@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="完美 typescript 类型推断提问：什么是完美的 typescript 使用？通过约定好的一种规则，通过 TypeScript 的隐式类型推断获得到传入的类型，再通过约定的规则转化出一种新的类型约束来对用户的输入进行限制。 假设：需要设计一个 API 用于从对象中拿取指定的一些 key 作为一个新的对象返回给外面使用。anyscript12declare function pick(targ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="完美typescript类型推断">
+<meta property="og:url" content="https://undercurre.github.io/2021/04/04/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%AE%8C%E7%BE%8Etypescript%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="完美 typescript 类型推断提问：什么是完美的 typescript 使用？通过约定好的一种规则，通过 TypeScript 的隐式类型推断获得到传入的类型，再通过约定的规则转化出一种新的类型约束来对用户的输入进行限制。 假设：需要设计一个 API 用于从对象中拿取指定的一些 key 作为一个新的对象返回给外面使用。anyscript12declare function pick(targ">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-04T10:18:00.000Z">
+<meta property="article:modified_time" content="2024-10-10T08:20:04.132Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="Typescript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>完美typescript类型推断 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="完美typescript类型推断"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-04 10:18" pubdate>
+          2021年4月4日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          922 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">完美typescript类型推断</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="完美-typescript-类型推断"><a href="#完美-typescript-类型推断" class="headerlink" title="完美 typescript 类型推断"></a>完美 typescript 类型推断</h1><h2 id="提问：什么是完美的-typescript-使用？"><a href="#提问：什么是完美的-typescript-使用？" class="headerlink" title="提问：什么是完美的 typescript 使用？"></a>提问：什么是完美的 typescript 使用？</h2><p>通过约定好的一种规则，通过 TypeScript 的隐式类型推断获得到传入的类型，再通过约定的规则转化出一种新的类型约束来对用户的输入进行限制。</p>
+<h3 id="假设：需要设计一个-API-用于从对象中拿取指定的一些-key-作为一个新的对象返回给外面使用。"><a href="#假设：需要设计一个-API-用于从对象中拿取指定的一些-key-作为一个新的对象返回给外面使用。" class="headerlink" title="假设：需要设计一个 API 用于从对象中拿取指定的一些 key 作为一个新的对象返回给外面使用。"></a>假设：需要设计一个 API 用于从对象中拿取指定的一些 key 作为一个新的对象返回给外面使用。</h3><h3 id="anyscript"><a href="#anyscript" class="headerlink" title="anyscript"></a>anyscript</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">pick</span>(<span class="hljs-params"><span class="hljs-attr">target</span>: <span class="hljs-built_in">any</span>, ...<span class="hljs-attr">keys</span>: <span class="hljs-built_in">any</span></span>): <span class="hljs-built_in">any</span>;<br><span class="hljs-title function_">pick</span>(<span class="hljs-literal">undefined</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">1</span>).<span class="hljs-property">b</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="菜鸟级：调用方的用户自己去-check-自己的字段"><a href="#菜鸟级：调用方的用户自己去-check-自己的字段" class="headerlink" title="菜鸟级：调用方的用户自己去 check 自己的字段"></a>菜鸟级：调用方的用户自己去 check 自己的字段</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">pick</span>(<span class="hljs-params"></span><br><span class="hljs-params">  <span class="hljs-attr">target</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;,</span><br><span class="hljs-params">  ...<span class="hljs-attr">keys</span>: <span class="hljs-built_in">string</span>[]</span><br><span class="hljs-params"></span>): <span class="hljs-built_in">unknown</span>;<br><span class="hljs-title function_">pick</span>(&#123; <span class="hljs-attr">abcdefghijkl</span>: <span class="hljs-string">&quot;123&quot;</span> &#125;, <span class="hljs-string">&quot;abcdefghikjl&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="进阶版：约定必要规则"><a href="#进阶版：约定必要规则" class="headerlink" title="进阶版：约定必要规则"></a>进阶版：约定必要规则</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> pick&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;&gt;(<br>  <span class="hljs-attr">target</span>: T,<br>  ...<span class="hljs-attr">keys</span>: (keyof T)[]<br>): <span class="hljs-built_in">unknown</span>;<br><br><span class="hljs-title function_">pick</span>(&#123; <span class="hljs-attr">abcdefghijkl</span>: <span class="hljs-string">&quot;123&quot;</span> &#125;, <span class="hljs-string">&quot;abcdefghijkl&quot;</span>).<span class="hljs-property">abcdefghikjl</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="进化版：约定了更多规则-但是有规则漏洞"><a href="#进化版：约定了更多规则-但是有规则漏洞" class="headerlink" title="进化版：约定了更多规则,但是有规则漏洞"></a>进化版：约定了更多规则,但是有规则漏洞</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> pick&lt;T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;, <span class="hljs-title class_">Keys</span> <span class="hljs-keyword">extends</span> keyof T&gt;(<br>  <span class="hljs-attr">target</span>: T,<br>  ...<span class="hljs-attr">keys</span>: <span class="hljs-title class_">Keys</span>[]<br>): &#123;<br>  [K <span class="hljs-keyword">in</span> <span class="hljs-title class_">Keys</span>]: T[K];<br>&#125;;<br><span class="hljs-title function_">pick</span>(&#123; <span class="hljs-attr">a</span>: <span class="hljs-string">&quot;&quot;</span> &#125;, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="完美版"><a href="#完美版" class="headerlink" title="完美版"></a>完美版</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-variable constant_">L2T</span>&lt;L, <span class="hljs-title class_">LAlias</span> = L, <span class="hljs-title class_">LAlias2</span> = L&gt; = [L] <span class="hljs-keyword">extends</span> [<span class="hljs-built_in">never</span>]<br>  ? []<br>  : L <span class="hljs-keyword">extends</span> infer <span class="hljs-title class_">LItem</span><br>  ? [<span class="hljs-title class_">LItem</span>?, ...<span class="hljs-variable constant_">L2T</span>&lt;<span class="hljs-title class_">Exclude</span>&lt;<span class="hljs-title class_">LAlias2</span>, <span class="hljs-title class_">LItem</span>&gt;, <span class="hljs-title class_">LAlias</span>&gt;]<br>  : <span class="hljs-built_in">never</span>;<br><br><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> pick&lt;<br>  T <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>&gt;,<br>  <span class="hljs-title class_">Keys</span> <span class="hljs-keyword">extends</span> <span class="hljs-variable constant_">L2T</span>&lt;keyof T&gt;<br>&gt;(<span class="hljs-attr">target</span>: T, ...<span class="hljs-attr">keys</span>: <span class="hljs-title class_">Keys</span>): <span class="hljs-title class_">Pick</span>&lt;T, <span class="hljs-title class_">Keys</span>[<span class="hljs-built_in">number</span>] &amp; keyof T&gt;;<br><br><span class="hljs-keyword">const</span> x0 = <span class="hljs-title function_">pick</span>(&#123; <span class="hljs-attr">a</span>: <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">&quot;2&quot;</span> &#125;, <span class="hljs-string">&quot;a&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x0.<span class="hljs-property">a</span>);<br><span class="hljs-comment">// @ts-expect-error</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x0.<span class="hljs-property">b</span>);<br><br><span class="hljs-keyword">const</span> x1 = <span class="hljs-title function_">pick</span>(&#123; <span class="hljs-attr">a</span>: <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-attr">b</span>: <span class="hljs-string">&quot;2&quot;</span> &#125;, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>);<br><span class="hljs-comment">//                                  ^^^^^^^^</span><br><span class="hljs-comment">// TS2345: Argument of type &#x27;[&quot;a&quot;, &quot;a&quot;]&#x27; is not assignable to parameter of type &#x27;[&quot;a&quot;?, &quot;b&quot;?] | [&quot;b&quot;?, &quot;a&quot;?]&#x27;.</span><br><span class="hljs-comment">//   Type &#x27;[&quot;a&quot;, &quot;a&quot;]&#x27; is not assignable to type &#x27;[&quot;a&quot;?, &quot;b&quot;?]&#x27;.</span><br><span class="hljs-comment">//     Type at position 1 in source is not compatible with type at position 1 in target.</span><br><span class="hljs-comment">//       Type &#x27;&quot;a&quot;&#x27; is not assignable to type &#x27;&quot;b&quot;&#x27;.</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="具体解释-export-type-L2T-lt-L-LAlias-L-LAlias2-L-gt-…-中的-infer-过程："><a href="#具体解释-export-type-L2T-lt-L-LAlias-L-LAlias2-L-gt-…-中的-infer-过程：" class="headerlink" title="具体解释 export type L2T&lt;L, LAlias = L, LAlias2 = L&gt; = … 中的 infer 过程："></a>具体解释 export type L2T&lt;L, LAlias = L, LAlias2 = L&gt; = … 中的 infer 过程：</h2><ol>
+<li><p>条件类型的开始： [L] extends [never] ? … 这是一个条件类型的开始，它检查 L 是否是 never 类型。</p>
+</li>
+<li><p>infer LItem 部分： 如果 L 不是 never 类型，那么就进入第二个条件分支 L extends infer LItem ? …。这里通过 infer LItem 引入了一个新的类型变量 LItem，这个变量代表了 L 的每个元素。</p>
+</li>
+<li><p>[LItem?, …L2T&lt;Exclude&lt;LAlias2, LItem&gt;, LAlias&gt;] 部分：</p>
+</li>
+</ol>
+<p>[LItem?, …] 创建了一个元组类型，第一个元素是 LItem，后续元素由递归调用产生。<br>Exclude&lt;LAlias2, LItem&gt; 用于排除已经选择的元素，确保不重复选择相同的项。<br>L2T&lt;Exclude&lt;LAlias2, LItem&gt;, LAlias&gt; 是对函数自身的递归调用，用于处理剩余的元素。</p>
+<ol start="4">
+<li>递归调用和终止条件： 在递归调用中，函数使用 Exclude&lt;LAlias2, LItem&gt; 筛选掉已经选择的元素，并继续递归地构建元组。当 L 中的所有元素都被处理完时，递归终止。</li>
+</ol>
+<h2 id="逐步解释-Pick-lt-T-Keys-number-amp-keyof-T-gt-这一部分："><a href="#逐步解释-Pick-lt-T-Keys-number-amp-keyof-T-gt-这一部分：" class="headerlink" title="逐步解释 Pick&lt;T, Keys[number] &amp; keyof T&gt; 这一部分："></a>逐步解释 Pick&lt;T, Keys[number] &amp; keyof T&gt; 这一部分：</h2><ol>
+<li><p>Pick&lt;T, …&gt;： Pick 是 TypeScript 中的一个内置工具类型，它用于从对象类型 T 中选择指定的键，并创建一个新的类型。其语法是 Pick&lt;T, K&gt;，其中 T 是对象类型，K 是 T 中的键的联合类型。</p>
+</li>
+<li><p>Keys[number]： Keys 是一个联合类型，表示从 T 中选择的键的集合。Keys[number] 表示从 Keys 中取出其中一个具体的键。这是因为 Keys 是联合类型，需要通过 [number] 访问具体的元素。</p>
+</li>
+<li><p>keyof T： keyof T 是对象类型 T 的所有键的联合类型。它包含了 T 中可能的所有键。</p>
+</li>
+<li><p>Keys[number] &amp; keyof T： 这一部分的结果是取 Keys 中的一个具体键，并确保它存在于 T 的所有键中。这是通过使用交集运算符 &amp; 实现的。</p>
+</li>
+<li><p>最终结果： Pick&lt;T, Keys[number] &amp; keyof T&gt; 表示从对象类型 T 中挑选出 Keys 中的一个具体键，确保它是 T 的键之一，并最终创建一个新的类型。</p>
+</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Typescript/" class="print-no-link">#Typescript</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>完美typescript类型推断</div>
+      <div>https://undercurre.github.io/2021/04/04/知识点积累/完美typescript类型推断/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/04/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/Typescript%E7%B1%BB%E5%9E%8B%E7%90%86%E8%A7%A3up%F0%9F%91%86/" title="Typescript类型理解up👆">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Typescript类型理解up👆</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/04/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E7%90%86%E8%A7%A3typescript%E4%B8%ADPick%E5%85%B3%E9%94%AE%E5%AD%97/" title="理解typescript的Pick">
+                        <span class="hidden-mobile">理解typescript的Pick</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

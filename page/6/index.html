@@ -1,0 +1,959 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Jack Blog">
+<meta property="og:url" content="https://undercurre.github.io/page/6/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Jack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="敲码卷中惊坐起，暗流月影渡幽魂"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/svg%E7%9A%84hover%E4%BF%AE%E6%94%B9css/" target="_self">
+          svg元素如何在hover时修改路径样式？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/svg%E7%9A%84hover%E4%BF%AE%E6%94%B9css/" target="_self">
+        <div>
+          svg 元素如何在 hover 时修改路径样式？修改 path 下的 fill 属性 123svg:hover path &#123;  fill: #ccc;&#125;
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-07-01 09:21" pubdate>
+              2024-07-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%9A%84%E5%94%AF%E4%B8%80id%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%EF%BC%9F/" target="_self">
+          数据库表的唯一id如何选择？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/07/01/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%9A%84%E5%94%AF%E4%B8%80id%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%EF%BC%9F/" target="_self">
+        <div>
+          数据库表的唯一 id 如何选择？ 自增数字（Auto-Incrementing Integer）  优点：简单易用。自动递增，避免手动生成。通常性能较好，索引和查找速度快。缺点：可预测性，容易被猜测。在分布式系统中管理较复杂，可能导致冲突。在高并发写入时，可能成为瓶颈。  UUID（Universally Unique Identifier）  优点：全球唯一性，避免冲突。难以预测，提高安全性。适
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-07-01 01:49" pubdate>
+              2024-07-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/BFC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A6%E5%8F%91BFC%EF%BC%9F/" target="_self">
+          BFC是什么？介绍一下，如何触发BFC？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/BFC%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A6%E5%8F%91BFC%EF%BC%9F/" target="_self">
+        <div>
+          BFC 是什么？介绍一下，如何触发 BFC？BFC 也就是常说的块格式化上下文，这是一个独立的渲染区域，规定了内部如何布局，并且这个区域的子元素不会影响到外面的元素。其中比较重要的布局规则有内部 box 垂直放置、计算 BFC 的高度的时候，浮动元素也参与计算。 触发 BFC 的规则有根元素、浮动元素、position 为 absolute 或 fixed 的元素、display 属性为 inli
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/CSS3%E5%8A%A8%E7%94%BB%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%9A%82%E5%81%9C%EF%BC%9F/" target="_self">
+          CSS3动画如何实现暂停？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/CSS3%E5%8A%A8%E7%94%BB%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%9A%82%E5%81%9C%EF%BC%9F/" target="_self">
+        <div>
+          CSS3 动画如何实现暂停？css3 动画可以通过设置 animation-play-state 属性为 paused 来设置这个动画暂停。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTML5%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E6%9C%89%E5%93%AA%E4%BA%9B/" target="_self">
+          HTML5的存储方案有哪些？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTML5%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E6%9C%89%E5%93%AA%E4%BA%9B/" target="_self">
+        <div>
+          HTML5 的存储方案有哪些？HTML5 提供了 sessionStorage、localStorage 和离线存储作为新的存储方案，其中 sessionStorage 和 localStorage 都是采用键值对的形式存储，两者都是通过 setItem、getItem、removeItem 来实现增删查改，而 sessionStorage 是会话存储，也就是说 当浏览器关闭之后 sessionS
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E5%92%8CHTTPS%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_self">
+          HTTP和HTTPS的区别
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E5%92%8CHTTPS%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_self">
+        <div>
+          HTTP 和 HTTPS 的区别首先 HTTP 和 HTTPS 的默认端口号就不一样，HTTP 的默认端口号为 80，HTTPS 的默认端口号为 443，HTTP 在传输过程中使用的是明文 传输，内容可能被窃取，而且无法验证通信方的身份，还有可能遭遇身份伪装，而 HTTPS 在应用层和传输层之间增加了 ssl 协议用来加密 内容，因此通过证书验证来验证身份，即使数据被窃取也无法解密，数据的传输更加
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E6%8A%A5%E6%96%87%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%8C%E4%BC%A0%E8%BE%93%E4%B8%AD%E4%BB%A5%E4%BD%95%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%BC%A0%E8%BE%93/" target="_self">
+          HTTP报文的格式，传输中以何种方式传输
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E6%8A%A5%E6%96%87%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%8C%E4%BC%A0%E8%BE%93%E4%B8%AD%E4%BB%A5%E4%BD%95%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%BC%A0%E8%BE%93/" target="_self">
+        <div>
+          HTTP 报文的格式，传输中以何种方式传输 ?HTTP 报文分为三个部分，起始行、首部和主体，其中起始行和首部以一个回车和换行符分隔，首部和主体以一个空行分隔，其中起始行是对这次 HTTP 请求或者响应 的描述，请求报文的起始行包括使用的 HTTP 方法、请求的 url 地址、HTTP 版本，响应报文的起始行包括 HTTP 的版本，HTTP 状态码，http 状态码的描述，首部也 就是常说的 HT
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E7%8A%B6%E6%80%81/" target="_self">
+          HTTP状态
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/HTTP%E7%8A%B6%E6%80%81/" target="_self">
+        <div>
+          HTTP 状态的简要分类可以按照 HTTP 状态码的第一个数字分类，1xx 表示信息，2xx 表示成功，3xx 表示重定向，这里需要注意的是 304，表示未修改， 4xx 表示客户端错误，最常见的是 404，5xx 表示服务端错误 HTTP 状态码 101、200、301、302、304 的具体含义101：切换协议 200：正常，OK，301：永久重定向，302：临时重定向，304：未修改 简要介
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E6%88%96%E8%80%85%E5%9B%9B%E6%AC%A1%EF%BC%9F/" target="_self">
+          TCP三次握手的过程，为什么是三次而不是两次或者四次？
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E7%9A%84%E8%BF%87%E7%A8%8B%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%A4%E6%AC%A1%E6%88%96%E8%80%85%E5%9B%9B%E6%AC%A1%EF%BC%9F/" target="_self">
+        <div>
+          TCP 三次握手的过程，为什么是三次而不是两次或者四次？第一次握手：客户端发送一个 syn（同步）包（syn=x）给服务器，进入 SYN_SEND 状态，等待服务器确认 第二次握手：服务端收到客户端发送的同步包，确认客户端的同步请求（ack=x+1）,同时也发送一个同步包， 也就是一个 ACK 包+SYN 包服务器进入 SYN_RECV 状态 第三次握手：客户端收到服务器的 SYN+ACK 包，向
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/TCP%E7%9A%84%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/" target="_self">
+          TCP的四次挥手
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/28/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/TCP%E7%9A%84%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/" target="_self">
+        <div>
+          TCP 的四次挥手 ?第一次：主动关闭方发送一个 FIN 包，用来关闭主动关闭方到被动关闭方的数据传送，也就是告诉另一方我不再发送数据了，但此时仍可以接收数据 第二次：被动关闭方收到 FIN 包之后，发送一个确认（ACK）包给对方 第三次：被动关闭方发送一个 FIN 包，告诉对方不带发送数据 第四次：主动关闭方收到 FIN 包之后，发送一个 ACK 包给对方，至此完成四次挥手
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-28 09:21" pubdate>
+              2024-06-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%96%E9%9F%B3/">#抖音</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#board">7</a><a class="page-number" href="/page/8/#board">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/#board">42</a><a class="extend next" rel="next" href="/page/7/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

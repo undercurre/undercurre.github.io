@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="组件库快餐式搭建模版惯例ESlint安装依赖 1pnpm i eslint @typescript-eslint&#x2F;parser @typescript-eslint&#x2F;eslint-plugin eslint-plugin-vue --save-dev -w  初始化 1npx eslint --init  增加 eslint 命令 1npm set-script eslint &quot;esli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组件库快餐">
+<meta property="og:url" content="https://undercurre.github.io/2022/01/14/%E6%A8%A1%E6%9D%BF/%E7%BB%84%E4%BB%B6%E5%BA%93%E5%BF%AB%E9%A4%90/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="组件库快餐式搭建模版惯例ESlint安装依赖 1pnpm i eslint @typescript-eslint&#x2F;parser @typescript-eslint&#x2F;eslint-plugin eslint-plugin-vue --save-dev -w  初始化 1npx eslint --init  增加 eslint 命令 1npm set-script eslint &quot;esli">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-14T00:30:16.000Z">
+<meta property="article:modified_time" content="2025-03-22T19:44:43.403Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="UI">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>组件库快餐 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="组件库快餐"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-01-14 00:30" pubdate>
+          2022年1月14日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">组件库快餐</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="组件库快餐式搭建"><a href="#组件库快餐式搭建" class="headerlink" title="组件库快餐式搭建"></a>组件库快餐式搭建</h1><h2 id="模版惯例"><a href="#模版惯例" class="headerlink" title="模版惯例"></a>模版惯例</h2><h4 id="ESlint"><a href="#ESlint" class="headerlink" title="ESlint"></a>ESlint</h4><p>安装依赖</p>
+<figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs moonscript">pnpm i eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-vue <span class="hljs-comment">--save-dev -w</span><br></code></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npx eslint <span class="hljs-comment">--init</span><br></code></pre></td></tr></table></figure>
+
+<p>增加 eslint 命令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">eslint</span> <span class="hljs-string">&quot;eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix .&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>这里记得配置好 vue-plugin</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js">.<span class="hljs-property">eslintrc</span>.<span class="hljs-property">js</span><br>    <span class="hljs-comment">// 配置vue3、ts</span><br>    <span class="hljs-string">&quot;parser&quot;</span>: <span class="hljs-string">&quot;vue-eslint-parser&quot;</span>,<br>    <span class="hljs-string">&quot;parserOptions&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;parser&quot;</span>: <span class="hljs-string">&quot;@typescript-eslint/parser&quot;</span>,<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>还要忽略掉 index.vue 的组件命名识别</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">rules:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-string">&quot;vue/multi-word-component-names&quot;</span>: [<br>      <span class="hljs-string">&quot;error&quot;</span>,<br>      <span class="hljs-punctuation">&#123;</span><br><span class="hljs-symbol">        ignores:</span> [<span class="hljs-string">&quot;index&quot;</span>], <span class="hljs-comment">//需要忽略的组件名</span><br>      <span class="hljs-punctuation">&#125;</span>,<br>    ],<br>  <span class="hljs-punctuation">&#125;</span>,<br></code></pre></td></tr></table></figure>
+
+<h4 id="Prettier"><a href="#Prettier" class="headerlink" title="Prettier"></a>Prettier</h4><p>安装依赖</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">pnpm i prettier eslint-config-prettier eslint-plugin-prettier -D -w<br></code></pre></td></tr></table></figure>
+
+<p>增加指令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">prettier</span> <span class="hljs-string">&quot;prettier --write ./*.&#123;ts,tsx,js,jsx,css,less,scss,json,md&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>新建.prettierrc.js,你可以直接 cv 我的配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-comment">// 一行最多 80 字符</span><br>  <span class="hljs-attr">printWidth</span>: <span class="hljs-number">80</span>,<br>  <span class="hljs-comment">// 使用 4 个空格缩进</span><br>  <span class="hljs-attr">tabWidth</span>: <span class="hljs-number">4</span>,<br>  <span class="hljs-comment">// 不使用 tab 缩进，而使用空格</span><br>  <span class="hljs-attr">useTabs</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 行尾需要有分号</span><br>  <span class="hljs-attr">semi</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// 使用单引号代替双引号</span><br>  <span class="hljs-attr">singleQuote</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// 对象的 key 仅在必要时用引号</span><br>  <span class="hljs-attr">quoteProps</span>: <span class="hljs-string">&quot;as-needed&quot;</span>,<br>  <span class="hljs-comment">// jsx 不使用单引号，而使用双引号</span><br>  <span class="hljs-attr">jsxSingleQuote</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 末尾使用逗号</span><br>  <span class="hljs-attr">trailingComma</span>: <span class="hljs-string">&quot;all&quot;</span>,<br>  <span class="hljs-comment">// 大括号内的首尾需要空格 &#123; foo: bar &#125;</span><br>  <span class="hljs-attr">bracketSpacing</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-comment">// jsx 标签的反尖括号需要换行</span><br>  <span class="hljs-attr">jsxBracketSameLine</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 箭头函数，只有一个参数的时候，也需要括号</span><br>  <span class="hljs-attr">arrowParens</span>: <span class="hljs-string">&quot;always&quot;</span>,<br>  <span class="hljs-comment">// 每个文件格式化的范围是文件的全部内容</span><br>  <span class="hljs-attr">rangeStart</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">rangeEnd</span>: <span class="hljs-title class_">Infinity</span>,<br>  <span class="hljs-comment">// 不需要写文件开头的 @prettier</span><br>  <span class="hljs-attr">requirePragma</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 不需要自动在文件开头插入 @prettier</span><br>  <span class="hljs-attr">insertPragma</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-comment">// 使用默认的折行标准</span><br>  <span class="hljs-attr">proseWrap</span>: <span class="hljs-string">&quot;preserve&quot;</span>,<br>  <span class="hljs-comment">// 根据显示样式决定 html 要不要折行</span><br>  <span class="hljs-attr">htmlWhitespaceSensitivity</span>: <span class="hljs-string">&quot;css&quot;</span>,<br>  <span class="hljs-comment">// 换行符使用 lf</span><br>  <span class="hljs-attr">endOfLine</span>: <span class="hljs-string">&quot;auto&quot;</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="stylelint"><a href="#stylelint" class="headerlink" title="stylelint"></a>stylelint</h4><p>安装依赖</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pnpm <span class="hljs-keyword">add </span>stylelint stylelint-<span class="hljs-built_in">config</span>-standard stylelint-<span class="hljs-keyword">scss </span>stylelint-<span class="hljs-keyword">order </span>-D -w<br></code></pre></td></tr></table></figure>
+
+<p>新建.stylelintrc.js 然后配置（也可以直接用我的配置）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">plugins</span>: [<span class="hljs-string">&quot;stylelint-scss&quot;</span>, <span class="hljs-string">&quot;stylelint-order&quot;</span>],<br>  <span class="hljs-attr">extends</span>: [<span class="hljs-string">&quot;stylelint-config-standard-scss&quot;</span>],<br>  <span class="hljs-attr">ignoreFiles</span>: [<br>    <span class="hljs-string">&quot;**/*.js&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.jsx&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.tsx&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.ts&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.json&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.md&quot;</span>,<br>    <span class="hljs-string">&quot;**/*.yaml&quot;</span>,<br>  ],<br>  <span class="hljs-attr">rules</span>: &#123;<br>    <span class="hljs-string">&quot;unit-no-unknown&quot;</span>: [<span class="hljs-literal">true</span>, &#123; <span class="hljs-attr">ignoreUnits</span>: [<span class="hljs-string">&quot;rpx&quot;</span>] &#125;],<br>    <span class="hljs-string">&quot;unit-allowed-list&quot;</span>: [<span class="hljs-string">&quot;rpx&quot;</span>, <span class="hljs-string">&quot;%&quot;</span>, <span class="hljs-string">&quot;px&quot;</span>],<br>    <span class="hljs-string">&quot;no-descending-specificity&quot;</span>: <span class="hljs-literal">null</span>, <span class="hljs-comment">// 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器</span><br>    <span class="hljs-string">&quot;selector-pseudo-element-no-unknown&quot;</span>: [<br>      <span class="hljs-literal">true</span>,<br>      &#123;<br>        <span class="hljs-attr">ignorePseudoElements</span>: [<span class="hljs-string">&quot;v-deep&quot;</span>],<br>      &#125;,<br>    ],<br>    <span class="hljs-string">&quot;selector-pseudo-class-no-unknown&quot;</span>: [<br>      <span class="hljs-literal">true</span>,<br>      &#123;<br>        <span class="hljs-attr">ignorePseudoClasses</span>: [<span class="hljs-string">&quot;deep&quot;</span>],<br>      &#125;,<br>    ],<br>    <span class="hljs-string">&quot;import-notation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,<br>    <span class="hljs-string">&quot;comment-whitespace-inside&quot;</span>: <span class="hljs-string">&quot;always&quot;</span>,<br>    <span class="hljs-comment">// 指定样式的排序</span><br>    <span class="hljs-string">&quot;order/properties-order&quot;</span>: [<br>      <span class="hljs-string">&quot;position&quot;</span>,<br>      <span class="hljs-string">&quot;top&quot;</span>,<br>      <span class="hljs-string">&quot;right&quot;</span>,<br>      <span class="hljs-string">&quot;bottom&quot;</span>,<br>      <span class="hljs-string">&quot;left&quot;</span>,<br>      <span class="hljs-string">&quot;z-index&quot;</span>,<br>      <span class="hljs-string">&quot;display&quot;</span>,<br>      <span class="hljs-string">&quot;justify-content&quot;</span>,<br>      <span class="hljs-string">&quot;align-items&quot;</span>,<br>      <span class="hljs-string">&quot;float&quot;</span>,<br>      <span class="hljs-string">&quot;clear&quot;</span>,<br>      <span class="hljs-string">&quot;overflow&quot;</span>,<br>      <span class="hljs-string">&quot;overflow-x&quot;</span>,<br>      <span class="hljs-string">&quot;overflow-y&quot;</span>,<br>      <span class="hljs-string">&quot;padding&quot;</span>,<br>      <span class="hljs-string">&quot;padding-top&quot;</span>,<br>      <span class="hljs-string">&quot;padding-right&quot;</span>,<br>      <span class="hljs-string">&quot;padding-bottom&quot;</span>,<br>      <span class="hljs-string">&quot;padding-left&quot;</span>,<br>      <span class="hljs-string">&quot;margin&quot;</span>,<br>      <span class="hljs-string">&quot;margin-top&quot;</span>,<br>      <span class="hljs-string">&quot;margin-right&quot;</span>,<br>      <span class="hljs-string">&quot;margin-bottom&quot;</span>,<br>      <span class="hljs-string">&quot;margin-left&quot;</span>,<br>      <span class="hljs-string">&quot;width&quot;</span>,<br>      <span class="hljs-string">&quot;min-width&quot;</span>,<br>      <span class="hljs-string">&quot;max-width&quot;</span>,<br>      <span class="hljs-string">&quot;height&quot;</span>,<br>      <span class="hljs-string">&quot;min-height&quot;</span>,<br>      <span class="hljs-string">&quot;max-height&quot;</span>,<br>      <span class="hljs-string">&quot;font-size&quot;</span>,<br>      <span class="hljs-string">&quot;font-family&quot;</span>,<br>      <span class="hljs-string">&quot;text-align&quot;</span>,<br>      <span class="hljs-string">&quot;text-justify&quot;</span>,<br>      <span class="hljs-string">&quot;text-indent&quot;</span>,<br>      <span class="hljs-string">&quot;text-overflow&quot;</span>,<br>      <span class="hljs-string">&quot;text-decoration&quot;</span>,<br>      <span class="hljs-string">&quot;white-space&quot;</span>,<br>      <span class="hljs-string">&quot;color&quot;</span>,<br>      <span class="hljs-string">&quot;background&quot;</span>,<br>      <span class="hljs-string">&quot;background-position&quot;</span>,<br>      <span class="hljs-string">&quot;background-repeat&quot;</span>,<br>      <span class="hljs-string">&quot;background-size&quot;</span>,<br>      <span class="hljs-string">&quot;background-color&quot;</span>,<br>      <span class="hljs-string">&quot;background-clip&quot;</span>,<br>      <span class="hljs-string">&quot;border&quot;</span>,<br>      <span class="hljs-string">&quot;border-style&quot;</span>,<br>      <span class="hljs-string">&quot;border-width&quot;</span>,<br>      <span class="hljs-string">&quot;border-color&quot;</span>,<br>      <span class="hljs-string">&quot;border-top-style&quot;</span>,<br>      <span class="hljs-string">&quot;border-top-width&quot;</span>,<br>      <span class="hljs-string">&quot;border-top-color&quot;</span>,<br>      <span class="hljs-string">&quot;border-right-style&quot;</span>,<br>      <span class="hljs-string">&quot;border-right-width&quot;</span>,<br>      <span class="hljs-string">&quot;border-right-color&quot;</span>,<br>      <span class="hljs-string">&quot;border-bottom-style&quot;</span>,<br>      <span class="hljs-string">&quot;border-bottom-width&quot;</span>,<br>      <span class="hljs-string">&quot;border-bottom-color&quot;</span>,<br>      <span class="hljs-string">&quot;border-left-style&quot;</span>,<br>      <span class="hljs-string">&quot;border-left-width&quot;</span>,<br>      <span class="hljs-string">&quot;border-left-color&quot;</span>,<br>      <span class="hljs-string">&quot;border-radius&quot;</span>,<br>      <span class="hljs-string">&quot;opacity&quot;</span>,<br>      <span class="hljs-string">&quot;filter&quot;</span>,<br>      <span class="hljs-string">&quot;list-style&quot;</span>,<br>      <span class="hljs-string">&quot;outline&quot;</span>,<br>      <span class="hljs-string">&quot;visibility&quot;</span>,<br>      <span class="hljs-string">&quot;box-shadow&quot;</span>,<br>      <span class="hljs-string">&quot;text-shadow&quot;</span>,<br>      <span class="hljs-string">&quot;resize&quot;</span>,<br>      <span class="hljs-string">&quot;transition&quot;</span>,<br>    ],<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>增加命令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">stylelint</span> <span class="hljs-string">&quot;stylelint ./*.&#123;scss,css&#125; --fix --allow-empty-input&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="lint-staged"><a href="#lint-staged" class="headerlink" title="lint-staged"></a>lint-staged</h4><p>安装依赖</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">pnpm <span class="hljs-built_in">add</span> lint-staged -D<br></code></pre></td></tr></table></figure>
+
+<p>新建.lintstagedrc.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;./*.&#123;js,jsx,ts,tsx&#125;&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;prettier --write .&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;eslint  --fix, stylelint --fix --allow-empty-input&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;*.md&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;prettier --write&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="husky、commitlint、commitizen"><a href="#husky、commitlint、commitizen" class="headerlink" title="husky、commitlint、commitizen"></a>husky、commitlint、commitizen</h4><p>依赖安装</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">pnpm add husky commitlint @commitlint/config-conventional cz-conventional-changelog commitizen commitlint-config-cz  cz-customizable  -D -w<br></code></pre></td></tr></table></figure>
+
+<p>增加命令<strong>然后执行一次 prepare</strong></p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">prepare</span> <span class="hljs-string">&quot;husky install&quot;</span><br><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">commit</span> <span class="hljs-string">&quot;git add . &amp;&amp; git-cz&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>部署 husky</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">pnpm husky <span class="hljs-keyword">add</span><span class="language-bash"> .husky/pre-commit <span class="hljs-string">&quot;pnpm eslint &amp;&amp; pnpm prettier &amp;&amp; pnpm stylelint&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>新建 commitlint.config.js 和 .cz-config.js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs commitlint.config.js">module.exports = &#123;<br>    extends:  [&#x27;cz&#x27;],<br>    rules: &#123;<br>        // 自定义规则<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cz-config.js">&#x27;use strict&#x27;<br>module.exports = &#123;<br>  types: [<br>    &#123; value: &#x27;✨新增&#x27;, name: &#x27;新增:    新的内容&#x27; &#125;,<br>    &#123; value: &#x27;🐛修复&#x27;, name: &#x27;修复:    修复一个Bug&#x27; &#125;,<br>    &#123; value: &#x27;📝文档&#x27;, name: &#x27;文档:    变更的只有文档&#x27; &#125;,<br>    &#123; value: &#x27;💄格式&#x27;, name: &#x27;格式:    空格, 分号等格式修复&#x27; &#125;,<br>    &#123; value: &#x27;♻️重构&#x27;, name: &#x27;重构:    代码重构，注意和特性、修复区分开&#x27; &#125;,<br>    &#123; value: &#x27;⚡️性能&#x27;, name: &#x27;性能:    提升性能&#x27; &#125;,<br>    &#123; value: &#x27;✅测试&#x27;, name: &#x27;测试:    添加一个测试&#x27; &#125;,<br>    &#123; value: &#x27;🔧工具&#x27;, name: &#x27;工具:    开发工具变动(构建、脚手架工具等)&#x27; &#125;,<br>    &#123; value: &#x27;⏪回滚&#x27;, name: &#x27;回滚:    代码回退&#x27; &#125;<br>  ],<br>  scopes: [<br>    &#123; name: &#x27;leetcode&#x27; &#125;,<br>    &#123; name: &#x27;javascript&#x27; &#125;,<br>    &#123; name: &#x27;typescript&#x27; &#125;,<br>    &#123; name: &#x27;Vue&#x27; &#125;,<br>    &#123; name: &#x27;node&#x27; &#125;<br>  ],<br>  // it needs to match the value for field type. Eg.: &#x27;fix&#x27;<br>  /*  scopeOverrides: &#123;<br>    fix: [<br>      &#123;name: &#x27;merge&#x27;&#125;,<br>      &#123;name: &#x27;style&#x27;&#125;,<br>      &#123;name: &#x27;e2eTest&#x27;&#125;,<br>      &#123;name: &#x27;unitTest&#x27;&#125;<br>    ]<br>  &#125;,  */<br>  // override the messages, defaults are as follows<br>  messages: &#123;<br>    type: &#x27;选择一种你的提交类型:&#x27;,<br>    scope: &#x27;选择一个scope (可选):&#x27;,<br>    // used if allowCustomScopes is true<br>    customScope: &#x27;Denote the SCOPE of this change:&#x27;,<br>    subject: &#x27;短说明:\n&#x27;,<br>    body: &#x27;长说明，使用&quot;|&quot;换行(可选)：\n&#x27;,<br>    breaking: &#x27;非兼容性说明 (可选):\n&#x27;,<br>    footer: &#x27;关联关闭的issue，例如：#31, #34(可选):\n&#x27;,<br>    confirmCommit: &#x27;确定提交说明?(yes/no)&#x27;<br>  &#125;,<br>  allowCustomScopes: true,<br>  allowBreakingChanges: [&#x27;特性&#x27;, &#x27;修复&#x27;],<br>  // limit subject length<br>  subjectLimit: 100<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>package.json 加入自定义配置</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// package.json</span><br>  <span class="hljs-attr">&quot;config&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;commitizen&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;path&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;node_modules/cz-customizable&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="changeLog"><a href="#changeLog" class="headerlink" title="changeLog"></a>changeLog</h4><p>安装依赖</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">pnpm install conventional-changelog-<span class="hljs-keyword">cli</span> -D -w<br></code></pre></td></tr></table></figure>
+
+<p>增加命令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">changelog</span> <span class="hljs-string">&quot;conventional-changelog -p angular -i CHANGELOG.md -s -r 0&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="version"><a href="#version" class="headerlink" title="version"></a>version</h4><figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs q">pnpm install --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span> standard-version -w<br></code></pre></td></tr></table></figure>
+
+<p>增加命令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">release</span> <span class="hljs-string">&quot;standard-version&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>安装依赖</p>
+<h2 id="建立-Monorepo-结构"><a href="#建立-Monorepo-结构" class="headerlink" title="建立 Monorepo 结构"></a>建立 Monorepo 结构</h2><p>就是指在一个大的项目仓库中，管理多个模块/包（package），这种类型的项目大都在项目根目录下有一个 packages 文件夹，分多个项目管理。</p>
+<p>通过 pnpm-workspace.yaml 实现</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">packages:</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;packages/**&quot;</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;examples&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-comment">-- packages</span><br>  <span class="hljs-comment">-- pkg1</span><br>    <span class="hljs-comment">--package.json</span><br>  <span class="hljs-comment">-- pkg2</span><br>    <span class="hljs-comment">--package.json</span><br><span class="hljs-comment">--package.json</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>新建项目目录（<code>pnpm init</code>）</p>
+</li>
+<li><p>新建 packages 文件夹（组件源码）(这里是多个包)</p>
+</li>
+<li><p>新建 example 文件夹（组件运行的操作台）(这里也是作为一个包来做 pnpm init)</p>
+</li>
+<li><p>新建 pnpm-workspace.yaml</p>
+</li>
+</ol>
+<h2 id="新建配置文件-npmrc"><a href="#新建配置文件-npmrc" class="headerlink" title="新建配置文件 .npmrc"></a>新建配置文件 .npmrc</h2><p>为什么要配置 shamefully-hoist?<br>如果某些工具仅在根目录的 node_modules 时才有效，可以将其设置为 true 来提升那些不在根目录的 node_modules，就是将你安装的依赖包的依赖包的依赖包的…都放到同一级别（扁平化）。</p>
+<h2 id="根包配置"><a href="#根包配置" class="headerlink" title="根包配置"></a>根包配置</h2><h4 id="基本配置-ts、vue"><a href="#基本配置-ts、vue" class="headerlink" title="基本配置 ts、vue"></a>基本配置 ts、vue</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs css">pnpm <span class="hljs-selector-tag">i</span> vue<span class="hljs-keyword">@next</span> typescript -D -w<br>npx tsc --init<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>安装@vitejs/plugin-vue 用来支持.vue 文件的转译</li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">pnpm</span> install vite <span class="hljs-variable">@vitejs</span>/plugin-vue -D -w<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>新建 vite.config.ts</li>
+</ol>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">import</span> &#123; defineConfig &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vite&#x27;</span><br><span class="hljs-keyword">import</span> vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@vitejs/plugin-vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> defineConfig(&#123;<br>    plugins:[vue()]<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>新建 vue 应用用于测试组件</p>
+<p>①、@vitejs/plugin-vue 会默认加载 examples 下的 index.html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;app&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;main.ts&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;module&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>②、新建 app.vue</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;运行测试&lt;/div&gt;<br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
+
+<p>③、新建 main.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;<br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./app.vue&quot;</span>;<br><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">createApp</span>(<span class="hljs-title class_">App</span>);<br><br>app.<span class="hljs-title function_">mount</span>(<span class="hljs-string">&quot;#app&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>④、新建 typings/vue-shim.d.ts 来支持解析 vue 文件</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">declare</span> <span class="hljs-variable language_">module</span> <span class="hljs-string">&quot;*.vue&quot;</span> &#123;<br>  <span class="hljs-keyword">import</span> <span class="hljs-keyword">type</span> &#123; <span class="hljs-title class_">DefineComponent</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;<br>  <span class="hljs-comment">// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-attr">component</span>: <span class="hljs-title class_">DefineComponent</span>&lt;&#123;&#125;, &#123;&#125;, <span class="hljs-built_in">any</span>&gt;;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> component;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>⑤、package.json 加入启动测试的命令</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite&quot;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="packages"><a href="#packages" class="headerlink" title="packages"></a>packages</h2><h3 id="分包-utils-pnpm-init，记得改包名，和入口-main-成-index-ts"><a href="#分包-utils-pnpm-init，记得改包名，和入口-main-成-index-ts" class="headerlink" title="分包 utils(pnpm init，记得改包名，和入口 main 成 index.ts)"></a>分包 utils(pnpm init，记得改包名，和入口 main 成 index.ts)</h3><p>新建 index.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> add = (<span class="hljs-attr">a</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">b</span>: <span class="hljs-built_in">number</span>): <span class="hljs-function"><span class="hljs-params">number</span> =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> a + b;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="分包-components-pnpm-init，记得改包名，和入口-main-成-index-ts"><a href="#分包-components-pnpm-init，记得改包名，和入口-main-成-index-ts" class="headerlink" title="分包 components(pnpm init，记得改包名，和入口 main 成 index.ts)"></a>分包 components(pnpm init，记得改包名，和入口 main 成 index.ts)</h3><p>加载上面 utils 包</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">pnpm</span> install <span class="hljs-variable">@metu</span>-ui/utils<br></code></pre></td></tr></table></figure>
+
+<p>新建 index.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; add &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@metu-ui/utils&quot;</span>; <span class="hljs-comment">//</span><br><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Button</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./index&quot;</span>; <span class="hljs-comment">// 待会要做button组件</span><br><br><span class="hljs-keyword">const</span> result = <span class="hljs-title function_">add</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br><br><span class="hljs-keyword">export</span> &#123; <span class="hljs-title class_">Button</span> &#125;;<br></code></pre></td></tr></table></figure>
+
+<p>新建 src 放组件源码</p>
+<h3 id="这里我们先做一个-button"><a href="#这里我们先做一个-button" class="headerlink" title="这里我们先做一个 button"></a>这里我们先做一个 button</h3><p>在 packages/components/src/ 下新建 button 文件夹<br>并在该文件夹下新建 index.ts 和 index.vue</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-keyword">import</span> Button <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./button.vue&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Button<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>测试按钮<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><p>examples 引入 组件库(components 包名)</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">pnpm <span class="hljs-selector-tag">i</span> metu-ui<br></code></pre></td></tr></table></figure>
+
+<p>修改 examples 的 app.vue</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs dust"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;ts&quot;</span> <span class="hljs-attr">setup</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">import</span> </span></span><span class="hljs-template-variable">&#123; Button &#125;</span><span class="language-xml"><span class="language-javascript"> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;kitty-ui&#x27;</span></span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="组件打包配置"><a href="#组件打包配置" class="headerlink" title="组件打包配置"></a>组件打包配置</h2><p>package.json 配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;lib/index.js&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;module&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;es/index.js&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;es&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;lib&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;build&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;vite build&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;typings&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;lib/index.d.ts&quot;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>components 下新建 vite.config.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; defineConfig &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vite&quot;</span>;<br><span class="hljs-keyword">import</span> vue <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@vitejs/plugin-vue&quot;</span>;<br><span class="hljs-keyword">import</span> dts <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vite-plugin-dts&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">build</span>: &#123;<br>    <span class="hljs-attr">target</span>: <span class="hljs-string">&quot;modules&quot;</span>,<br>    <span class="hljs-comment">//打包文件目录</span><br>    <span class="hljs-attr">outDir</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>    <span class="hljs-comment">//压缩</span><br>    <span class="hljs-attr">minify</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-comment">//css分离</span><br>    <span class="hljs-comment">//cssCodeSplit: true,</span><br>    <span class="hljs-attr">rollupOptions</span>: &#123;<br>      <span class="hljs-comment">//忽略打包vue文件</span><br>      <span class="hljs-attr">external</span>: [<span class="hljs-string">&quot;vue&quot;</span>],<br>      <span class="hljs-attr">input</span>: [<span class="hljs-string">&quot;src/index.ts&quot;</span>],<br>      <span class="hljs-attr">output</span>: [<br>        &#123;<br>          <span class="hljs-attr">format</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>          <span class="hljs-comment">//不用打包成.es.js,这里我们想把它打包成.js</span><br>          <span class="hljs-attr">entryFileNames</span>: <span class="hljs-string">&quot;[name].js&quot;</span>,<br>          <span class="hljs-comment">//让打包目录和我们目录对应</span><br>          <span class="hljs-attr">preserveModules</span>: <span class="hljs-literal">true</span>,<br>          <span class="hljs-comment">//配置打包根目录</span><br>          <span class="hljs-attr">dir</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>          <span class="hljs-attr">preserveModulesRoot</span>: <span class="hljs-string">&quot;src&quot;</span>,<br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">format</span>: <span class="hljs-string">&quot;cjs&quot;</span>,<br>          <span class="hljs-attr">entryFileNames</span>: <span class="hljs-string">&quot;[name].js&quot;</span>,<br>          <span class="hljs-comment">//让打包目录和我们目录对应</span><br>          <span class="hljs-attr">preserveModules</span>: <span class="hljs-literal">true</span>,<br>          <span class="hljs-comment">//配置打包根目录</span><br>          <span class="hljs-attr">dir</span>: <span class="hljs-string">&quot;lib&quot;</span>,<br>          <span class="hljs-attr">preserveModulesRoot</span>: <span class="hljs-string">&quot;src&quot;</span>,<br>        &#125;,<br>      ],<br>    &#125;,<br>    <span class="hljs-attr">lib</span>: &#123;<br>      <span class="hljs-attr">entry</span>: <span class="hljs-string">&quot;./index.ts&quot;</span>,<br>      <span class="hljs-attr">formats</span>: [<span class="hljs-string">&quot;es&quot;</span>, <span class="hljs-string">&quot;cjs&quot;</span>],<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-title function_">vue</span>(),<br>    <span class="hljs-title function_">dts</span>(&#123;<br>      <span class="hljs-comment">//指定使用的tsconfig.json为我们整个项目根目录下掉,如果不配置,你也可以在components下新建tsconfig.json</span><br>      <span class="hljs-attr">tsConfigFilePath</span>: <span class="hljs-string">&quot;../../tsconfig.json&quot;</span>,<br>    &#125;),<br>    <span class="hljs-comment">//因为这个插件默认打包到es下，我们想让lib目录下也生成声明文件需要再配置一个</span><br>    <span class="hljs-title function_">dts</span>(&#123;<br>      <span class="hljs-attr">outputDir</span>: <span class="hljs-string">&quot;lib&quot;</span>,<br>      <span class="hljs-attr">tsConfigFilePath</span>: <span class="hljs-string">&quot;../../tsconfig.json&quot;</span>,<br>    &#125;),<br>  ],<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>如何向打包后的库里加入声明文件呢让组件库能提供给 ts 代码使用？</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">pnpm <span class="hljs-selector-tag">i</span> vite-plugin-dts -D -w<br></code></pre></td></tr></table></figure>
+
+<p>增加 build 打包命令</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">npm</span> <span class="hljs-built_in">set-script</span> <span class="hljs-string">build</span> <span class="hljs-string">&quot;vite build&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="组件样式"><a href="#组件样式" class="headerlink" title="组件样式"></a>组件样式</h2><h3 id="使用-unocss"><a href="#使用-unocss" class="headerlink" title="使用 unocss"></a>使用 unocss</h3><p>vite.config.ts</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; defineConfig &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vite&quot;</span>;<br><span class="hljs-keyword">import</span> vue <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@vitejs/plugin-vue&quot;</span>;<br><span class="hljs-keyword">import</span> dts <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vite-plugin-dts&quot;</span>;<br><span class="hljs-comment">// 引入Unocss</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">Unocss</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;unocss/vite&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; presetUno, presetAttributify, presetIcons &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;unocss&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title function_">defineConfig</span>(&#123;<br>  <span class="hljs-attr">build</span>: &#123;<br>    <span class="hljs-attr">target</span>: <span class="hljs-string">&quot;modules&quot;</span>,<br>    <span class="hljs-comment">//打包文件目录</span><br>    <span class="hljs-attr">outDir</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>    <span class="hljs-comment">//压缩</span><br>    <span class="hljs-attr">minify</span>: <span class="hljs-literal">false</span>,<br>    <span class="hljs-comment">//css分离</span><br>    <span class="hljs-comment">//cssCodeSplit: true,</span><br>    <span class="hljs-attr">rollupOptions</span>: &#123;<br>      <span class="hljs-comment">//忽略打包vue文件</span><br>      <span class="hljs-attr">external</span>: [<span class="hljs-string">&quot;vue&quot;</span>],<br>      <span class="hljs-attr">input</span>: [<span class="hljs-string">&quot;src/index.ts&quot;</span>],<br>      <span class="hljs-attr">output</span>: [<br>        &#123;<br>          <span class="hljs-attr">format</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>          <span class="hljs-comment">//不用打包成.es.js,这里我们想把它打包成.js</span><br>          <span class="hljs-attr">entryFileNames</span>: <span class="hljs-string">&quot;[name].js&quot;</span>,<br>          <span class="hljs-comment">//让打包目录和我们目录对应</span><br>          <span class="hljs-attr">preserveModules</span>: <span class="hljs-literal">true</span>,<br>          <span class="hljs-comment">//配置打包根目录</span><br>          <span class="hljs-attr">dir</span>: <span class="hljs-string">&quot;es&quot;</span>,<br>          <span class="hljs-attr">preserveModulesRoot</span>: <span class="hljs-string">&quot;src&quot;</span>,<br>        &#125;,<br>        &#123;<br>          <span class="hljs-attr">format</span>: <span class="hljs-string">&quot;cjs&quot;</span>,<br>          <span class="hljs-attr">entryFileNames</span>: <span class="hljs-string">&quot;[name].js&quot;</span>,<br>          <span class="hljs-comment">//让打包目录和我们目录对应</span><br>          <span class="hljs-attr">preserveModules</span>: <span class="hljs-literal">true</span>,<br>          <span class="hljs-comment">//配置打包根目录</span><br>          <span class="hljs-attr">dir</span>: <span class="hljs-string">&quot;lib&quot;</span>,<br>          <span class="hljs-attr">preserveModulesRoot</span>: <span class="hljs-string">&quot;src&quot;</span>,<br>        &#125;,<br>      ],<br>    &#125;,<br>    <span class="hljs-attr">lib</span>: &#123;<br>      <span class="hljs-attr">entry</span>: <span class="hljs-string">&quot;./index.ts&quot;</span>,<br>      <span class="hljs-attr">formats</span>: [<span class="hljs-string">&quot;es&quot;</span>, <span class="hljs-string">&quot;cjs&quot;</span>],<br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">plugins</span>: [<br>    <span class="hljs-title function_">vue</span>(),<br>    <span class="hljs-title class_">Unocss</span>(&#123;<br>      <span class="hljs-comment">// 使用Unocss</span><br>      <span class="hljs-attr">presets</span>: [<span class="hljs-title function_">presetUno</span>(), <span class="hljs-title function_">presetAttributify</span>(), <span class="hljs-title function_">presetIcons</span>()],<br>    &#125;),<br>    <span class="hljs-title function_">dts</span>(&#123;<br>      <span class="hljs-comment">//指定使用的tsconfig.json为我们整个项目根目录下掉,如果不配置,你也可以在components下新建tsconfig.json</span><br>      <span class="hljs-attr">tsConfigFilePath</span>: <span class="hljs-string">&quot;../../tsconfig.json&quot;</span>,<br>    &#125;),<br>    <span class="hljs-comment">//因为这个插件默认打包到es下，我们想让lib目录下也生成声明文件需要再配置一个</span><br>    <span class="hljs-title function_">dts</span>(&#123;<br>      <span class="hljs-attr">outputDir</span>: <span class="hljs-string">&quot;lib&quot;</span>,<br>      <span class="hljs-attr">tsConfigFilePath</span>: <span class="hljs-string">&quot;../../tsconfig.json&quot;</span>,<br>    &#125;),<br>  ],<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="组件文档"><a href="#组件文档" class="headerlink" title="组件文档"></a>组件文档</h2><h2 id="组件库发布"><a href="#组件库发布" class="headerlink" title="组件库发布"></a>组件库发布</h2><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fortran">pnpm publish --<span class="hljs-keyword">access</span> <span class="hljs-keyword">public</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A8%A1%E6%9D%BF/" class="category-chain-item">模板</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/UI/" class="print-no-link">#UI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>组件库快餐</div>
+      <div>https://undercurre.github.io/2022/01/14/模板/组件库快餐/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年1月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/16/%E5%8A%A8%E7%94%BB/raf%E5%87%BD%E6%95%B0%E9%98%B2%E6%8E%89%E5%B8%A7/" title="raf函数防掉帧">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">raf函数防掉帧</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/05/%E6%A8%A1%E6%9D%BF/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%A8%A1%E6%9D%BF/" title="小程序模板">
+                        <span class="hidden-mobile">小程序模板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

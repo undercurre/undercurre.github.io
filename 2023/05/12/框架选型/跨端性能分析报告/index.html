@@ -1,0 +1,703 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="跨端性能分析报告桌面跨端当前流行框架：Electron、Tauri、Flutter 和 Wails 框架介绍 Electron：Electron 使用 Chromium 和 Node.js 来构建桌面应用，可以使用 HTML、CSS 和 JavaScript 进行开发。它的主要优点是易于学习和使用，可以快速地开发出高质量的桌面应用。Electron 拥有庞大的生态系统，可以使用众多的第三方库和工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨端性能分析报告">
+<meta property="og:url" content="https://undercurre.github.io/2023/05/12/%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/%E8%B7%A8%E7%AB%AF%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="跨端性能分析报告桌面跨端当前流行框架：Electron、Tauri、Flutter 和 Wails 框架介绍 Electron：Electron 使用 Chromium 和 Node.js 来构建桌面应用，可以使用 HTML、CSS 和 JavaScript 进行开发。它的主要优点是易于学习和使用，可以快速地开发出高质量的桌面应用。Electron 拥有庞大的生态系统，可以使用众多的第三方库和工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-12T11:18:51.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.082Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="跨端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>跨端性能分析报告 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="跨端性能分析报告"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-12 11:18" pubdate>
+          2023年5月12日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">跨端性能分析报告</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="跨端性能分析报告"><a href="#跨端性能分析报告" class="headerlink" title="跨端性能分析报告"></a>跨端性能分析报告</h1><h2 id="桌面跨端"><a href="#桌面跨端" class="headerlink" title="桌面跨端"></a>桌面跨端</h2><p>当前流行框架：Electron、Tauri、Flutter 和 Wails</p>
+<h3 id="框架介绍"><a href="#框架介绍" class="headerlink" title="框架介绍"></a>框架介绍</h3><ol>
+<li><p>Electron：Electron 使用 Chromium 和 Node.js 来构建桌面应用，可以使用 HTML、CSS 和 JavaScript 进行开发。它的主要优点是易于学习和使用，可以快速地开发出高质量的桌面应用。Electron 拥有庞大的生态系统，可以使用众多的第三方库和工具来扩展功能。</p>
+</li>
+<li><p>Tauri：Tauri 是一个使用 Rust 和 Web 技术构建的跨平台桌面应用框架，可以使用 HTML、CSS 和 JavaScript 进行开发。Tauri 的主要优点是性能优秀、二进制文件体积小、启动速度快。它的缺点是在开发时需要使用 Rust 编程语言，对开发者的技能要求较高。Tauri 目前仍处于较为活跃的开发状态，生态系统相对较小，但正在逐步壮大。</p>
+</li>
+<li><p>Wails：Wails 也是一个使用 Go 和 Web 技术构建的跨平台桌面应用框架，可以使用 HTML、CSS 和 JavaScript 进行开发。Wails 的主要优点是性能优秀、可执行文件体积小、开发效率高、支持打包为单个可执行文件。它的缺点是在开发时需要使用 Go 编程语言，对开发者的技能要求较高。Wails 生态系统相对较小，但也在逐步壮大。</p>
+</li>
+<li><p>Flutter 是一种跨平台移动应用开发框架，可以用来构建高性能、美观、流畅的移动应用程序。Flutter 的主要特点是使用 Dart 语言开发，具有热重载、高性能渲染引擎、丰富的组件库等优点。它可以运行在多种平台上，包括 Android、iOS、Web、桌面端等。</p>
+</li>
+</ol>
+<h3 id="选型决策"><a href="#选型决策" class="headerlink" title="选型决策"></a>选型决策</h3><p>如果团队已经熟悉了 JavaScript 技术栈，同时需要跨多个桌面平台开发应用程序，可以选择 Electron 或 Tauri。</p>
+<p>如果需要开发高性能、漂亮、流畅的移动应用程序，可以选择 Flutter。</p>
+<p>如果需要开发跨平台的桌面应用程序，可以选择 Wails。Wails 使用 Go 语言开发，可以生成本地代码，具有较高的性能和良好的可维护性。</p>
+<p>一般而言, 使用跨端框架是为了节省成本，使用ELectron是不二的选择，能同时降低开发和维护的成本。</p>
+<h3 id="选型分析"><a href="#选型分析" class="headerlink" title="选型分析"></a>选型分析</h3><h4 id="技术栈："><a href="#技术栈：" class="headerlink" title="技术栈："></a>技术栈：</h4><p>Electron使用HTML、CSS和JavaScript技术栈构建桌面应用程序，底层采用了Node.js和Chromium浏览器引擎。<br>Tauri使用Rust语言构建桌面应用程序，底层采用了Webview引擎。<br>Flutter使用Dart语言构建跨平台移动应用程序和桌面应用程序，底层采用了自己的渲染引擎Flutter Engine。<br>Wails使用Go语言构建跨平台桌面应用程序，底层采用了Webview引擎。</p>
+<h4 id="生态系统："><a href="#生态系统：" class="headerlink" title="生态系统："></a>生态系统：</h4><p>Electron拥有一个庞大的生态系统，社区非常活跃，拥有大量的第三方库和插件，可以轻松地实现很多功能。<br>Tauri的生态系统相对较小，但是它拥有一个非常活跃的社区，同时还提供了完整的文档和教程。<br>Flutter的生态系统不断增长，它拥有一个强大的Widget库，同时还提供了许多插件和工具，可以帮助开发者更快速地构建应用程序。<br>Wails的生态系统相对较小，但是它提供了很多有用的工具和库，可以帮助开发者更快速地构建应用程序。</p>
+<h4 id="性能："><a href="#性能：" class="headerlink" title="性能："></a>性能：</h4><p>Electron的性能相对较低，由于底层采用了Chromium浏览器引擎，因此占用了大量的内存和CPU资源。<br>Tauri的性能相对较高，由于底层采用了Webview引擎，因此可以轻松地实现很多功能，并且占用的资源相对较少。<br>Flutter的性能相对较高，由于底层采用了自己的渲染引擎Flutter Engine，因此可以实现高效的渲染和布局，并且占用的资源相对较少。<br>Wails的性能相对较高，由于底层采用了Webview引擎，因此可以实现高效的渲染和布局，并且占用的资源相对较少。</p>
+<h4 id="可维护性："><a href="#可维护性：" class="headerlink" title="可维护性："></a>可维护性：</h4><p>Flutter使用的是Dart语言，拥有更严格的类型检查和更好的代码组织方式，可以帮助开发者更好地维护代码。Tauri和Wails分别使用的是Rust和Go语言，这些语言都是系统级别的语言，有更好的内存管理和更安全的代码执行。相比之下，Electron使用的是JavaScript语言，虽然也有很好的开发工具和框架，但是可维护性较差，开发者需要更多的自我约束和规范。</p>
+<h4 id="支持的平台：跨端开发需要支持多个平台，包括Windows、macOS、Linux、iOS、Android等。"><a href="#支持的平台：跨端开发需要支持多个平台，包括Windows、macOS、Linux、iOS、Android等。" class="headerlink" title="支持的平台：跨端开发需要支持多个平台，包括Windows、macOS、Linux、iOS、Android等。"></a>支持的平台：跨端开发需要支持多个平台，包括Windows、macOS、Linux、iOS、Android等。</h4><p>在这方面，Electron和Flutter有比较好的支持，可以在多个平台上运行。Tauri和Wails也可以支持多个平台，但是相对于Electron和Flutter而言，支持的平台较少。</p>
+<h2 id="移动跨端"><a href="#移动跨端" class="headerlink" title="移动跨端"></a>移动跨端</h2><p>当前流行框架：Flutter、Uniapp 和 React Native</p>
+<h3 id="框架介绍-1"><a href="#框架介绍-1" class="headerlink" title="框架介绍"></a>框架介绍</h3><ol>
+<li>Flutter：<br>Flutter 是由 Google 推出的移动应用开发框架，使用 Dart 编程语言，并使用自有的 Skia 渲染引擎绘制 UI。Flutter 的主要特点包括：</li>
+</ol>
+<p>快速的开发速度：Flutter 提供了热重载等开发工具，使开发者可以快速迭代和调试应用程序。<br>高度的定制化：Flutter 的 UI 组件可以轻松地进行定制，开发者可以根据应用程序的需求自由地创建自定义 UI 组件。<br>出色的性能表现：Flutter 使用自有的 Skia 渲染引擎，可以实现平滑的动画和流畅的交互，同时还提供了高效的内存管理机制和即时编译技术。<br>2. Uniapp：<br>Uniapp 是由 DCloud 推出的跨平台移动应用开发框架，基于 Vue.js 框架，可以将同一份代码同时运行在多个平台（包括 iOS、Android、H5、小程序等）。Uniapp 的主要特点包括：</p>
+<p>基于 Vue.js 框架：Uniapp 使用 Vue.js 框架，开发者可以使用 Vue.js 的开发方式进行开发。<br>真正的跨平台：Uniapp 可以将同一份代码编译成多个平台的应用程序，可以节省开发时间和成本。<br>多种小程序平台支持：Uniapp 可以同时支持多种小程序平台，如微信小程序、支付宝小程序等。<br>3. React Native：<br>React Native 是由 Facebook 推出的跨平台移动应用开发框架，使用 JavaScript 和 React.js 框架进行开发，并使用原生组件进行渲染。React Native 的主要特点包括：</p>
+<p>使用原生组件进行渲染：React Native 使用原生组件进行渲染，可以实现与原生应用程序相似的用户体验。<br>优秀的生态系统：React Native 拥有广泛的社区支持和丰富的插件、库和工具，可以满足各种应用程序的需求。<br>可能出现的性能问题：由于 JavaScript 的性能限制，React Native 在处理大量数据和复杂动画等方面可能会出现性能问题。</p>
+<h3 id="选型决策-1"><a href="#选型决策-1" class="headerlink" title="选型决策"></a>选型决策</h3><p>性能优先的情况下选择React Native， 成本优先的情况下选择Uniapp</p>
+<h3 id="选型分析-1"><a href="#选型分析-1" class="headerlink" title="选型分析"></a>选型分析</h3><ol>
+<li>技术栈<br>Flutter 使用 Dart 编程语言，Uniapp 基于 Vue.js 框架，React Native 使用 JavaScript 和 React.js 框架。从学习曲线来看，相对来说 Flutter 和 React Native 可能需要更长时间的学习，而 Uniapp 的学习曲线相对较浅。</li>
+</ol>
+<p>排序：Uniapp &gt; Flutter &gt; React Native</p>
+<ol start="2">
+<li>生态系统<br>Flutter、Uniapp 和 React Native 都有庞大的社区支持和丰富的生态系统，提供了大量的插件、库和工具，可以满足各种应用程序的需求。不过从整体来看，React Native 的生态系统更加成熟和稳定，包括社区的活跃度、插件的丰富程度和质量等方面都表现优秀。</li>
+</ol>
+<p>排序：React Native &gt; Flutter &gt; Uniapp</p>
+<ol start="3">
+<li>性能<br>在性能方面，Flutter 和 React Native 都表现优秀，特别是在动画和交互方面的性能表现较为出色。而 Uniapp 由于使用了 WebView 进行渲染，所以在一些性能方面可能不如 Flutter 和 React Native。</li>
+</ol>
+<p>排序：Flutter = React Native &gt; Uniapp</p>
+<h2 id="小程序跨端"><a href="#小程序跨端" class="headerlink" title="小程序跨端"></a>小程序跨端</h2><p>当前流行框架：Taro 和 Uni-app</p>
+<h3 id="选型分析-2"><a href="#选型分析-2" class="headerlink" title="选型分析"></a>选型分析</h3><ol>
+<li><p>技术栈<br>Taro 和 Uni-app 的技术栈都是使用了 Vue.js，但它们的底层实现和框架设计是不同的。Taro 将原生 API 进行封装，提供了更为灵活的 API 和生命周期，并且支持多端组件复用。Uni-app 则是通过运行时框架来实现多端支持，它在底层使用了 Vue.js、Webpack 等技术栈，同时也支持第三方 UI 库的集成。</p>
+</li>
+<li><p>生态系统<br>Taro 和 Uni-app 的生态系统都非常丰富，有大量的插件和扩展库可以使用，可以帮助开发者更快速地实现功能。同时，它们也都有活跃的社区支持，可以通过社区获得帮助和交流经验。</p>
+</li>
+<li><p>性能<br>Taro 和 Uni-app 的性能表现都比较稳定，可以满足大部分应用的性能需求。但是因为它们都是通过原生渲染引擎来进行渲染的，所以在一些复杂的页面上性能可能会受到影响。此外，由于它们都是通过转译成原生代码来进行运行的，所以启动时间可能会比较长。</p>
+</li>
+</ol>
+<p>Taro 和 Uni-app 都是优秀的跨平台开发框架，它们都提供了很多便利的功能和优秀的开发体验，但是它们的性能表现还是有一些差异的。</p>
+<p>下面从性能方面详细对比 Taro 和 Uni-app：</p>
+<p>启动性能<br>Taro 在启动性能方面表现较好，由于它支持按需加载，可以根据具体情况来动态加载模块，避免了一些不必要的初始化操作，因此启动速度比较快。而 Uni-app 的启动性能相对较差，由于它是通过将所有的代码打包成一个文件来进行加载的，所以启动速度可能会比较慢。</p>
+<p>运行时性能<br>Taro 在运行时性能方面表现比较出色，它采用了自定义渲染引擎的方式，能够在一定程度上避免使用原生渲染引擎的一些性能问题，同时也支持按需加载，可以根据具体情况来动态加载组件和模块，从而减少一些性能瓶颈。而 Uni-app 在运行时性能方面表现一般，由于它采用了原生渲染引擎，所以可能会受到一些性能瓶颈的限制。</p>
+<p>页面渲染性能<br>Taro 和 Uni-app 在页面渲染性能方面都表现较好，它们都使用了原生渲染引擎来进行渲染，可以提供良好的页面渲染效果。但是在一些复杂的页面上，可能会出现卡顿和性能瓶颈的问题，需要进行一些优化才能得到更好的性能表现。</p>
+<p>文件大小<br>Taro 和 Uni-app 在文件大小方面也有一定的差异，Taro 的文件大小相对较小，由于它支持按需加载和组件复用，可以有效地减少一些代码的冗余。而 Uni-app 的文件大小相对较大，由于它将所有的代码都打包成一个文件，所以可能会存在一些冗余代码和文件，增加了文件大小。</p>
+<h3 id="选型决策-2"><a href="#选型决策-2" class="headerlink" title="选型决策"></a>选型决策</h3><p>Taro 和 Uni-app 在性能方面都有各自的优势和不足，需要根据具体的项目需求来选择适合的框架。如果是追求启动速度和运行时性能的应用，可以选择 Taro；如果是追求开发体验和生态系统的应用，可以选择 Uni-app。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B/" class="category-chain-item">框架选型</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%B7%A8%E7%AB%AF/" class="print-no-link">#跨端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>跨端性能分析报告</div>
+      <div>https://undercurre.github.io/2023/05/12/框架选型/跨端性能分析报告/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/16/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%A4%8D%E4%B9%A0%E4%B8%80%E4%B8%8B%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="复习一下原型链">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">复习一下原型链</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/24/%E6%8E%A5%E5%85%A5%E5%B9%B3%E5%8F%B0/%E6%8E%A5%E5%85%A5%E5%BE%AE%E4%BF%A1/" title="接入微信">
+                        <span class="hidden-mobile">接入微信</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

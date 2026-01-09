@@ -1,0 +1,946 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="面试问答训练宝典 JavaScript typescript 网络基础 打包知识 性能优化 css 浏览器缓存 微信小程序 vue react flutter DOM Taro 浏览器特性 SSR 数据结构 ReactNative  Javascript  call、bind、apply 三者有什么区别？*   如何判断一个变量的类型？为什么不用 typeof 和 instanceof ？   J">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试问答训练宝典">
+<meta property="og:url" content="https://undercurre.github.io/2024/09/16/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="面试问答训练宝典 JavaScript typescript 网络基础 打包知识 性能优化 css 浏览器缓存 微信小程序 vue react flutter DOM Taro 浏览器特性 SSR 数据结构 ReactNative  Javascript  call、bind、apply 三者有什么区别？*   如何判断一个变量的类型？为什么不用 typeof 和 instanceof ？   J">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-16T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.097Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="自研">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>面试问答训练宝典 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="面试问答训练宝典"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-16 19:49" pubdate>
+          2024年9月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">面试问答训练宝典</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="面试问答训练宝典"><a href="#面试问答训练宝典" class="headerlink" title="面试问答训练宝典"></a>面试问答训练宝典</h1><ol>
+<li>JavaScript</li>
+<li>typescript</li>
+<li>网络基础</li>
+<li>打包知识</li>
+<li>性能优化</li>
+<li>css</li>
+<li>浏览器缓存</li>
+<li>微信小程序</li>
+<li>vue</li>
+<li>react</li>
+<li>flutter</li>
+<li>DOM</li>
+<li>Taro</li>
+<li>浏览器特性</li>
+<li>SSR</li>
+<li>数据结构</li>
+<li>ReactNative</li>
+</ol>
+<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2><ol>
+<li><p> call、bind、apply 三者有什么区别？*</p>
+</li>
+<li><p> 如何判断一个变量的类型？为什么不用 typeof 和 instanceof ？</p>
+</li>
+<li><p> Javascript 的基本数据类型有哪些？object 为什么不是？</p>
+</li>
+<li><p> Javascript 中 <code>0.1+0.2 === 0.3</code>成立吗？这种情况如何处理？</p>
+</li>
+<li><p> null 和 undefined 有什么区别？*</p>
+</li>
+<li><p> 闭包里面的变量为什么不会被垃圾回收 ?</p>
+</li>
+<li><p> 说一下对闭包的理解 ?</p>
+</li>
+<li><p>以下代码的输出结果是什么？怎么做才能得到本来想要的结果？</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(i);<br>  &#125;, <span class="hljs-number">1000</span>);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>以下两种绑定事件方式有什么不同?</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> count = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">const</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;myButton&quot;</span>);<br><br>button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  count++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Button clicked &quot;</span> + count + <span class="hljs-string">&quot; times&quot;</span>);<br>&#125;);<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleClick</span>(<span class="hljs-params"></span>) &#123;<br>  count++;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Button clicked &quot;</span> + count + <span class="hljs-string">&quot; times&quot;</span>);<br>&#125;<br><br>button.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, handleClick);<br></code></pre></td></tr></table></figure></li>
+<li><p>你在实际项目中遇到过哪些闭包的坑 ？*</p>
+</li>
+<li><p>闭包有什么用途？*</p>
+</li>
+<li><p>闭包的优缺点是什么？</p>
+</li>
+<li><p>说说你对原型链的理解 ？</p>
+</li>
+<li><p>JS 的继承有几种方式 ？是怎么实现的？*</p>
+</li>
+<li><p>JS 创建一个对象的过程？</p>
+</li>
+<li><p>在 JS 中如何实现多重继承 ？*</p>
+</li>
+<li><p>说一下你了解的 promise 的方法？*</p>
+</li>
+<li><p>说一下 this 的指向有几种方式及使用场景？</p>
+</li>
+<li><p>箭头函数和普通函数有什么区别？</p>
+</li>
+<li><p>浅拷贝和深拷贝的区别 ？</p>
+</li>
+<li><p>说说 JS 的事件循环机制 ？</p>
+</li>
+<li><p>ES6 有哪些新特性，说一下你用过的 ES6 的新特性</p>
+</li>
+<li><p>如何把一个对象解构给一个数组?</p>
+</li>
+<li><p>for in 和 for of 的区别和原理？</p>
+</li>
+<li><p>什么是可枚举属性？</p>
+</li>
+<li><p>JavaScript 中的引用传递出现在什么地方，什么地方是值传递，如何证明？</p>
+</li>
+<li><p>说说 js 中的栈和堆</p>
+</li>
+<li><p>为什么答案是 035286</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs ts">(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">0</span>);<br>  &#125;);<br>  <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-title function_">resolve</span>();<br>      <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>      &#125;);<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">3</span>);<br>    &#125;);<br>  &#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">5</span>);<br>    <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">8</span>);<br>    &#125;);<br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">6</span>);<br>    &#125;);<br>  &#125;);<br>&#125;)();<br></code></pre></td></tr></table></figure></li>
+<li><p>(实操)如何做网络请求竞速？</p>
+</li>
+<li><p>（实操）给出输出结果？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> F = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;&#125;;<br><span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">a</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;a&quot;</span>);<br>&#125;;<br><span class="hljs-title class_">Function</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">b</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;b&quot;</span>);<br>&#125;;<br><span class="hljs-keyword">var</span> f = <span class="hljs-keyword">new</span> <span class="hljs-title function_">F</span>();<br>F.<span class="hljs-title function_">a</span>();<br>F.<span class="hljs-title function_">b</span>();<br>f.<span class="hljs-title function_">a</span>();<br>f.<span class="hljs-title function_">b</span>();<br></code></pre></td></tr></table></figure></li>
+<li><p>（实操）给出输出结果？</p>
+</li>
+<li><p>有字符串 var = ‘abc345efgabcab’，请写出 3 条 JS 语句分别实现如下 3 个功能（使用正则）：<br>1）去掉字符串中的 a、b、c 字符，形成结果：’345efg’<br>2）将字符串中的数字用中括号括起来，形成结果：’abc[345]efgabcab’<br>3）将字符串中的每个数字的值分别乘以 2，形成结果：’abc6810efgabcab’</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">runAsync</span>(<span class="hljs-params">x</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">r</span>) =&gt;</span> <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">r</span>(x, <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x)), <span class="hljs-number">1000</span>));<br>&#125;<br><span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">race</span>([<span class="hljs-title function_">runAsync</span>(<span class="hljs-number">1</span>), <span class="hljs-title function_">runAsync</span>(<span class="hljs-number">2</span>), <span class="hljs-title function_">runAsync</span>(<span class="hljs-number">3</span>)])<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;result: &quot;</span>, res))<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err));<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">runReject</span>(<span class="hljs-params">x</span>) &#123;<br>  <span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">res, rej</span>) =&gt;</span><br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">rej</span>(<span class="hljs-string">`Error: <span class="hljs-subst">$&#123;x&#125;</span>`</span>, <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x)), <span class="hljs-number">1000</span> * x)<br>  );<br>  <span class="hljs-keyword">return</span> p;<br>&#125;<br><span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">race</span>([<span class="hljs-title function_">runReject</span>(<span class="hljs-number">0</span>), <span class="hljs-title function_">runAsync</span>(<span class="hljs-number">1</span>), <span class="hljs-title function_">runAsync</span>(<span class="hljs-number">2</span>), <span class="hljs-title function_">runAsync</span>(<span class="hljs-number">3</span>)])<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;result: &quot;</span>, res))<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err));<br></code></pre></td></tr></table></figure></li>
+<li><p>请写出以下程序的输出</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>];<br><span class="hljs-keyword">const</span> sortedArr = arr.<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(sortedArr);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr);<br></code></pre></td></tr></table></figure></li>
+<li><p>实现节流函数，并保证最后一次运行</p>
+</li>
+<li><p>concat 是否会改变原数组</p>
+</li>
+<li><p>写出下面代码的输出结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">let</span> p2 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>    <span class="hljs-keyword">throw</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;2--------&quot;</span>);<br>    <span class="hljs-title function_">reject</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;2-reject&quot;</span>));<br>  &#125;);<br>  p2.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  &#125;)<br>    .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;catch&quot;</span>, error);<br>    &#125;)<br>    .<span class="hljs-title function_">finally</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;finally&quot;</span>);<br>    &#125;);<br>&#125;<br><br><span class="hljs-title function_">run</span>();<br></code></pre></td></tr></table></figure></li>
+<li><p>写出下面代码的输出结果</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">c</span>: <span class="hljs-number">3</span>,<br>&#125;;<br><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> arr) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr[key], key);<br>&#125;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">of</span> arr) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr[key], key);<br>&#125;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> obj) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj[key], key);<br>&#125;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">of</span> obj) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj[key], key);<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Typescript"><a href="#Typescript" class="headerlink" title="Typescript"></a>Typescript</h2><ol>
+<li> 为什么使用 TypeScript ？</li>
+<li> Typescript 中的 interface 和 type 到底有什么区别?</li>
+<li> 什么是泛型（generic），如何创建泛型函数和泛型类，实际用途？</li>
+<li> 你知道哪些泛型约束的场景？</li>
+<li> 你用过哪些 typescript 工具类？</li>
+</ol>
+<h2 id="网络基础"><a href="#网络基础" class="headerlink" title="网络基础"></a>网络基础</h2><ol>
+<li>介绍下 http1.0、http1.1、http2.0 协议的区别？</li>
+<li>http 和 https 的区别</li>
+<li>说说常见的 http 状态码</li>
+<li>前端如何实现即时通讯？</li>
+<li>如何解决跨域问题？</li>
+<li>介绍一下 xss csrf 攻击</li>
+<li>Get 和 Post 的区别</li>
+<li>什么是强缓存？什么是弱缓存？</li>
+<li>具体说说你有过什么时候做强缓存和弱缓存的场景？</li>
+<li>做了强缓存的资源，那万一资源有更新怎么办呢？</li>
+<li>强制刷新强缓存的原理是什么？</li>
+<li>在 meta 标签中设置 cache-Control 可靠吗？</li>
+<li>（实操）vite 如何处理静态发布资源的 hash？</li>
+<li>浏览器拥有几种缓存？</li>
+</ol>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><ol>
+<li>Babel 的作用是什么？</li>
+<li>说说你了解的打包格式,打包工具的打包产物默认是什么格式？</li>
+<li>谈一谈 webpack 的 loader 和 plugin 的区别？</li>
+<li>为什么 vite 比 webpack 更快？</li>
+<li>webpack 打包流程？</li>
+<li>webpack 的热更新功能如何实现的？</li>
+<li>如何制作一个 vite 插件？</li>
+</ol>
+<h2 id="浏览器特性"><a href="#浏览器特性" class="headerlink" title="浏览器特性"></a>浏览器特性</h2><ol>
+<li>说说浏览器的缓存？</li>
+<li>说说怎么做浏览器选项卡数据交换？</li>
+<li>怎么用 webworker?</li>
+<li>页面从输入 URL 到展现发生了什么?</li>
+<li>esmodule 加载顺序？</li>
+<li>在浏览器中，为什么 JavaScript 的执行会阻塞渲染？</li>
+<li>知道 async 和 defer 属性吗？</li>
+<li>第三方 cookie 是什么？</li>
+<li>HTML 解析完成的标志是什么？</li>
+<li>HTML 文件第一行的<code>&lt;!DOCTYPE html&gt;</code>作用是什么？如果没有他会发生什么？</li>
+<li>GET 和 POST 的请求区别？</li>
+<li>POST 有什么 Content-Type? 有什么作用？</li>
+<li>除了 GET 和 POST 你还知道什么请求方法？</li>
+<li>原生 JS 都有什么路由跳转方式？</li>
+<li>如何实现路由重定向？他在请求头中怎么表现？</li>
+<li>知道 window 的 name 属性吗，有什么作用？</li>
+<li></li>
+</ol>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><ol>
+<li>什么是虚拟 DOM， 有什么作用，为什么可以提高性能？</li>
+</ol>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><ol>
+<li>谈谈你对 MVVM 的理解</li>
+</ol>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><ol>
+<li>CSS 样式优先级顺序规则是什么？</li>
+<li>什么是伪类，什么是伪元素，二者有何区别？</li>
+<li>什么是盒子模型？</li>
+<li>如何实现响应式移动端布局？</li>
+<li>什么是 BFC，有何作用？如何创建 BFC？</li>
+<li>什么是 CSS 预处理器，有什么作用？</li>
+<li>如何在 CSS 方面做性能优化？</li>
+<li>为什么会出现加载闪烁？</li>
+<li>link 和@import 的区别？</li>
+<li>px，em，rem 有何区别，各自适用场景是什么？</li>
+<li>flex-basis 有什么用？</li>
+<li>CSS3 的网格布局（Grid）有哪些属性，如何使用？</li>
+<li>CSS3 的变量（Custom Properties）如何使用？</li>
+<li>如何实现两栏布局？</li>
+<li>如何实现三栏布局？</li>
+<li>如何实现一个三角形？</li>
+<li>如何画一条 0.5px 的线，或者设置字体小于 12px?</li>
+<li>如何实现文字单行或多行超出隐藏并省略?</li>
+<li>如何使用 GPU 硬件加速？</li>
+</ol>
+<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><ol>
+<li>你知道哪些 css 的性能优化？</li>
+<li>你知道哪些 首屏加载的性能优化？</li>
+<li>CDN 是什么？有什么作用？原理是什么？</li>
+<li>平时如何进行性能分析？</li>
+<li>性能优化手段还有哪些？</li>
+<li>（实操）实现图片渐进式加载？</li>
+</ol>
+<h2 id="SSR"><a href="#SSR" class="headerlink" title="SSR"></a>SSR</h2><ol>
+<li>CSR，SSR 和 SSG 是什么，有什么优缺点？</li>
+</ol>
+<h2 id="微信小程序"><a href="#微信小程序" class="headerlink" title="微信小程序"></a>微信小程序</h2><ol>
+<li>如何提高小程序的性能？</li>
+<li>平时你如何调试小程序？</li>
+<li>小程序启动流程是怎么样的？</li>
+<li>setData 的流程是怎么样的？</li>
+<li>简述微信小程序原理</li>
+<li>说说小程序的生命周期</li>
+<li>什么是小程序的入口组件？页面组件？</li>
+<li>如何不通过 setState 做动画达到提升动画性能的效果？</li>
+</ol>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><ol>
+<li>常见的 React Hooks 有哪些?</li>
+<li>函数组件和类组件的区别？</li>
+<li>什么是错误边界？</li>
+<li>React18 有哪些更新？</li>
+<li>Vue 和 React 的区别？</li>
+<li>JSX 是什么，它和 JS 有什么区别？</li>
+<li>React 组件为什么不能返回多个元素?</li>
+<li>React 和 Vue 的 diff 算法有什么区别？</li>
+<li>说说 react 的生命周期</li>
+<li>说说 useEffect 的依赖数组不同会怎么样？</li>
+<li>react 如何缓存组件</li>
+<li>(操作题)：创建一个 react 项目，名叫 train_react</li>
+<li>(操作题)：渲染一个列表卡片，title 是前端 js 框架，内容为<code>[&quot;angular&quot;, &quot;react&quot;, &quot;vue&quot;]</code>,要求使用函数式组件</li>
+<li>(操作题)：渲染一个列表卡片，title 是混合开发框架，内容为<code>[&quot;flutter&quot;, &quot;uniapp&quot;, &quot;taro&quot;]</code>，要求使用类组件</li>
+<li>为什么 react 类组件中的自定义方法的 this 是 undefined？</li>
+<li>(操作题)：编写一个开关组件，包含开/关状态文案，组件中的 state 要求有 name 和 switch 两个状态，通过点击按钮实现切换。要求使用类组件</li>
+<li>(操作题)：编写一个开关组件，包含开/关状态文案，组件中的 state 要求有 name 和 switch 两个状态，通过点击按钮实现切换。要求使用函数组件</li>
+<li>(操作题)：做一个任务信息展示卡片，要求展示传入参数的 Person 对象（name,age,city,并且具有一个国籍属性）,要求使用函数式组件</li>
+<li>(操作题)：做一个任务信息展示卡片，要求展示传入参数的 Person 对象（name,age,city,并且具有一个国籍属性）,要求使用类组件</li>
+<li>(操作题)：做一个 input 和 button，单击 button，input 中的文案变成 Hello，要求使用类组件</li>
+<li>(操作题)：做一个 input 和 button，单击 button，input 中的文案变成 Hello，要求使用函数组件</li>
+<li>什么是受控组件？什么是非受控组件？</li>
+<li>getDerivedStateFromProps 的作用是什么？实际开发中什么情况用到？</li>
+<li>getSnapshotBeforeUpdate 的作用是什么？实际开发中什么情况用到？</li>
+<li></li>
+</ol>
+<h2 id="Taro"><a href="#Taro" class="headerlink" title="Taro"></a>Taro</h2><ol>
+<li>Taro 的应用路由是怎么样的？</li>
+<li>入口组件的生命周期有哪些？</li>
+<li>页面组件的生命周期有哪些？</li>
+<li>页面子组件可以使用 onReady 生命周期吗？</li>
+<li>当子组件是按需加载的时候，页面 onReady 早已触发。如果此按需加载的子组件需要获取小程序渲染层的 DOM 节点，该怎么办？</li>
+<li>Taro 在使用 react hooks 时要注意什么？</li>
+<li>Taro 如何实现多端开发？</li>
+<li>如何如果要获取自定义组件内的节点？</li>
+</ol>
+<h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><ol>
+<li>怎么实现自动回复？</li>
+</ol>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><ol>
+<li>你认识哪些排序算法？在编写代码时如何判断使用哪一个？</li>
+<li>什么是前序，中序，后序？</li>
+<li>写一下二叉树的前中后序遍历？</li>
+<li>写一下非递归的中序遍历？</li>
+<li>设计一个算法找到数组中两个元素相加等于指定数的所有组合，用 js 实现</li>
+<li>题目：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。<br>例如输入一个长度为 9 的数组<code>[1,2,3,2,2,2,5,4,2]</code>。由于数字 2 在数组中出现了 5 次，超过数组长度的一半，因此输出 2。如果不存在则输出 0。</li>
+</ol>
+<h2 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h2><ol>
+<li>Dart 多任务如何并行的？</li>
+<li>Future 和 Stream 有什么不一样？</li>
+<li>flutter 中 Widget、Element、RenderObject、Layer 都有什么关系？</li>
+<li>什么是 flutter 里的 key? 有什么用？</li>
+<li>什么是 widget? 在 flutter 里有几种类型的 widget？分别有什么区别？能分别说一下生命周期吗？</li>
+<li>flutter 如何保证自身高性能？</li>
+<li>如何保持后台运行？</li>
+<li>如何发送消息栏？</li>
+<li>如何实现暗黑模式？</li>
+<li>如何比较优化地使用 SharedPreferences？</li>
+<li>如何封装 api？</li>
+<li>你开发过程中有使用过泛型吗？</li>
+<li>flutter 中路由和导航器之间的关系是怎么样的？什么是静态路由？什么是动态路由？</li>
+<li>flutter 如何实现路由传值?</li>
+<li>如何判断应该使用静态路由还是动态路由？</li>
+<li>flutter 的路由跳转有几种方式？</li>
+<li>onGenerateRoute 是干什么的？</li>
+<li>如何在 BuildContext 外使用路由跳转操作？譬如 401 时跳转到登录页？</li>
+<li>Scaffold 是一个什么 widget，有什么作用 ？</li>
+<li>flutter 的更新机制是怎么样的？</li>
+<li>flutter 的 diff 规则是怎么样的？</li>
+<li>Future 有什么方法？</li>
+<li>flutter 的 ioslate 共享内存吗？是一个线程吗？</li>
+<li>dart 是单线程还是多线程？</li>
+<li>如何解决滑动冲突问题？</li>
+<li>flutter 的 stream 有什么作用？</li>
+<li>Stream 有几种？</li>
+<li>widget 的更新逻辑是怎么样的？</li>
+<li>如何调优性能？</li>
+</ol>
+<h2 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h2><ol>
+<li>vue2 的$set 使用场景</li>
+<li>vue3 父子组件的生命周期嵌套</li>
+<li>nextTick 是什么？为什么需要 nextTick?他的实现原理是什么？</li>
+<li>vue3 的生命周期</li>
+<li>vue 的虚拟 dom 解决什么问题， 为什么要用虚拟 dom？</li>
+<li>vue3 比 vue2 有什么优势？</li>
+<li>谈谈你对 vue 的理解，或者说 vue 最重要的是什么？</li>
+<li>（实操）自己实现一个 Object.defineProperty 数据劫持？</li>
+<li>（实操）自己实现一个 Proxy 数据劫持？</li>
+<li>Proxy 和 Object.defineProperty 的区别？</li>
+<li>为什么在 vue2 时代没有启用 proxy?</li>
+<li>vue2 和 vue3 以及 react 核心 diff 算法区别？</li>
+<li>(实操) 实现组件间的普通通信（props 和 emit）？</li>
+<li>(实操) 实现组件间的爷孙通信？</li>
+<li>(实操) 实现组件间的方法和变量的暴露和调用（props 和 emit）？</li>
+<li>(实操) 实现使用 pinia 做两个以上的组件通信？</li>
+<li>v-if 和 v-for 的优先级谁高？</li>
+<li>vue 的两种路由模式以及他们的不同？</li>
+<li>给出 vue-router 的完整的导航解析流程</li>
+</ol>
+<h2 id="echart-优化"><a href="#echart-优化" class="headerlink" title="echart 优化"></a>echart 优化</h2><ol>
+<li>万级节点的巨量数据图标渲染如何优化？</li>
+<li>如何实现重绘动画？</li>
+<li>如果数据点超过 2000 个，仍然需要维持动画，怎么实现？</li>
+</ol>
+<h2 id="weex"><a href="#weex" class="headerlink" title="weex"></a>weex</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9D%A2%E8%AF%95/" class="category-chain-item">面试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%87%AA%E7%A0%94/" class="print-no-link">#自研</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>面试问答训练宝典</div>
+      <div>https://undercurre.github.io/2024/09/16/面试/面试宝典/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/22/Node/Nest-CMS/" title="Nest-CMS">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Nest-CMS</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/16/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8%E7%AD%94%E6%A1%88/" title="面试问答训练宝典答案">
+                        <span class="hidden-mobile">面试问答训练宝典答案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

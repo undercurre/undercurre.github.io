@@ -1,0 +1,716 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最能打的本地存储方案——localforage背景如果你需要一个存储量大，还要覆盖全多种设备多种浏览器的本地离线存储方案 方案分析 既然要存储的数量大，得排除 cookie, 因为只有 4KB  localStorage，虽然比 cookie 多，但是同样有上限（5M）左右  websql 使用简单，存储量大，已经被废弃，兼容性差 WebSQL 是一个在浏览器中提供关系型数据库访问的 API。它是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最能打的本地存储方案">
+<meta property="og:url" content="https://undercurre.github.io/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%9C%80%E8%83%BD%E6%89%93%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E2%80%94%E2%80%94localforage/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="最能打的本地存储方案——localforage背景如果你需要一个存储量大，还要覆盖全多种设备多种浏览器的本地离线存储方案 方案分析 既然要存储的数量大，得排除 cookie, 因为只有 4KB  localStorage，虽然比 cookie 多，但是同样有上限（5M）左右  websql 使用简单，存储量大，已经被废弃，兼容性差 WebSQL 是一个在浏览器中提供关系型数据库访问的 API。它是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-08T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.092Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="JS每日一题">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>最能打的本地存储方案 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="最能打的本地存储方案"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-08 19:49" pubdate>
+          2024年1月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">最能打的本地存储方案</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="最能打的本地存储方案——localforage"><a href="#最能打的本地存储方案——localforage" class="headerlink" title="最能打的本地存储方案——localforage"></a>最能打的本地存储方案——localforage</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>如果你需要一个存储量大，还要覆盖全多种设备多种浏览器的本地离线存储方案</p>
+<h3 id="方案分析"><a href="#方案分析" class="headerlink" title="方案分析"></a>方案分析</h3><ol>
+<li><p>既然要存储的数量大，得排除 cookie, 因为只有 4KB</p>
+</li>
+<li><p>localStorage，虽然比 cookie 多，但是同样有上限（5M）左右</p>
+</li>
+<li><p>websql 使用简单，存储量大，已经被废弃，兼容性差</p>
+<p>WebSQL 是一个在浏览器中提供关系型数据库访问的 API。它是由 Web SQL Database 规范定义的，该规范已经被停止维护，不再是 W3C 的标准。</p>
+</li>
+<li><p>indexedDB api 多且繁琐，存储量大、高版本浏览器兼容性较好</p>
+<p>websql 的替代方案，IndexedDB 是一种在浏览器中提供客户端数据库存储的 API，它是 W3C 制定的标准。IndexedDB 允许你在浏览器中异步地存储和检索大量数据，并提供了比以前的技术（如 WebSQL 和 Web Storage）更灵活和强大的存储机制。</p>
+<p>以下是 IndexedDB API 的一些基本概念和示例代码：</p>
+<h4 id="打开或创建数据库："><a href="#打开或创建数据库：" class="headerlink" title="打开或创建数据库："></a>打开或创建数据库：</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">var</span> request = indexedDB.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;myDatabase&quot;</span>, <span class="hljs-number">1</span>);<br><br>request.<span class="hljs-property">onupgradeneeded</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-keyword">var</span> db = event.<span class="hljs-property">target</span>.<span class="hljs-property">result</span>;<br>  <span class="hljs-keyword">var</span> objectStore = db.<span class="hljs-title function_">createObjectStore</span>(<span class="hljs-string">&quot;myStore&quot;</span>, &#123; <span class="hljs-attr">keyPath</span>: <span class="hljs-string">&quot;id&quot;</span> &#125;);<br>  objectStore.<span class="hljs-title function_">createIndex</span>(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;name&quot;</span>, &#123; <span class="hljs-attr">unique</span>: <span class="hljs-literal">false</span> &#125;);<br>&#125;;<br><br>request.<span class="hljs-property">onsuccess</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-keyword">var</span> db = event.<span class="hljs-property">target</span>.<span class="hljs-property">result</span>;<br>  <span class="hljs-comment">// 在这里进行数据库操作</span><br>&#125;;<br><br>request.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;Database error: &quot;</span> + event.<span class="hljs-property">target</span>.<span class="hljs-property">errorCode</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="添加数据："><a href="#添加数据：" class="headerlink" title="添加数据："></a>添加数据：</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">var</span> transaction = db.<span class="hljs-title function_">transaction</span>([<span class="hljs-string">&quot;myStore&quot;</span>], <span class="hljs-string">&quot;readwrite&quot;</span>);<br><span class="hljs-keyword">var</span> objectStore = transaction.<span class="hljs-title function_">objectStore</span>(<span class="hljs-string">&quot;myStore&quot;</span>);<br><br><span class="hljs-keyword">var</span> data = &#123; <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;John Doe&quot;</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">25</span> &#125;;<br><br><span class="hljs-keyword">var</span> request = objectStore.<span class="hljs-title function_">add</span>(data);<br><br>request.<span class="hljs-property">onsuccess</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Data added successfully&quot;</span>);<br>&#125;;<br><br>request.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;Error adding data: &quot;</span> + event.<span class="hljs-property">target</span>.<span class="hljs-property">errorCode</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="查询数据："><a href="#查询数据：" class="headerlink" title="查询数据："></a>查询数据：</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">var</span> transaction = db.<span class="hljs-title function_">transaction</span>([<span class="hljs-string">&quot;myStore&quot;</span>], <span class="hljs-string">&quot;readonly&quot;</span>);<br><span class="hljs-keyword">var</span> objectStore = transaction.<span class="hljs-title function_">objectStore</span>(<span class="hljs-string">&quot;myStore&quot;</span>);<br><br><span class="hljs-keyword">var</span> request = objectStore.<span class="hljs-title function_">get</span>(<span class="hljs-number">1</span>);<br><br>request.<span class="hljs-property">onsuccess</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-keyword">var</span> result = event.<span class="hljs-property">target</span>.<span class="hljs-property">result</span>;<br>  <span class="hljs-keyword">if</span> (result) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Data found: &quot;</span>, result);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Data not found&quot;</span>);<br>  &#125;<br>&#125;;<br><br>request.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;Error getting data: &quot;</span> + event.<span class="hljs-property">target</span>.<span class="hljs-property">errorCode</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="使用索引查询数据："><a href="#使用索引查询数据：" class="headerlink" title="使用索引查询数据："></a>使用索引查询数据：</h4><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">var</span> transaction = db.<span class="hljs-title function_">transaction</span>([<span class="hljs-string">&quot;myStore&quot;</span>], <span class="hljs-string">&quot;readonly&quot;</span>);<br><span class="hljs-keyword">var</span> objectStore = transaction.<span class="hljs-title function_">objectStore</span>(<span class="hljs-string">&quot;myStore&quot;</span>);<br><span class="hljs-keyword">var</span> index = objectStore.<span class="hljs-title function_">index</span>(<span class="hljs-string">&quot;name&quot;</span>);<br><br><span class="hljs-keyword">var</span> request = index.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;John Doe&quot;</span>);<br><br>request.<span class="hljs-property">onsuccess</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-keyword">var</span> result = event.<span class="hljs-property">target</span>.<span class="hljs-property">result</span>;<br>  <span class="hljs-keyword">if</span> (result) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Data found: &quot;</span>, result);<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Data not found&quot;</span>);<br>  &#125;<br>&#125;;<br><br>request.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params">event</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;Error getting data: &quot;</span> + event.<span class="hljs-property">target</span>.<span class="hljs-property">errorCode</span>);<br>&#125;;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="localforage-应运而生"><a href="#localforage-应运而生" class="headerlink" title="localforage 应运而生"></a>localforage 应运而生</h2><p>localForage 是一个 JavaScript 库，只需要通过简单类似 localStorage API 的异步存储来改进你的 Web 应用程序的离线体验。它能存储多种类型的数据，而不仅仅是字符串。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pnpm install localforage<br></code></pre></td></tr></table></figure>
+
+<h3 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h3><p>localForage 有一个优雅降级策略，若浏览器不支持 IndexedDB 或 WebSQL，则使用 localStorage。在所有主流浏览器中都可用：Chrome，Firefox，IE 和 Safari（包括 Safari Mobile）。兼容性方面 loaclForage 基本上满足 99%需求</p>
+<h3 id="存储量"><a href="#存储量" class="headerlink" title="存储量"></a>存储量</h3><p>首先 indexDB 的存储，理论上是硬件有多大内存就可以存多少，但是有些浏览器厂商会限制，具体限制各家不同，但是基本最小是 250M 起步</p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><h4 id="获取存储"><a href="#获取存储" class="headerlink" title="获取存储"></a>获取存储</h4><p><code>getItem(key, successCallback)</code></p>
+<p>从仓库中获取 key 对应的值并将结果提供给回调函数。如果 key 不存在，getItem() 将返回 null。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ts">localforage<br>  .<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&quot;somekey&quot;</span>)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-comment">// 当离线仓库中的值被载入时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-comment">// 当出错时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>  &#125;);<br><br><span class="hljs-comment">// 回调版本：</span><br>localforage.<span class="hljs-title function_">getItem</span>(<span class="hljs-string">&quot;somekey&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">err, value</span>) &#123;<br>  <span class="hljs-comment">// 当离线仓库中的值被载入时，此处代码运行</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="设置存储"><a href="#设置存储" class="headerlink" title="设置存储"></a>设置存储</h4><p><code>setItem(key, value, successCallback)</code></p>
+<p>将数据保存到离线仓库。你可以存储如下类型的 JavaScript 对象：</p>
+<ol>
+<li>Array</li>
+<li>ArrayBuffer</li>
+<li>Blob</li>
+<li>Float32Array</li>
+<li>Float64Array</li>
+<li>Int8Array</li>
+<li>Int16Array</li>
+<li>Int32Array</li>
+<li>Number</li>
+<li>Object</li>
+<li>Uint8Array</li>
+<li>Uint8ClampedArray</li>
+<li>Uint16Array</li>
+<li>Uint32Array</li>
+<li>String</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs ts">localforage<br>  .<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&quot;somekey&quot;</span>, <span class="hljs-string">&quot;some value&quot;</span>)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-comment">// 当值被存储后，可执行其他操作</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value);<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-comment">// 当出错时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>  &#125;);<br><br><span class="hljs-comment">// 不同于 localStorage，你可以存储非字符串类型</span><br>localforage<br>  .<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&quot;my array&quot;</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-string">&quot;three&quot;</span>])<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) &#123;<br>    <span class="hljs-comment">// 如下输出 `1`</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value[<span class="hljs-number">0</span>]);<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-comment">// 当出错时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>  &#125;);<br><br><span class="hljs-comment">// 你甚至可以存储 AJAX 响应返回的二进制数据</span><br>req = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>req.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;/photo.jpg&quot;</span>, <span class="hljs-literal">true</span>);<br>req.<span class="hljs-property">responseType</span> = <span class="hljs-string">&quot;arraybuffer&quot;</span>;<br><br>req.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;readystatechange&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">if</span> (req.<span class="hljs-property">readyState</span> === <span class="hljs-number">4</span>) &#123;<br>    <span class="hljs-comment">// readyState 完成</span><br>    localforage<br>      .<span class="hljs-title function_">setItem</span>(<span class="hljs-string">&quot;photo&quot;</span>, req.<span class="hljs-property">response</span>)<br>      .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">image</span>) &#123;<br>        <span class="hljs-comment">// 如下为一个合法的 &lt;img&gt; 标签的 blob URI</span><br>        <span class="hljs-keyword">var</span> blob = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Blob</span>([image]);<br>        <span class="hljs-keyword">var</span> imageURI = <span class="hljs-variable language_">window</span>.<span class="hljs-property">URL</span>.<span class="hljs-title function_">createObjectURL</span>(blob);<br>      &#125;)<br>      .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>        <span class="hljs-comment">// 当出错时，此处代码运行</span><br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>      &#125;);<br>  &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="删除存储"><a href="#删除存储" class="headerlink" title="删除存储"></a>删除存储</h4><p><code>removeItem(key, successCallback)</code></p>
+<p>从离线仓库中删除 key 对应的值。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts">localforage<br>  .<span class="hljs-title function_">removeItem</span>(<span class="hljs-string">&quot;somekey&quot;</span>)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 当值被移除后，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Key is cleared!&quot;</span>);<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-comment">// 当出错时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>  &#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="清空存储"><a href="#清空存储" class="headerlink" title="清空存储"></a>清空存储</h4><p><code>clear(successCallback)</code></p>
+<p>从数据库中删除所有的 key，重置数据库。</p>
+<p><code>localforage.clear()</code> 将会删除离线仓库中的所有值。谨慎使用此方法。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts">localforage<br>  .<span class="hljs-title function_">clear</span>()<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 当数据库被全部删除后，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;Database is now empty.&quot;</span>);<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-comment">// 当出错时，此处代码运行</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>  &#125;);<br></code></pre></td></tr></table></figure>
+
+<h2 id="特别问题"><a href="#特别问题" class="headerlink" title="特别问题"></a>特别问题</h2><h3 id="内存不足状态下使用"><a href="#内存不足状态下使用" class="headerlink" title="内存不足状态下使用"></a>内存不足状态下使用</h3><p>抛出错误 QuotaExceededError 的 DOMError</p>
+<h3 id="存储数据出现了脏数据或者读取问题"><a href="#存储数据出现了脏数据或者读取问题" class="headerlink" title="存储数据出现了脏数据或者读取问题"></a>存储数据出现了脏数据或者读取问题</h3><h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>存储数据的时候加上存储的时间戳和模块标识，加时间戳一起存储</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">setItem</span>(&#123;<br>  <span class="hljs-attr">value</span>: <span class="hljs-string">&quot;1&quot;</span>,<br>  <span class="hljs-attr">label</span>: <span class="hljs-string">&quot;a&quot;</span>,<br>  <span class="hljs-attr">module</span>: <span class="hljs-string">&quot;a&quot;</span>,<br>  <span class="hljs-attr">timestamp</span>: <span class="hljs-string">&quot;11111111111&quot;</span>,<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h5 id="遇到内存不足的情况，则根据时间戳和模块标识清理一部分旧数据（内存不足的情况还是比较少的）或者上传数据库-记住提示弹窗。"><a href="#遇到内存不足的情况，则根据时间戳和模块标识清理一部分旧数据（内存不足的情况还是比较少的）或者上传数据库-记住提示弹窗。" class="headerlink" title="遇到内存不足的情况，则根据时间戳和模块标识清理一部分旧数据（内存不足的情况还是比较少的）或者上传数据库,记住提示弹窗。"></a>遇到内存不足的情况，则根据时间戳和模块标识清理一部分旧数据（内存不足的情况还是比较少的）或者上传数据库,记住提示弹窗。</h5><h5 id="在用户手机上产生脏数据的情况，想要清理的这种情况的-处理方式是："><a href="#在用户手机上产生脏数据的情况，想要清理的这种情况的-处理方式是：" class="headerlink" title="在用户手机上产生脏数据的情况，想要清理的这种情况的 处理方式是："></a>在用户手机上产生脏数据的情况，想要清理的这种情况的 处理方式是：</h5><ol>
+<li>让后端在用户信息接口里面加上缓存有效期时间戳，当该时间戳存在，则前端会进行一次对本地存储扫描</li>
+<li>在有效期时间戳之前的数据，结合模块标识，进行清理，清理完毕后调用后端接口上报清理日志</li>
+<li>模块标识的意义是清理数据的时候，可以按照模块去清理（选填）</li>
+<li>没有后端信息的情况下，根据客诉，使用事先准备好的开发者页面去清除指定模块，报错模块，时间段等</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JS%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" class="print-no-link">#JS每日一题</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>最能打的本地存储方案</div>
+      <div>https://undercurre.github.io/2024/01/08/知识点积累/最能打的本地存储方案——localforage/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%96%87%E4%BB%B6%E6%B5%81%E3%80%81%E5%88%87%E7%89%87%E4%B8%8B%E8%BD%BD%E4%BB%A5%E5%8F%8A%E4%B8%8A%E4%BC%A0/" title="文件流、切片下载以及上传">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">文件流、切片下载以及上传</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%B7%B1%E5%BA%A6%E9%80%89%E6%8B%A9%E5%99%A8/" title="深度选择器">
+                        <span class="hidden-mobile">深度选择器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

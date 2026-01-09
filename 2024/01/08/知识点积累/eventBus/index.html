@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="eventBusEventBus 事件总线是发布订阅设计模式的应用。多个模块 module1，module2，module3 都订阅了事件 EventA ，然后我们在 module4 中通过事件总线发布事件 EventA ，事件总线会通知所有订阅者 module1，module2，module3，它们收到消息会执行对应函数逻辑，注意这里通知的时候还可以传递 extraArgs 参数。 手写思路 创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eventBus">
+<meta property="og:url" content="https://undercurre.github.io/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/eventBus/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="eventBusEventBus 事件总线是发布订阅设计模式的应用。多个模块 module1，module2，module3 都订阅了事件 EventA ，然后我们在 module4 中通过事件总线发布事件 EventA ，事件总线会通知所有订阅者 module1，module2，module3，它们收到消息会执行对应函数逻辑，注意这里通知的时候还可以传递 extraArgs 参数。 手写思路 创">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-08T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.088Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="JS每日一题">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>eventBus - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="eventBus"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-08 19:49" pubdate>
+          2024年1月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">eventBus</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="eventBus"><a href="#eventBus" class="headerlink" title="eventBus"></a>eventBus</h1><p>EventBus 事件总线是发布订阅设计模式的应用。多个模块 module1，module2，module3 都订阅了事件 EventA ，然后我们在 module4 中通过事件总线发布事件 EventA ，事件总线会通知所有订阅者 module1，module2，module3，它们收到消息会执行对应函数逻辑，注意这里通知的时候还可以传递 extraArgs 参数。</p>
+<h2 id="手写思路"><a href="#手写思路" class="headerlink" title="手写思路"></a>手写思路</h2><ol>
+<li>创建一个 eventMap 集合用来存储事件，key 为 事件名称，value 位事件数组列表</li>
+<li>订阅功能：实现一个 subscribe 订阅函数</li>
+<li>发布功能：实现一个 emit 发布函数</li>
+</ol>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">class</span> <span class="hljs-title class_">EventBus</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 用来存储发布订阅事件的集合</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件函数</span>&#125; <span class="hljs-variable">funCallback</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">subscribe</span>(<span class="hljs-params">eventName, funCallback</span>) &#123;<br>    <span class="hljs-comment">// 判断是否订阅过</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">set</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName, []);<br>    &#125;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName].<span class="hljs-title function_">push</span>(funCallback);<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 发布事件</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">emit</span>(<span class="hljs-params">eventName</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`从未订阅过此事件<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">const</span> callbackList = <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>    <span class="hljs-keyword">if</span> (callbackList.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`事件<span class="hljs-subst">$&#123;eventName&#125;</span>无函数可执行`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName].<span class="hljs-property">length</span>) &#123;<br>      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> fun <span class="hljs-keyword">of</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]) &#123;<br>        fun.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>);<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> eventBus = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventBus</span>();<br><br><span class="hljs-keyword">const</span> fun1 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;11111&quot;</span>);<br>&#125;;<br><br><span class="hljs-keyword">const</span> fun2 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">222222</span>);<br>&#125;;<br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun1); <span class="hljs-comment">// 订阅1</span><br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun2); <span class="hljs-comment">// 订阅2</span><br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName2&quot;</span>, fun2); <span class="hljs-comment">// 订阅3</span><br>eventBus.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&quot;testName&quot;</span>); <span class="hljs-comment">// 发布=&gt;导致触发订阅1和订阅2</span><br><br><span class="hljs-comment">// 11111</span><br><span class="hljs-comment">// 222222</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Deeper1：发布函数调用增加参数-增加最大订阅数量限制"><a href="#Deeper1：发布函数调用增加参数-增加最大订阅数量限制" class="headerlink" title="Deeper1：发布函数调用增加参数,增加最大订阅数量限制"></a>Deeper1：发布函数调用增加参数,增加最大订阅数量限制</h2><h3 id="新增功能"><a href="#新增功能" class="headerlink" title="新增功能"></a>新增功能</h3><ol>
+<li>发布函数时，需要传递一些额外参数</li>
+<li>可以限制每个监听函数的最大数量</li>
+</ol>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ol>
+<li>加入参数并使用 call 接收它</li>
+<li>加入变量 max 去 lock push 的代码</li>
+</ol>
+<h3 id="实现代码-1"><a href="#实现代码-1" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">class</span> <span class="hljs-title class_">UpgradeEventBus</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">maxListeners</span>) &#123;<br>    <span class="hljs-comment">// 用来存储发布订阅事件的集合</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> = maxListeners || <span class="hljs-title class_">Infinity</span>; <span class="hljs-comment">// 基于基础版本的变化</span><br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件函数</span>&#125; <span class="hljs-variable">funCallback</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">subscribe</span>(<span class="hljs-params">eventName, funCallback</span>) &#123;<br>    <span class="hljs-comment">// 判断是否订阅过</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">set</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName, []);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> !== <span class="hljs-title class_">Infinity</span> &amp;&amp;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName].<span class="hljs-property">length</span> &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span><br>    ) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`该事件<span class="hljs-subst">$&#123;eventName&#125;</span>超过了最大监听数`</span>); <span class="hljs-comment">// 基于基础版本的变化</span><br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName].<span class="hljs-title function_">push</span>(funCallback);<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 发布事件</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件执行额外参数</span>&#125; <span class="hljs-variable">args</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">emit</span>(<span class="hljs-params">eventName, ...args</span>) &#123;<br>    <span class="hljs-comment">// 基于基础版本的变化(增加了第二个参数)</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`从未订阅过此事件<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">const</span> callbackList = <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>    <span class="hljs-keyword">if</span> (callbackList.<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`事件<span class="hljs-subst">$&#123;eventName&#125;</span>无函数可执行`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName].<span class="hljs-property">length</span>) &#123;<br>      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> fun <span class="hljs-keyword">of</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]) &#123;<br>        fun.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, ...args);<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> eventBus = <span class="hljs-keyword">new</span> <span class="hljs-title class_">UpgradeEventBus</span>(<span class="hljs-number">20</span>);<br><br><span class="hljs-keyword">const</span> fun1 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;打印额外参数&quot;</span>, ...<span class="hljs-variable language_">arguments</span>); <span class="hljs-comment">// 打印额外参数 额外参数二娃</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;11111&quot;</span>);<br>&#125;;<br><br><span class="hljs-keyword">const</span> fun2 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">222222</span>);<br>&#125;;<br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun1);<br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun2);<br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName2&quot;</span>, fun2);<br>eventBus.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&quot;testName&quot;</span>, <span class="hljs-string">&quot;额外参数二娃&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="增加取消订阅-清空事件-订阅一次功能"><a href="#增加取消订阅-清空事件-订阅一次功能" class="headerlink" title="增加取消订阅/清空事件/订阅一次功能"></a>增加取消订阅/清空事件/订阅一次功能</h2><h3 id="清空事件功能"><a href="#清空事件功能" class="headerlink" title="清空事件功能"></a>清空事件功能</h3><p>清空事件功能实现，比较简单，一种是 clear,根据事件名称来清空；另一种是清空整个事件。只需要增加两个函数即可</p>
+<h3 id="实现思路-1"><a href="#实现思路-1" class="headerlink" title="实现思路"></a>实现思路</h3><ol>
+<li>清空整个事件就是重置 map</li>
+<li>清空某个事件的订阅就是删除该元组的某元素</li>
+</ol>
+<h3 id="实现代码-2"><a href="#实现代码-2" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 清空某个事件名称下所有回调函数</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">clear</span>(<span class="hljs-params">eventName</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!eventName) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`需提供要被清除的事件名称<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-comment">// delete this.eventMap[eventName];</span><br>    <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">deleteProperty</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName);<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 清空事件监听函数</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">clearAll</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="取消订阅功能"><a href="#取消订阅功能" class="headerlink" title="取消订阅功能"></a>取消订阅功能</h3><h3 id="实现思路-2"><a href="#实现思路-2" class="headerlink" title="实现思路"></a>实现思路</h3><p>原有的存储结构不能满足取消订阅功能，原有结构 <code>&#123;key:value(value 是数组结构)&#125;</code>，需要变更为 <code>&#123;key:&#123;id1:value1,id2:value2,id3:value3&#125;&#125;</code> , 这样取消订阅可以根据每一个函数对应的 id 去取消(因根据 id 取消，要保证 id 的唯一性)，代码实现时，保证 id 唯一性，通过自增的方式实现，声明了一个 callbackId 。 在订阅的时候，返回一个取消函数等待调用就好了。</p>
+<h3 id="实现代码-3"><a href="#实现代码-3" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">class</span> <span class="hljs-title class_">UpgradeEventBus2</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">maxListeners</span>) &#123;<br>    <span class="hljs-comment">// 用来存储发布订阅事件的集合</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> = maxListeners || <span class="hljs-title class_">Infinity</span>;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbackId</span> = <span class="hljs-number">0</span>;<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   *</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件函数</span>&#125; <span class="hljs-variable">funCallback</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">subscribe</span>(<span class="hljs-params">eventName, funCallback</span>) &#123;<br>    <span class="hljs-comment">// 判断是否订阅过</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">set</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName, &#123;&#125;);<br>    &#125;<br>    <span class="hljs-comment">// 判断是否超过了最大监听数</span><br>    <span class="hljs-keyword">if</span> (<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> !== <span class="hljs-title class_">Infinity</span> &amp;&amp;<br>      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]).<span class="hljs-property">length</span> &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span><br>    ) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`该事件<span class="hljs-subst">$&#123;eventName&#125;</span>超过了最大监听数`</span>);<br>    &#125;<br>    <span class="hljs-comment">// 以下原始订阅部分要做修改，因为存储结构从普通对象调整</span><br>    <span class="hljs-comment">// ====&gt; 修改前代码</span><br>    <span class="hljs-comment">// this.eventMap[eventName].push(funCallback);</span><br>    <span class="hljs-comment">// ====&gt; 修改后代码</span><br>    <span class="hljs-keyword">const</span> thisCallbackId = <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbackId</span>++;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][thisCallbackId] = funCallback;<br>    <span class="hljs-comment">// 用于取消订阅的函数</span><br>    <span class="hljs-keyword">const</span> <span class="hljs-title function_">unSubscribe</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>      <span class="hljs-comment">// 根据 callbackId 取消订阅对应的 funCallback</span><br>      <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][thisCallbackId];<br>      <span class="hljs-comment">// 如果一个事件下的 funCallback 为空，清掉 eventName</span><br>      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>      &#125;<br>    &#125;;<br>    <span class="hljs-keyword">return</span> &#123;<br>      unSubscribe,<br>    &#125;;<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 发布事件</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件执行额外参数</span>&#125; <span class="hljs-variable">args</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">emit</span>(<span class="hljs-params">eventName, ...args</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`从未订阅过此事件<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">const</span> callbackList = <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>    <span class="hljs-comment">// 因eventMap 结构变化后，一下发布调用函数部分会有变化</span><br>    <span class="hljs-comment">// ====&gt; 改动前</span><br>    <span class="hljs-comment">// if (callbackList.length === 0) &#123;</span><br>    <span class="hljs-comment">//   console.warn(`该事件$&#123;eventName&#125;下无可执行的订阅者`);</span><br>    <span class="hljs-comment">//   return;</span><br>    <span class="hljs-comment">// &#125;</span><br><br>    <span class="hljs-comment">// if (this.eventMap[eventName].length) &#123;</span><br>    <span class="hljs-comment">//   for (const fun of this.eventMap[eventName]) &#123;</span><br>    <span class="hljs-comment">//     fun.call(this, ...args);</span><br>    <span class="hljs-comment">//   &#125;</span><br>    <span class="hljs-comment">// &#125;</span><br>    <span class="hljs-comment">// ====&gt; 改动后</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(callbackList).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`该事件<span class="hljs-subst">$&#123;eventName&#125;</span>下无可执行的订阅者`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> callback <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">values</span>(callbackList)) &#123;<br>      <span class="hljs-title function_">callback</span>();<br>    &#125;<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 清空某个事件名称下所有回调函数</span><br><span class="hljs-comment">   * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">事件名称</span>&#125; <span class="hljs-variable">eventName</span></span><br><span class="hljs-comment">   * <span class="hljs-doctag">@returns</span></span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">clear</span>(<span class="hljs-params">eventName</span>) &#123;<br>    <span class="hljs-keyword">if</span> (!eventName) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`需提供要被清除的事件名称<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-comment">// delete this.eventMap[eventName];</span><br>    <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">deleteProperty</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName);<br>  &#125;<br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">   * 清空事件监听函数</span><br><span class="hljs-comment">   */</span><br>  <span class="hljs-title function_">clearAll</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> eventBus = <span class="hljs-keyword">new</span> <span class="hljs-title class_">UpgradeEventBus2</span>(<span class="hljs-number">20</span>);<br><br><span class="hljs-keyword">const</span> fun1 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;打印额外参数&quot;</span>, ...<span class="hljs-variable language_">arguments</span>); <span class="hljs-comment">// 打印额外参数 额外参数二娃</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;11111&quot;</span>);<br>&#125;;<br><br><span class="hljs-keyword">const</span> fun2 = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">222222</span>);<br>&#125;;<br>eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun1);<br><span class="hljs-keyword">const</span> &#123; unSubscribe &#125; = eventBus.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;testName&quot;</span>, fun2);<br><span class="hljs-title function_">unSubscribe</span>(); <span class="hljs-comment">// 取消订阅fun2</span><br>eventBus.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&quot;testName&quot;</span>, <span class="hljs-string">&quot;额外参数二娃&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="只订阅一次功能"><a href="#只订阅一次功能" class="headerlink" title="只订阅一次功能"></a>只订阅一次功能</h3><p>只可订阅一次功能的实现思路，不改变原有的 subscribe 函数，新提供一个 subscribeOne 函数, callbackId 中增加一个 one 前缀，订阅后仍然存储到 eventMap 结构中。</p>
+<h3 id="实现思路-3"><a href="#实现思路-3" class="headerlink" title="实现思路"></a>实现思路</h3><p>发布时判断如果是 one 前缀的 id，说明只执行一次就可以，然后从 eventMap 中删除掉</p>
+<h3 id="实现代码-4"><a href="#实现代码-4" class="headerlink" title="实现代码"></a>实现代码</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-title function_">subscribeOne</span>(<span class="hljs-params">evenName,callback</span>)&#123;<br>        <span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[evenName])&#123;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[evenName] = &#123;&#125;;<br>        &#125;<br>        <span class="hljs-keyword">const</span> theCallbackId = <span class="hljs-string">&#x27;one&#x27;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">callbackId</span>++;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[evenName][theCallbackId] = callback;<br>         <span class="hljs-comment">// 取消订阅(这种订阅取消，只能通过)</span><br>         <span class="hljs-keyword">const</span> <span class="hljs-title function_">unSubscribe</span> = (<span class="hljs-params"></span>)=&gt;&#123;<br>            <span class="hljs-comment">// 根据callbackId去取消订阅对应的callback</span><br>            <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[eventName][theCallbackId]<br>            <span class="hljs-comment">// 如果一个事件下的callback为空，直接清掉eventName</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[evenName]).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>)&#123;<br>                <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventSet</span>[eventName]<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> unSubscribe<br>    &#125;<br><br> <span class="hljs-title function_">emit</span>(<span class="hljs-params">eventName, ...args</span>) &#123;<br>      <span class="hljs-keyword">if</span> (!<span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">has</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName)) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`从未订阅过此事件<span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>        <span class="hljs-keyword">return</span>;<br>      &#125;<br>      <span class="hljs-keyword">const</span> callbackList = <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>      <span class="hljs-comment">// 因eventMap 结构变化后，一下发布调用函数部分会有变化</span><br>      <span class="hljs-comment">// ====&gt; 改动前</span><br>      <span class="hljs-comment">// if (callbackList.length === 0) &#123;</span><br>      <span class="hljs-comment">//   console.warn(`该事件$&#123;eventName&#125;下无可执行的订阅者`);</span><br>      <span class="hljs-comment">//   return;</span><br>      <span class="hljs-comment">// &#125;</span><br><br>      <span class="hljs-comment">// if (this.eventMap[eventName].length) &#123;</span><br>      <span class="hljs-comment">//   for (const fun of this.eventMap[eventName]) &#123;</span><br>      <span class="hljs-comment">//     fun.call(this, ...args);</span><br>      <span class="hljs-comment">//   &#125;</span><br>      <span class="hljs-comment">// &#125;</span><br>      <span class="hljs-comment">// ====&gt; 改动后</span><br>      <span class="hljs-keyword">if</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(callbackList).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>)&#123;<br>          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`该事件<span class="hljs-subst">$&#123;eventName&#125;</span>下无可执行的订阅者`</span>);<br>          <span class="hljs-keyword">return</span>;<br>      &#125;<br>      <span class="hljs-comment">// ====&gt; 改动前</span><br>      <span class="hljs-comment">// for (const callback of Object.values(callbackList)) &#123;</span><br>      <span class="hljs-comment">//     callback()</span><br>      <span class="hljs-comment">// &#125;</span><br><br>      <span class="hljs-comment">// ====&gt; 改动后</span><br>      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [id, callback] <span class="hljs-keyword">in</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(callbackList)) &#123;<br>        <span class="hljs-title function_">callback</span>();<br>        <span class="hljs-comment">// 如果是只执行一次的订阅者 判断只订阅一次的回调函数要删除</span><br>        <span class="hljs-keyword">if</span>(id.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">&#x27;one&#x27;</span>))&#123;<br>            <span class="hljs-keyword">delete</span> callbackList[id];<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="改造成-typescript-版本"><a href="#改造成-typescript-版本" class="headerlink" title="改造成 typescript 版本"></a>改造成 typescript 版本</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">type</span> <span class="hljs-title class_">EventCallback</span> = <span class="hljs-function">(<span class="hljs-params">...<span class="hljs-attr">args</span>: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> <span class="hljs-built_in">void</span>;<br><br><span class="hljs-keyword">interface</span> <span class="hljs-title class_">UnsubscribeFunction</span> &#123;<br>  (): <span class="hljs-built_in">void</span>;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">UpgradeEventBus2</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">eventMap</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-title class_">EventCallback</span>&gt;&gt; = &#123;&#125;;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">maxListeners</span>: <span class="hljs-built_in">number</span>;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">callbackId</span>: <span class="hljs-built_in">number</span> = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-attr">maxListeners</span>: <span class="hljs-built_in">number</span> = <span class="hljs-title class_">Infinity</span></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> = maxListeners;<br>  &#125;<br><br>  <span class="hljs-title function_">subscribe</span>(<br>    <span class="hljs-attr">eventName</span>: <span class="hljs-built_in">string</span>,<br>    <span class="hljs-attr">funCallback</span>: <span class="hljs-title class_">EventCallback</span><br>  ): <span class="hljs-title class_">UnsubscribeFunction</span> &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName] = &#123;&#125;;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span> !== <span class="hljs-title class_">Infinity</span> &amp;&amp;<br>      <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]).<span class="hljs-property">length</span> &gt;= <span class="hljs-variable language_">this</span>.<span class="hljs-property">maxListeners</span><br>    ) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`该事件 <span class="hljs-subst">$&#123;eventName&#125;</span> 超过了最大监听数`</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> thisCallbackId = <span class="hljs-title class_">String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">callbackId</span>++);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][thisCallbackId] = funCallback;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][thisCallbackId];<br>      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>      &#125;<br>    &#125;;<br>  &#125;<br><br>  <span class="hljs-title function_">emit</span>(<span class="hljs-attr">eventName</span>: <span class="hljs-built_in">string</span>, ...<span class="hljs-attr">args</span>: <span class="hljs-built_in">any</span>[]): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-keyword">const</span> callbackList = <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br><br>    <span class="hljs-keyword">if</span> (!callbackList) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`从未订阅过此事件 <span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [id, callback] <span class="hljs-keyword">of</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(callbackList)) &#123;<br>      <span class="hljs-title function_">callback</span>(...args);<br>      <span class="hljs-keyword">if</span> (id.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">&quot;one&quot;</span>)) &#123;<br>        <span class="hljs-keyword">delete</span> callbackList[id];<br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-title function_">clear</span>(<span class="hljs-attr">eventName</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-keyword">if</span> (!eventName) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`需提供要被清除的事件名称 <span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">deleteProperty</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName);<br>  &#125;<br><br>  <span class="hljs-title function_">clearAll</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span> = &#123;&#125;;<br>  &#125;<br><br>  <span class="hljs-title function_">subscribeOne</span>(<br>    <span class="hljs-attr">eventName</span>: <span class="hljs-built_in">string</span>,<br>    <span class="hljs-attr">callback</span>: <span class="hljs-title class_">EventCallback</span><br>  ): <span class="hljs-title class_">UnsubscribeFunction</span> &#123;<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName] = &#123;&#125;;<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> theCallbackId = <span class="hljs-string">&quot;one&quot;</span> + <span class="hljs-title class_">String</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">callbackId</span>++);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][theCallbackId] = callback;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName][theCallbackId];<br>      <span class="hljs-keyword">if</span> (<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName]).<span class="hljs-property">length</span> === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>[eventName];<br>      &#125;<br>    &#125;;<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">UpgradeEventBus2</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="EventBus-支持链式调用设计模式"><a href="#EventBus-支持链式调用设计模式" class="headerlink" title="EventBus 支持链式调用设计模式"></a>EventBus 支持链式调用设计模式</h2><h3 id="重点"><a href="#重点" class="headerlink" title="重点"></a>重点</h3><p>取消订阅的功能就不能放到订阅函数中返回了</p>
+<h3 id="实现思路-4"><a href="#实现思路-4" class="headerlink" title="实现思路"></a>实现思路</h3><p>链式调用可以在每个方法调用后返回当前对象的引用。</p>
+<h3 id="实现示例代码"><a href="#实现示例代码" class="headerlink" title="实现示例代码"></a>实现示例代码</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-title function_">clear</span>(<span class="hljs-attr">eventName</span>: <span class="hljs-built_in">string</span>): <span class="hljs-title class_">UpgradeEventBus2</span> &#123;<br>   <span class="hljs-keyword">if</span> (!eventName) &#123;<br>     <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">`需提供要被清除的事件名称 <span class="hljs-subst">$&#123;eventName&#125;</span>`</span>);<br>     <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>;<br>   &#125;<br><br>   <span class="hljs-title class_">Reflect</span>.<span class="hljs-title function_">deleteProperty</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">eventMap</span>, eventName);<br>   <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>; <span class="hljs-comment">// Return the current instance for chaining</span><br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="发布订阅应用场景"><a href="#发布订阅应用场景" class="headerlink" title="发布订阅应用场景"></a>发布订阅应用场景</h2><ol>
+<li>Mobx 实现 Mobx 的实现中，依赖搜集 被观察者变时触发所有依赖全部执行一遍，都是依赖发布订阅</li>
+<li>表单保存校验功能</li>
+<li>当组件层级较深时，数据通信</li>
+<li>Node.js 中 EventEmitter 模块</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JS%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" class="print-no-link">#JS每日一题</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>eventBus</div>
+      <div>https://undercurre.github.io/2024/01/08/知识点积累/eventBus/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/base64%E8%BD%ACFile/" title="base64转File">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">base64转File</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/08/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/foreach%E7%9A%84%E6%BC%8F%E6%B4%9E/" title="foreach的漏洞">
+                        <span class="hidden-mobile">foreach的漏洞</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

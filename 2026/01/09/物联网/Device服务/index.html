@@ -1,0 +1,658 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="上报的状态和数据记录存入数据库MqttMessageService.java123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jack Blog">
+<meta property="og:url" content="https://undercurre.github.io/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/Device%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="上报的状态和数据记录存入数据库MqttMessageService.java123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-09T16:35:00.083Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.083Z">
+<meta property="article:author" content="Jack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-09 16:35" pubdate>
+          2026年1月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="上报的状态和数据记录存入数据库"><a href="#上报的状态和数据记录存入数据库" class="headerlink" title="上报的状态和数据记录存入数据库"></a>上报的状态和数据记录存入数据库</h2><h4 id="MqttMessageService-java"><a href="#MqttMessageService-java" class="headerlink" title="MqttMessageService.java"></a>MqttMessageService.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.service;<br><br><span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.JsonNode;<br><span class="hljs-keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;<br><span class="hljs-keyword">import</span> com.iot.entity.Device;<br><span class="hljs-keyword">import</span> com.iot.entity.DeviceData;<br><span class="hljs-keyword">import</span> com.iot.repository.DeviceRepository;<br><span class="hljs-keyword">import</span> com.iot.repository.DeviceDataRepository;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.integration.annotation.ServiceActivator;<br><span class="hljs-keyword">import</span> org.springframework.integration.mqtt.support.MqttHeaders;<br><span class="hljs-keyword">import</span> org.springframework.messaging.Message;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessageHandler;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessagingException;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><br><span class="hljs-meta">@Service</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MqttMessageService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> DeviceRepository deviceRepository;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> WebSocketNotificationService webSocketNotificationService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> DeviceDataRepository deviceDataRepository;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> ObjectMapper objectMapper;<br><br>    <span class="hljs-meta">@ServiceActivator(inputChannel = &quot;mqttInputChannel&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleMessage</span><span class="hljs-params">(Message&lt;?&gt; message)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">topic</span> <span class="hljs-operator">=</span> (String) message.getHeaders().get(<span class="hljs-string">&quot;mqtt_receivedTopic&quot;</span>);<br>        <span class="hljs-type">String</span> <span class="hljs-variable">payload</span> <span class="hljs-operator">=</span> message.getPayload().toString();<br><br>        log.info(<span class="hljs-string">&quot;🎯 收到MQTT消息 - 主题: &#123;&#125;&quot;</span>, topic);<br>        log.info(<span class="hljs-string">&quot;📦 消息内容: &#123;&#125;&quot;</span>, payload);<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;device/status&quot;</span>.equals(topic)) &#123;<br>                handleStatusMessage(payload);<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;device/data&quot;</span>.equals(topic)) &#123;<br>                handleDataMessage(payload);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                log.warn(<span class="hljs-string">&quot;⚠️ 未知主题: &#123;&#125;&quot;</span>, topic);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            log.error(<span class="hljs-string">&quot;❌ 处理MQTT消息失败: &#123;&#125;&quot;</span>, e.getMessage(), e);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleStatusMessage</span><span class="hljs-params">(String payload)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">JsonNode</span> <span class="hljs-variable">jsonNode</span> <span class="hljs-operator">=</span> objectMapper.readTree(payload);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">deviceId</span> <span class="hljs-operator">=</span> jsonNode.get(<span class="hljs-string">&quot;deviceId&quot;</span>).asText();<br><br>            log.info(<span class="hljs-string">&quot;🔄 处理设备状态消息 - 设备ID: &#123;&#125;&quot;</span>, deviceId);<br><br>            <span class="hljs-comment">// 更新或创建设备记录</span><br>            <span class="hljs-type">Device</span> <span class="hljs-variable">device</span> <span class="hljs-operator">=</span> deviceRepository.findByDeviceId(deviceId)<br>                    .orElse(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Device</span>());<br><br>            device.setDeviceId(deviceId);<br>            device.setDeviceName(jsonNode.has(<span class="hljs-string">&quot;deviceName&quot;</span>) ?<br>                    jsonNode.get(<span class="hljs-string">&quot;deviceName&quot;</span>).asText() : <span class="hljs-string">&quot;ESP32设备&quot;</span>);<br>            <span class="hljs-keyword">if</span> (!Device.DeviceStatus.ONLINE.equals(device.getStatus())) &#123;<br>                device.setStatus(Device.DeviceStatus.ONLINE);<br>                <span class="hljs-comment">// 发送WebSocket上线通知</span><br>                log.info(<span class="hljs-string">&quot;发送设备 &#123;&#125; 上线通知&quot;</span>, device.getDeviceId());<br>                webSocketNotificationService.sendDeviceStatusUpdate(<br>                        device.getDeviceId(),<br>                        Device.DeviceStatus.ONLINE.name()<br>                );<br>            &#125;<br>            device.setIpAddress(jsonNode.has(<span class="hljs-string">&quot;ipAddress&quot;</span>) ?<br>                    jsonNode.get(<span class="hljs-string">&quot;ipAddress&quot;</span>).asText() : <span class="hljs-literal">null</span>);<br>            device.setLastSeen(LocalDateTime.now());<br><br>            <span class="hljs-comment">// 设置电源状态</span><br><span class="hljs-comment">//            if (jsonNode.has(&quot;powerState&quot;)) &#123;</span><br><span class="hljs-comment">//                device.setPowerState(jsonNode.get(&quot;powerState&quot;).asText());</span><br><span class="hljs-comment">//            &#125;</span><br><br>            deviceRepository.save(device);<br>            log.info(<span class="hljs-string">&quot;✅ 设备状态更新成功: &#123;&#125;&quot;</span>, deviceId);<br><br>            <span class="hljs-comment">// 保存状态数据到设备数据表</span><br>            saveDeviceData(deviceId, <span class="hljs-string">&quot;device/status&quot;</span>, payload, <span class="hljs-string">&quot;status&quot;</span>);<br><br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            log.error(<span class="hljs-string">&quot;❌ 处理状态消息失败: &#123;&#125;&quot;</span>, e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleDataMessage</span><span class="hljs-params">(String payload)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">JsonNode</span> <span class="hljs-variable">jsonNode</span> <span class="hljs-operator">=</span> objectMapper.readTree(payload);<br>            <span class="hljs-type">String</span> <span class="hljs-variable">deviceId</span> <span class="hljs-operator">=</span> jsonNode.get(<span class="hljs-string">&quot;deviceId&quot;</span>).asText();<br><br>            log.info(<span class="hljs-string">&quot;📊 处理设备数据消息 - 设备ID: &#123;&#125;&quot;</span>, deviceId);<br><br>            <span class="hljs-comment">// 保存传感器数据到设备数据表</span><br>            saveDeviceData(deviceId, <span class="hljs-string">&quot;device/data&quot;</span>, payload, <span class="hljs-string">&quot;sensor&quot;</span>);<br><br>            log.info(<span class="hljs-string">&quot;✅ 设备数据保存成功: &#123;&#125;&quot;</span>, deviceId);<br><br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            log.error(<span class="hljs-string">&quot;❌ 处理数据消息失败: &#123;&#125;&quot;</span>, e.getMessage());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">saveDeviceData</span><span class="hljs-params">(String deviceId, String topic, String payload, String dataType)</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">DeviceData</span> <span class="hljs-variable">deviceData</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeviceData</span>();<br>            deviceData.setDeviceId(deviceId);<br>            deviceData.setTopic(topic);<br>            deviceData.setPayload(payload);<br>            deviceData.setTimestamp(LocalDateTime.now());<br><br>            <span class="hljs-type">JsonNode</span> <span class="hljs-variable">jsonNode</span> <span class="hljs-operator">=</span> objectMapper.readTree(payload);<br><br>            <span class="hljs-comment">// 提取数值数据用于快速查询</span><br>            <span class="hljs-keyword">if</span> (jsonNode.has(<span class="hljs-string">&quot;temperature&quot;</span>)) &#123;<br>                deviceData.setNumericValue(jsonNode.get(<span class="hljs-string">&quot;temperature&quot;</span>).asDouble());<br>                deviceData.setStringValue(<span class="hljs-string">&quot;temperature:&quot;</span> + jsonNode.get(<span class="hljs-string">&quot;temperature&quot;</span>).asText());<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (jsonNode.has(<span class="hljs-string">&quot;humidity&quot;</span>)) &#123;<br>                deviceData.setNumericValue(jsonNode.get(<span class="hljs-string">&quot;humidity&quot;</span>).asDouble());<br>                deviceData.setStringValue(<span class="hljs-string">&quot;humidity:&quot;</span> + jsonNode.get(<span class="hljs-string">&quot;humidity&quot;</span>).asText());<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (jsonNode.has(<span class="hljs-string">&quot;wifiStrength&quot;</span>)) &#123;<br>                deviceData.setNumericValue(jsonNode.get(<span class="hljs-string">&quot;wifiStrength&quot;</span>).asDouble());<br>                deviceData.setStringValue(<span class="hljs-string">&quot;wifi:&quot;</span> + jsonNode.get(<span class="hljs-string">&quot;wifiStrength&quot;</span>).asText());<br>            &#125;<br><br>            deviceDataRepository.save(deviceData);<br><br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            log.error(<span class="hljs-string">&quot;❌ 保存设备数据失败: &#123;&#125;&quot;</span>, e.getMessage());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="MqttChannelConfig-java"><a href="#MqttChannelConfig-java" class="headerlink" title="MqttChannelConfig.java"></a>MqttChannelConfig.java</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.config;<br><br><span class="hljs-keyword">import</span> com.iot.service.MqttMessageService;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j; <span class="hljs-comment">// 引入Lombok的Slf4j注解</span><br><span class="hljs-keyword">import</span> org.eclipse.paho.client.mqttv3.MqttConnectOptions;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.integration.channel.DirectChannel;<br><span class="hljs-keyword">import</span> org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;<br><span class="hljs-keyword">import</span> org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;<br><span class="hljs-keyword">import</span> org.springframework.integration.mqtt.core.MqttPahoClientFactory;<br><span class="hljs-keyword">import</span> org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;<br><span class="hljs-keyword">import</span> org.springframework.messaging.Message;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessageChannel;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessageHandler;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessagingException;<br><br><span class="hljs-meta">@Slf4j</span> <span class="hljs-comment">// 使用Lombok注解，会自动提供log变量</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MqttChannelConfig</span> &#123;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;mqtt.broker-url&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String brokerUrl;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;mqtt.topics.status&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String statusTopic;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;mqtt.topics.data&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String dataTopic;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;mqtt.username:&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String username;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;mqtt.password:&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String password;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> MqttMessageService mqttMessageService;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MqttPahoClientFactory <span class="hljs-title function_">mqttClientFactory</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">DefaultMqttPahoClientFactory</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultMqttPahoClientFactory</span>();<br><br>        <span class="hljs-type">MqttConnectOptions</span> <span class="hljs-variable">options</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MqttConnectOptions</span>();<br>        options.setServerURIs(<span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>[]&#123;brokerUrl&#125;);<br><br>        <span class="hljs-comment">// 设置认证信息（如果需要）</span><br>        <span class="hljs-keyword">if</span> (username != <span class="hljs-literal">null</span> &amp;&amp; !username.trim().isEmpty()) &#123;<br>            options.setUserName(username);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (password != <span class="hljs-literal">null</span> &amp;&amp; !password.trim().isEmpty()) &#123;<br>            options.setPassword(password.toCharArray());<br>        &#125;<br><br>        <span class="hljs-comment">// 配置连接选项</span><br>        options.setConnectionTimeout(<span class="hljs-number">10</span>);<br>        options.setKeepAliveInterval(<span class="hljs-number">90</span>);<br>        options.setAutomaticReconnect(<span class="hljs-literal">true</span>); <span class="hljs-comment">// 启用自动重连 [citation:1]</span><br>        options.setCleanSession(<span class="hljs-literal">true</span>);<br><br>        factory.setConnectionOptions(options);<br>        <span class="hljs-keyword">return</span> factory;<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MessageChannel <span class="hljs-title function_">mqttInputChannel</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">DirectChannel</span> <span class="hljs-variable">channel</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DirectChannel</span>();<br>        channel.subscribe(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MessageHandler</span>() &#123;<br>            <span class="hljs-meta">@Override</span> <span class="hljs-comment">// 添加Override注解</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleMessage</span><span class="hljs-params">(Message&lt;?&gt; message)</span> <span class="hljs-keyword">throws</span> MessagingException &#123;<br>                <span class="hljs-comment">// 直接使用log，由@Slf4j注解提供</span><br>                log.info(<span class="hljs-string">&quot;消息到达输入通道，主题: &#123;&#125;&quot;</span>, message.getHeaders().get(<span class="hljs-string">&quot;mqtt_receivedTopic&quot;</span>));<br>                <span class="hljs-comment">// 实际的消息处理在 MqttMessageService 中完成</span><br>            &#125;<br>        &#125;);<br>        <span class="hljs-keyword">return</span> channel;<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> MqttPahoMessageDrivenChannelAdapter <span class="hljs-title function_">inbound</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">clientId</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;iot-server-inbound-&quot;</span> + System.currentTimeMillis();<br><br>        <span class="hljs-type">MqttPahoMessageDrivenChannelAdapter</span> <span class="hljs-variable">adapter</span> <span class="hljs-operator">=</span><br>                <span class="hljs-keyword">new</span> <span class="hljs-title class_">MqttPahoMessageDrivenChannelAdapter</span>(clientId,<br>                        mqttClientFactory(), statusTopic, dataTopic);<br><br>        adapter.setCompletionTimeout(<span class="hljs-number">5000</span>);<br>        adapter.setConverter(<span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultPahoMessageConverter</span>());<br>        adapter.setQos(<span class="hljs-number">1</span>);<br>        adapter.setOutputChannel(mqttInputChannel());<br><br>        <span class="hljs-comment">// 移除了setRecoveryInterval方法，因为它在当前版本中可能不存在</span><br>        <span class="hljs-comment">// 自动重连功能已在MqttConnectOptions中通过setAutomaticReconnect(true)配置 [citation:1]</span><br><br>        log.info(<span class="hljs-string">&quot;MQTT入站适配器创建完成，客户端ID: &#123;&#125;&quot;</span>, clientId);<br>        log.info(<span class="hljs-string">&quot;订阅主题: &#123;&#125; 和 &#123;&#125;&quot;</span>, statusTopic, dataTopic);<br><br>        <span class="hljs-keyword">return</span> adapter;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="心跳"><a href="#心跳" class="headerlink" title="心跳"></a>心跳</h2><ol>
+<li>application.properties</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">device.heartbeat.timeout-seconds=30<br>device.heartbeat.check-interval-millis=10000<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>DeviceStatusCheckTask.java</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.task;<br><br><span class="hljs-keyword">import</span> com.iot.service.DeviceService;<br><span class="hljs-keyword">import</span> lombok.RequiredArgsConstructor;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;<br><span class="hljs-keyword">import</span> org.springframework.scheduling.annotation.Scheduled;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DeviceStatusCheckTask</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> DeviceService deviceService;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;device.heartbeat.check-interval-millis&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> checkInterval;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 定期检查设备心跳状态</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Scheduled(fixedRateString = &quot;$&#123;device.heartbeat.check-interval-millis&#125;&quot;)</span> <span class="hljs-comment">// 转换为毫秒</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkDeviceHeartbeat</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;执行设备心跳检查任务...&quot;</span>);<br>        deviceService.checkAndUpdateOfflineDevices();<br>        log.info(<span class="hljs-string">&quot;设备心跳检查任务完成&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>嵌入式</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 发送心跳，retained=false（心跳不应该被保留）</span><br><span class="hljs-keyword">if</span> (mqttClient.<span class="hljs-built_in">publish</span>(TOPIC_STATUS, jsonBuffer)) &#123;<br>  hbStats.lastSuccessTime = currentMillis;<br>  lastHeartbeatTime = currentMillis;<br>  lastHeartbeatMillis = currentMillis;<br>  hbStats.successRate = <span class="hljs-number">100.0</span>;<br><br>  <span class="hljs-comment">// 偶尔打印心跳成功信息</span><br>  <span class="hljs-type">static</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> lastPrintTime = <span class="hljs-number">0</span>;<br>  <span class="hljs-keyword">if</span> (currentMillis - lastPrintTime &gt; <span class="hljs-number">60000</span>) &#123; <span class="hljs-comment">// 每分钟打印一次</span><br>    Serial.<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;❤️  心跳发送成功 (计数: %lu)\n&quot;</span>, hbStats.totalSent);<br>    lastPrintTime = currentMillis;<br>  &#125;<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  hbStats.totalFailed++;<br>  <span class="hljs-comment">// 计算成功率</span><br>  <span class="hljs-keyword">if</span> (hbStats.totalSent &gt; <span class="hljs-number">0</span>) &#123;<br>    hbStats.successRate = ((<span class="hljs-type">float</span>)(hbStats.totalSent - hbStats.totalFailed) / hbStats.totalSent) * <span class="hljs-number">100</span>;<br>  &#125;<br>  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;❌ 心跳发送失败&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>websocket</li>
+</ol>
+<p>使用 sock</p>
+<h6 id="websocket-ts"><a href="#websocket-ts" class="headerlink" title="websocket.ts"></a>websocket.ts</h6><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// src/utils/stompWebSocket.ts</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Client</span>, <span class="hljs-title class_">IMessage</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@stomp/stompjs&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">SockJS</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;sockjs-client/dist/sockjs.min.js&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; getToken &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@/utils/auth&quot;</span>;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">StompWebSocketManager</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-attr">client</span>: <span class="hljs-title class_">Client</span> | <span class="hljs-literal">null</span> = <span class="hljs-literal">null</span>;<br>  <span class="hljs-keyword">private</span> subscriptions = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">any</span>&gt;(); <span class="hljs-comment">// 管理订阅</span><br>  <span class="hljs-keyword">private</span> reconnectDelay = <span class="hljs-number">5000</span>;<br><br>  <span class="hljs-comment">// 初始化并连接</span><br>  <span class="hljs-title function_">connect</span>(<span class="hljs-attr">url</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-comment">// 构建带认证的完整URL（SockJS允许通过URL传递参数）</span><br>    <span class="hljs-keyword">const</span> token = <span class="hljs-title function_">getToken</span>();<br>    <span class="hljs-keyword">const</span> finalUrl = <span class="hljs-string">`<span class="hljs-subst">$&#123;url&#125;</span>?token=<span class="hljs-subst">$&#123;<span class="hljs-built_in">encodeURIComponent</span>(token || <span class="hljs-string">&quot;&quot;</span>)&#125;</span>`</span>;<br><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span> = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Client</span>(&#123;<br>      <span class="hljs-comment">// 关键：使用SockJS作为底层连接工厂</span><br>      <span class="hljs-attr">webSocketFactory</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SockJS</span>(finalUrl),<br><br>      <span class="hljs-comment">// 连接成功回调</span><br>      <span class="hljs-attr">onConnect</span>: <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;STOMP连接成功&quot;</span>);<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">resubscribeAll</span>(); <span class="hljs-comment">// 自动重新订阅之前的主题</span><br>      &#125;,<br><br>      <span class="hljs-comment">// 连接断开回调</span><br>      <span class="hljs-attr">onDisconnect</span>: <span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;STOMP连接断开，尝试重连...&quot;</span>);<br>      &#125;,<br><br>      <span class="hljs-comment">// 连接错误回调（SockJS会在此处处理降级）</span><br>      <span class="hljs-attr">onStompError</span>: <span class="hljs-function">(<span class="hljs-params">frame</span>) =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;STOMP协议错误:&quot;</span>, frame.<span class="hljs-property">headers</span>[<span class="hljs-string">&quot;message&quot;</span>]);<br>      &#125;,<br><br>      <span class="hljs-comment">// 调试信息（开发环境开启）</span><br>      <span class="hljs-attr">debug</span>: <span class="hljs-function">(<span class="hljs-params">msg</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">import</span>.<span class="hljs-property">meta</span>.<span class="hljs-property">env</span>.<span class="hljs-property">DEV</span>) <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;[STOMP]&quot;</span>, msg);<br>      &#125;,<br><br>      <span class="hljs-comment">// 自动重连</span><br>      <span class="hljs-attr">reconnectDelay</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">reconnectDelay</span>,<br>    &#125;);<br><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>.<span class="hljs-title function_">activate</span>();<br>  &#125;<br><br>  <span class="hljs-comment">// 订阅主题（企业级核心：清晰的Pub/Sub）</span><br>  <span class="hljs-title function_">subscribe</span>(<span class="hljs-attr">destination</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">callback</span>: <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">message</span>: <span class="hljs-title class_">IMessage</span></span>) =&gt;</span> <span class="hljs-built_in">void</span>): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`订阅 <span class="hljs-subst">$&#123;destination&#125;</span>`</span>);<br>    <span class="hljs-keyword">if</span> (!<span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>?.<span class="hljs-property">connected</span>) &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">warn</span>(<span class="hljs-string">&quot;客户端未连接，订阅将被延迟&quot;</span>);<br>      <span class="hljs-comment">// 缓存订阅请求，在onConnect中执行</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">set</span>(destination, callback);<br>      <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">const</span> subscription = <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>.<span class="hljs-title function_">subscribe</span>(<br>      destination,<br>      <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">message</span>: <span class="hljs-title class_">IMessage</span></span>) =&gt;</span> &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`收到 <span class="hljs-subst">$&#123;destination&#125;</span> 的消息:`</span>, message.<span class="hljs-property">body</span>);<br>        <span class="hljs-title function_">callback</span>(message);<br>      &#125;,<br>      <span class="hljs-comment">// 可在headers中传递额外的订阅参数，如认证信息</span><br>      &#123;<br>        <span class="hljs-title class_">Authorization</span>: <span class="hljs-string">`Bearer <span class="hljs-subst">$&#123;getToken()&#125;</span>`</span>,<br>        <span class="hljs-attr">id</span>: <span class="hljs-string">`sub-<span class="hljs-subst">$&#123;<span class="hljs-built_in">Date</span>.now()&#125;</span>`</span>, <span class="hljs-comment">// 给订阅一个唯一ID，便于管理</span><br>      &#125;<br>    );<br><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">set</span>(destination, subscription);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`成功订阅 <span class="hljs-subst">$&#123;destination&#125;</span>`</span>);<br>  &#125;<br><br>  <span class="hljs-comment">// 取消订阅</span><br>  <span class="hljs-title function_">unsubscribe</span>(<span class="hljs-attr">destination</span>: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-keyword">const</span> sub = <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">get</span>(destination);<br>    <span class="hljs-keyword">if</span> (sub) &#123;<br>      sub.<span class="hljs-title function_">unsubscribe</span>();<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">delete</span>(destination);<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 发送消息到特定目的地</span><br>  <span class="hljs-title function_">send</span>(<span class="hljs-attr">destination</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">body</span>: <span class="hljs-built_in">object</span>, <span class="hljs-attr">headers</span>: <span class="hljs-built_in">object</span> = &#123;&#125;): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>?.<span class="hljs-property">connected</span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>.<span class="hljs-title function_">publish</span>(&#123;<br>        destination,<br>        <span class="hljs-attr">body</span>: <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(body),<br>        <span class="hljs-attr">headers</span>: &#123;<br>          <span class="hljs-string">&quot;content-type&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span>,<br>          ...headers,<br>        &#125;,<br>      &#125;);<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-comment">// 断开连接</span><br>  <span class="hljs-title function_">disconnect</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">clear</span>();<br>    <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>) &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span>.<span class="hljs-title function_">deactivate</span>();<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">client</span> = <span class="hljs-literal">null</span>;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">private</span> <span class="hljs-title function_">resubscribeAll</span>(): <span class="hljs-built_in">void</span> &#123;<br>    <span class="hljs-comment">// 在实际项目中，这里需要从状态管理中恢复订阅逻辑</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">subscriptions</span>.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">callback, destination</span>) =&gt;</span> &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">subscribe</span>(destination, callback);<br>    &#125;);<br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StompWebSocketManager</span>();<br></code></pre></td></tr></table></figure>
+
+<h6 id="store-websocket-ts"><a href="#store-websocket-ts" class="headerlink" title="store/websocket.ts"></a>store/websocket.ts</h6><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// src/stores/websocket.ts</span><br><span class="hljs-keyword">import</span> &#123; defineStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;pinia&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; ref &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;<br><span class="hljs-keyword">import</span> stompManager <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@/utils/websocket&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> useStompStore = <span class="hljs-title function_">defineStore</span>(<span class="hljs-string">&quot;stomp&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> isConnected = <span class="hljs-title function_">ref</span>(<span class="hljs-literal">false</span>);<br>  <span class="hljs-keyword">const</span> notifications = ref&lt;<span class="hljs-built_in">any</span>[]&gt;([]);<br>  <span class="hljs-keyword">const</span> systemAlerts = ref&lt;<span class="hljs-built_in">any</span>[]&gt;([]);<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">initConnection</span> = (<span class="hljs-params">wsUrl</span>) =&gt; &#123;<br>    stompManager.<span class="hljs-title function_">connect</span>(wsUrl);<br><br>    <span class="hljs-comment">// 订阅系统通知频道</span><br>    stompManager.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;/topic/device/status&quot;</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> notification = message.<span class="hljs-property">body</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;收到系统通知:&quot;</span>, notification);<br>      notifications.<span class="hljs-property">value</span>.<span class="hljs-title function_">unshift</span>(notification);<br>    &#125;);<br><br>    <span class="hljs-comment">// 订阅全局告警频道</span><br>    stompManager.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&quot;/topic/alerts&quot;</span>, <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> alert = message.<span class="hljs-property">body</span>;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;收到全局告警:&quot;</span>, alert);<br>      systemAlerts.<span class="hljs-property">value</span>.<span class="hljs-title function_">push</span>(alert);<br>    &#125;);<br>  &#125;;<br><br>  <span class="hljs-comment">// 发送私人消息示例</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">sendPrivateMessage</span> = (<span class="hljs-params"><span class="hljs-attr">userId</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">content</span>: <span class="hljs-built_in">string</span></span>) =&gt; &#123;<br>    stompManager.<span class="hljs-title function_">send</span>(<span class="hljs-string">`/app/chat.private.<span class="hljs-subst">$&#123;userId&#125;</span>`</span>, &#123; content &#125;);<br>  &#125;;<br><br>  <span class="hljs-comment">// 关闭连接</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">closeConnection</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    stompManager.<span class="hljs-title function_">disconnect</span>();<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> &#123;<br>    isConnected,<br>    notifications,<br>    systemAlerts,<br>    initConnection,<br>    sendPrivateMessage,<br>    closeConnection,<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h6 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h6><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-websocket<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h6><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">logging.level.com.iot.config.WebSocketConfig</span>=<span class="hljs-string">INFO</span><br><span class="hljs-attr">logging.level.com.iot.listener.WebSocketEventListener</span>=<span class="hljs-string">INFO</span><br></code></pre></td></tr></table></figure>
+
+<h6 id="SecurityConfig-java"><a href="#SecurityConfig-java" class="headerlink" title="SecurityConfig.java"></a>SecurityConfig.java</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">package</span> com.iot.config;<br><br><span class="hljs-keyword">import</span> com.iot.config.JwtAuthenticationFilter;<br><span class="hljs-keyword">import</span> lombok.RequiredArgsConstructor;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.http.SessionCreationPolicy;<br><span class="hljs-keyword">import</span> org.springframework.security.web.SecurityFilterChain;<br><span class="hljs-keyword">import</span> org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.CorsConfiguration;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.CorsConfigurationSource;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.UrlBasedCorsConfigurationSource;<br><br><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableWebSecurity</span><br><span class="hljs-meta">@EnableMethodSecurity(prePostEnabled = true)</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> JwtAuthenticationFilter jwtAuthenticationFilter;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> SecurityFilterChain <span class="hljs-title function_">filterChain</span><span class="hljs-params">(HttpSecurity http)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        http<br>                .cors(cors -&gt; cors.configurationSource(corsConfigurationSource()))<br>                .csrf(csrf -&gt; csrf.disable())<br>                .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))<br>                .authorizeHttpRequests(auth -&gt; auth<br>                        .requestMatchers(<span class="hljs-string">&quot;/swagger-ui/**&quot;</span>, <span class="hljs-string">&quot;/v3/api-docs/**&quot;</span>, <span class="hljs-string">&quot;/api-docs/**&quot;</span>, <span class="hljs-string">&quot;/swagger-ui.html&quot;</span>).permitAll()<br>                        .requestMatchers(<span class="hljs-string">&quot;/auth/**&quot;</span>, <span class="hljs-string">&quot;/health&quot;</span>).permitAll()<br>                        .requestMatchers(<span class="hljs-string">&quot;/ws/**&quot;</span>, <span class="hljs-string">&quot;/ws&quot;</span>).permitAll()  <span class="hljs-comment">// 添加WebSocket端点</span><br>                        .requestMatchers(<span class="hljs-string">&quot;/admin/**&quot;</span>).hasRole(<span class="hljs-string">&quot;ADMIN&quot;</span>)<br>                        .requestMatchers(<span class="hljs-string">&quot;/user/**&quot;</span>).hasAnyRole(<span class="hljs-string">&quot;USER&quot;</span>, <span class="hljs-string">&quot;ADMIN&quot;</span>)<br>                        .anyRequest().authenticated()<br>                )<br>                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);<br><br>        <span class="hljs-keyword">return</span> http.build();<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> CorsConfigurationSource <span class="hljs-title function_">corsConfigurationSource</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">CorsConfiguration</span> <span class="hljs-variable">configuration</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CorsConfiguration</span>();<br>        configuration.setAllowedOriginPatterns(Arrays.asList(<span class="hljs-string">&quot;*&quot;</span>));<br>        configuration.setAllowedMethods(Arrays.asList(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;POST&quot;</span>, <span class="hljs-string">&quot;PUT&quot;</span>, <span class="hljs-string">&quot;DELETE&quot;</span>, <span class="hljs-string">&quot;OPTIONS&quot;</span>));<br>        configuration.setAllowedHeaders(Arrays.asList(<span class="hljs-string">&quot;*&quot;</span>));<br>        configuration.setAllowCredentials(<span class="hljs-literal">true</span>);<br>        configuration.setMaxAge(<span class="hljs-number">3600L</span>);<br><br>        <span class="hljs-type">UrlBasedCorsConfigurationSource</span> <span class="hljs-variable">source</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UrlBasedCorsConfigurationSource</span>();<br>        source.registerCorsConfiguration(<span class="hljs-string">&quot;/**&quot;</span>, configuration);<br>        <span class="hljs-keyword">return</span> source;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="WebSocketConfig-java"><a href="#WebSocketConfig-java" class="headerlink" title="WebSocketConfig.java"></a>WebSocketConfig.java</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.config;<br><br><span class="hljs-keyword">import</span> com.iot.entity.User;<br><span class="hljs-keyword">import</span> com.iot.security.JwtTokenProvider;<br><span class="hljs-keyword">import</span> com.iot.service.UserService;<br><span class="hljs-keyword">import</span> lombok.RequiredArgsConstructor;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.messaging.Message;<br><span class="hljs-keyword">import</span> org.springframework.messaging.MessageChannel;<br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.config.ChannelRegistration;<br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.config.MessageBrokerRegistry;<br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.stomp.StompCommand;<br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.stomp.StompHeaderAccessor;<br><span class="hljs-keyword">import</span> org.springframework.messaging.support.ChannelInterceptor;<br><span class="hljs-keyword">import</span> org.springframework.messaging.support.MessageHeaderAccessor;<br><span class="hljs-keyword">import</span> org.springframework.security.authentication.UsernamePasswordAuthenticationToken;<br><span class="hljs-keyword">import</span> org.springframework.security.core.authority.SimpleGrantedAuthority;<br><span class="hljs-keyword">import</span> org.springframework.security.core.context.SecurityContextHolder;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.config.annotation.StompEndpointRegistry;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;<br><br><span class="hljs-keyword">import</span> java.util.Collections;<br><span class="hljs-keyword">import</span> java.util.Optional;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableWebSocketMessageBroker</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebSocketMessageBrokerConfigurer</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> JwtTokenProvider jwtTokenProvider;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureMessageBroker</span><span class="hljs-params">(MessageBrokerRegistry config)</span> &#123;<br>        <span class="hljs-comment">// 配置消息代理，用于广播通知</span><br>        config.enableSimpleBroker(<span class="hljs-string">&quot;/topic&quot;</span>);<br>        <span class="hljs-comment">// 配置应用程序目的地前缀</span><br>        config.setApplicationDestinationPrefixes(<span class="hljs-string">&quot;/app&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">registerStompEndpoints</span><span class="hljs-params">(StompEndpointRegistry registry)</span> &#123;<br>        <span class="hljs-comment">// 注册WebSocket端点，允许前端连接</span><br>        registry.addEndpoint(<span class="hljs-string">&quot;/ws&quot;</span>)<br>                .setAllowedOriginPatterns(<span class="hljs-string">&quot;*&quot;</span>)  <span class="hljs-comment">// 生产环境应限制允许的域名</span><br>                .withSockJS();<br>    &#125;<br><span class="hljs-comment">//</span><br><span class="hljs-comment">//    @Override</span><br><span class="hljs-comment">//    public void configureClientInboundChannel(ChannelRegistration registration) &#123;</span><br><span class="hljs-comment">//        // 添加JWT认证拦截器</span><br><span class="hljs-comment">//        registration.interceptors(new ChannelInterceptor() &#123;</span><br><span class="hljs-comment">//            @Override</span><br><span class="hljs-comment">//            public Message&lt;?&gt; preSend(Message&lt;?&gt; message, MessageChannel channel) &#123;</span><br><span class="hljs-comment">//                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                // 处理连接请求</span><br><span class="hljs-comment">//                if (StompCommand.CONNECT.equals(accessor.getCommand())) &#123;</span><br><span class="hljs-comment">//                    // 从请求头获取JWT令牌</span><br><span class="hljs-comment">//                    String token = accessor.getFirstNativeHeader(&quot;Authorization&quot;);</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                    if (token != null &amp;&amp; token.startsWith(&quot;Bearer &quot;)) &#123;</span><br><span class="hljs-comment">//                        token = token.substring(7);</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                        // 验证令牌</span><br><span class="hljs-comment">//                        if (jwtTokenProvider.validateToken(token)) &#123;</span><br><span class="hljs-comment">//                            String username = jwtTokenProvider.getUsernameFromToken(token);</span><br><span class="hljs-comment">//                            Optional&lt;User&gt; userOpt = userService.findActiveUserByUsername(username);</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                            if (userOpt.isPresent()) &#123;</span><br><span class="hljs-comment">//                                User user = userOpt.get();</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                                // 设置认证信息到Spring Security上下文</span><br><span class="hljs-comment">//                                UsernamePasswordAuthenticationToken authentication =</span><br><span class="hljs-comment">//                                        new UsernamePasswordAuthenticationToken(</span><br><span class="hljs-comment">//                                                user,</span><br><span class="hljs-comment">//                                                null,</span><br><span class="hljs-comment">//                                                Collections.singletonList(new SimpleGrantedAuthority(&quot;ROLE_&quot; + user.getRole().name()))</span><br><span class="hljs-comment">//                                        );</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                                SecurityContextHolder.getContext().setAuthentication(authentication);</span><br><span class="hljs-comment">//                                accessor.setUser(authentication);</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                                return message;</span><br><span class="hljs-comment">//                            &#125;</span><br><span class="hljs-comment">//                        &#125;</span><br><span class="hljs-comment">//                    &#125;</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                    // 认证失败，拒绝连接</span><br><span class="hljs-comment">//                    throw new SecurityException(&quot;WebSocket连接认证失败：无效的JWT令牌&quot;);</span><br><span class="hljs-comment">//                &#125;</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//                return message;</span><br><span class="hljs-comment">//            &#125;</span><br><span class="hljs-comment">//        &#125;);</span><br><span class="hljs-comment">//    &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="WebSocketEventListener-java"><a href="#WebSocketEventListener-java" class="headerlink" title="WebSocketEventListener.java"></a>WebSocketEventListener.java</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.listener;<br><br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.context.event.EventListener;<br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.stomp.StompHeaderAccessor;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;<br><span class="hljs-keyword">import</span> org.springframework.web.socket.messaging.*;<br><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketEventListener</span> &#123;<br><br>    <span class="hljs-comment">// 监听WebSocket连接事件</span><br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleWebSocketConnectListener</span><span class="hljs-params">(SessionConnectEvent event)</span> &#123;<br>        <span class="hljs-type">StompHeaderAccessor</span> <span class="hljs-variable">accessor</span> <span class="hljs-operator">=</span> StompHeaderAccessor.wrap(event.getMessage());<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionId</span> <span class="hljs-operator">=</span> accessor.getSessionId();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">origin</span> <span class="hljs-operator">=</span> accessor.getFirstNativeHeader(<span class="hljs-string">&quot;Origin&quot;</span>);<br><br>        log.info(<span class="hljs-string">&quot;WebSocket连接事件 - 会话ID: &#123;&#125;, 来源: &#123;&#125;&quot;</span>, sessionId, origin);<br>    &#125;<br><br>    <span class="hljs-comment">// 监听WebSocket连接建立事件</span><br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleWebSocketSessionConnected</span><span class="hljs-params">(SessionConnectedEvent event)</span> &#123;<br>        <span class="hljs-type">StompHeaderAccessor</span> <span class="hljs-variable">accessor</span> <span class="hljs-operator">=</span> StompHeaderAccessor.wrap(event.getMessage());<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionId</span> <span class="hljs-operator">=</span> accessor.getSessionId();<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> accessor.getUser();<br><br>        log.info(<span class="hljs-string">&quot;WebSocket连接建立 - 会话ID: &#123;&#125;, 用户: &#123;&#125;&quot;</span>, sessionId, user != <span class="hljs-literal">null</span> ? user : <span class="hljs-string">&quot;匿名&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 监听WebSocket断开连接事件</span><br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleWebSocketDisconnectListener</span><span class="hljs-params">(SessionDisconnectEvent event)</span> &#123;<br>        <span class="hljs-type">StompHeaderAccessor</span> <span class="hljs-variable">accessor</span> <span class="hljs-operator">=</span> StompHeaderAccessor.wrap(event.getMessage());<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionId</span> <span class="hljs-operator">=</span> accessor.getSessionId();<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> accessor.getUser();<br><br>        log.info(<span class="hljs-string">&quot;WebSocket断开连接 - 会话ID: &#123;&#125;, 用户: &#123;&#125;&quot;</span>, sessionId, user != <span class="hljs-literal">null</span> ? user : <span class="hljs-string">&quot;匿名&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-comment">// 监听WebSocket订阅事件</span><br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleWebSocketSubscribeEvent</span><span class="hljs-params">(SessionSubscribeEvent event)</span> &#123;<br>        <span class="hljs-type">StompHeaderAccessor</span> <span class="hljs-variable">accessor</span> <span class="hljs-operator">=</span> StompHeaderAccessor.wrap(event.getMessage());<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionId</span> <span class="hljs-operator">=</span> accessor.getSessionId();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">destination</span> <span class="hljs-operator">=</span> accessor.getDestination();<br><br>        log.info(<span class="hljs-string">&quot;WebSocket订阅事件 - 会话ID: &#123;&#125;, 目的地: &#123;&#125;&quot;</span>, sessionId, destination);<br>    &#125;<br><br>    <span class="hljs-comment">// 监听WebSocket取消订阅事件</span><br>    <span class="hljs-meta">@EventListener</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handleWebSocketUnsubscribeEvent</span><span class="hljs-params">(SessionUnsubscribeEvent event)</span> &#123;<br>        <span class="hljs-type">StompHeaderAccessor</span> <span class="hljs-variable">accessor</span> <span class="hljs-operator">=</span> StompHeaderAccessor.wrap(event.getMessage());<br>        <span class="hljs-type">String</span> <span class="hljs-variable">sessionId</span> <span class="hljs-operator">=</span> accessor.getSessionId();<br>        <span class="hljs-type">String</span> <span class="hljs-variable">destination</span> <span class="hljs-operator">=</span> accessor.getDestination();<br><br>        log.info(<span class="hljs-string">&quot;WebSocket取消订阅 - 会话ID: &#123;&#125;, 目的地: &#123;&#125;&quot;</span>, sessionId, destination);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="WebSocketNotificationService-java"><a href="#WebSocketNotificationService-java" class="headerlink" title="WebSocketNotificationService.java"></a>WebSocketNotificationService.java</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.service;<br><br><span class="hljs-keyword">import</span> org.springframework.messaging.simp.SimpMessagingTemplate;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WebSocketNotificationService</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> SimpMessagingTemplate messagingTemplate;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">WebSocketNotificationService</span><span class="hljs-params">(SimpMessagingTemplate messagingTemplate)</span> &#123;<br>        <span class="hljs-built_in">this</span>.messagingTemplate = messagingTemplate;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送设备状态更新通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendDeviceStatusUpdate</span><span class="hljs-params">(String deviceId, String status)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;设备状态更新：&quot;</span> + deviceId + <span class="hljs-string">&quot; - &quot;</span> + status;<br>        messagingTemplate.convertAndSend(<span class="hljs-string">&quot;/topic/device/status&quot;</span>, message);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 发送告警通知</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">sendAlertNotification</span><span class="hljs-params">(String alertTitle, String alertMessage)</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">message</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;告警：&quot;</span> + alertTitle + <span class="hljs-string">&quot; - &quot;</span> + alertMessage;<br>        messagingTemplate.convertAndSend(<span class="hljs-string">&quot;/topic/alerts&quot;</span>, message);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="DeviceService-java"><a href="#DeviceService-java" class="headerlink" title="DeviceService.java"></a>DeviceService.java</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.service;<br><br><span class="hljs-keyword">import</span> com.iot.dto.DeviceStatusDTO;<br><span class="hljs-keyword">import</span> com.iot.entity.Device;<br><span class="hljs-keyword">import</span> com.iot.entity.DeviceData;<br><span class="hljs-keyword">import</span> com.iot.repository.DeviceRepository;<br><span class="hljs-keyword">import</span> com.iot.repository.DeviceDataRepository;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;<br><span class="hljs-keyword">import</span> org.springframework.data.domain.Page;<br><span class="hljs-keyword">import</span> org.springframework.data.domain.Pageable;<br><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;<br><br><span class="hljs-keyword">import</span> java.time.LocalDateTime;<br><span class="hljs-keyword">import</span> java.util.List;<br><span class="hljs-keyword">import</span> java.util.Optional;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DeviceService</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> DeviceRepository deviceRepository;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> WebSocketNotificationService webSocketNotificationService;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> DeviceDataRepository deviceDataRepository;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;device.heartbeat.timeout-seconds&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> heartbeatTimeoutSeconds;<br><br>    <span class="hljs-keyword">public</span> Page&lt;Device&gt; <span class="hljs-title function_">getAllDevices</span><span class="hljs-params">(Pageable pageable)</span> &#123;<br>        <span class="hljs-keyword">return</span> deviceRepository.findAll(pageable);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> Optional&lt;Device&gt; <span class="hljs-title function_">getDeviceByDeviceId</span><span class="hljs-params">(String deviceId)</span> &#123;<br>        <span class="hljs-keyword">return</span> deviceRepository.findByDeviceId(deviceId);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> Page&lt;DeviceData&gt; <span class="hljs-title function_">getDeviceData</span><span class="hljs-params">(String deviceId, Pageable pageable)</span> &#123;<br>        <span class="hljs-keyword">return</span> deviceDataRepository.findByDeviceId(deviceId, pageable);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> DeviceStatusDTO <span class="hljs-title function_">getDeviceStatus</span><span class="hljs-params">(String deviceId)</span> &#123;<br>        Optional&lt;Device&gt; deviceOpt = deviceRepository.findByDeviceId(deviceId);<br><br>        <span class="hljs-keyword">if</span> (deviceOpt.isPresent()) &#123;<br>            <span class="hljs-type">Device</span> <span class="hljs-variable">device</span> <span class="hljs-operator">=</span> deviceOpt.get();<br>            <span class="hljs-type">DeviceStatusDTO</span> <span class="hljs-variable">statusDTO</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DeviceStatusDTO</span>();<br>            statusDTO.setDeviceId(device.getDeviceId());<br>            statusDTO.setDeviceName(device.getDeviceName());<br>            statusDTO.setStatus(device.getStatus().name());<br>            statusDTO.setIpAddress(device.getIpAddress());<br>            statusDTO.setLastSeen(device.getLastSeen());<br><br>            <span class="hljs-comment">// 这里可以添加从最新设备数据中提取传感器数据等逻辑</span><br>            <span class="hljs-keyword">return</span> statusDTO;<br>        &#125;<br><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;设备不存在: &quot;</span> + deviceId);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> Device <span class="hljs-title function_">saveOrUpdateDevice</span><span class="hljs-params">(Device device)</span> &#123;<br>        <span class="hljs-keyword">return</span> deviceRepository.save(device);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 检查并更新超时设备状态为离线</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">checkAndUpdateOfflineDevices</span><span class="hljs-params">()</span> &#123;<br>        log.info(<span class="hljs-string">&quot;开始检查设备离线状态...&quot;</span>);<br><br>        <span class="hljs-comment">// 计算心跳超时阈值</span><br>        <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">threshold</span> <span class="hljs-operator">=</span> LocalDateTime.now().minusSeconds(heartbeatTimeoutSeconds);<br><br>        <span class="hljs-comment">// 查询所有超时设备</span><br>        List&lt;Device&gt; offlineDevices = deviceRepository.findOfflineDevices(threshold);<br><br>        <span class="hljs-keyword">if</span> (offlineDevices.isEmpty()) &#123;<br>            log.info(<span class="hljs-string">&quot;没有超时设备&quot;</span>);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br><br>        log.info(<span class="hljs-string">&quot;发现 &#123;&#125; 个超时设备，标记为离线&quot;</span>, offlineDevices.size());<br><br>        <span class="hljs-comment">// 将超时设备状态更新为离线</span><br>        <span class="hljs-keyword">for</span> (Device device : offlineDevices) &#123;<br>            <span class="hljs-keyword">if</span> (device.getStatus() != Device.DeviceStatus.OFFLINE) &#123;<br>                device.setStatus(Device.DeviceStatus.OFFLINE);<br>                deviceRepository.save(device);<br>                log.info(<span class="hljs-string">&quot;设备 &#123;&#125; 已标记为离线&quot;</span>, device.getDeviceId());<br>            &#125;<br><br>            <span class="hljs-comment">// 发送WebSocket离线通知</span><br>            log.info(<span class="hljs-string">&quot;发送设备 &#123;&#125; 离线通知&quot;</span>, device.getDeviceId());<br>            webSocketNotificationService.sendDeviceStatusUpdate(<br>                    device.getDeviceId(),<br>                    Device.DeviceStatus.OFFLINE.name()<br>            );<br>        &#125;<br><br>        log.info(<span class="hljs-string">&quot;设备离线状态检查完成&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>https://undercurre.github.io/2026/01/09/物联网/Device服务/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/%E6%9E%B6%E6%9E%84/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/JAVA/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

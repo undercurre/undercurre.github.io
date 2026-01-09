@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="地图画布怎么实现？使用关键技术  瓦片技术：将地图数据切割成小块（瓦片），这些瓦片在不同的缩放级别下有不同的分辨率。仅加载和渲染用户当前视图范围内的瓦片，避免一次性加载整个地图数据。 矢量图层，使用矢量数据（如 GeoJSON）而非栅格图像来渲染地图上的特征（如道路、建筑物）。矢量数据在客户端渲染时可以缩放而不失真，并允许动态样式和交互。 渲染优化：利用 GPU 加速进行图形渲染，尤其是 WebG">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative面试题">
+<meta property="og:url" content="https://undercurre.github.io/2024/08/21/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/ReactNative%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="地图画布怎么实现？使用关键技术  瓦片技术：将地图数据切割成小块（瓦片），这些瓦片在不同的缩放级别下有不同的分辨率。仅加载和渲染用户当前视图范围内的瓦片，避免一次性加载整个地图数据。 矢量图层，使用矢量数据（如 GeoJSON）而非栅格图像来渲染地图上的特征（如道路、建筑物）。矢量数据在客户端渲染时可以缩放而不失真，并允许动态样式和交互。 渲染优化：利用 GPU 加速进行图形渲染，尤其是 WebG">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-21T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.087Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="ReactNative">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>ReactNative面试题 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ReactNative面试题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-21 19:49" pubdate>
+          2024年8月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ReactNative面试题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="地图画布怎么实现？"><a href="#地图画布怎么实现？" class="headerlink" title="地图画布怎么实现？"></a>地图画布怎么实现？</h1><p>使用关键技术</p>
+<ol>
+<li>瓦片技术：将地图数据切割成小块（瓦片），这些瓦片在不同的缩放级别下有不同的分辨率。仅加载和渲染用户当前视图范围内的瓦片，避免一次性加载整个地图数据。</li>
+<li>矢量图层，使用矢量数据（如 GeoJSON）而非栅格图像来渲染地图上的特征（如道路、建筑物）。矢量数据在客户端渲染时可以缩放而不失真，并允许动态样式和交互。</li>
+<li>渲染优化：利用 GPU 加速进行图形渲染，尤其是 WebGL 或 Canvas 技术。实现视图剪裁（View Clipping）和优化算法来只渲染用户当前视图范围内的内容。</li>
+</ol>
+<p>react-native 可以使用 react-native-canvas<br>flutter 有 canvas 类能够封装自定义组件<br>鸿蒙也有 Canvas 组件</p>
+<p>虚拟渲染，只需要过滤出视口对应地理数据数组内的数据就可以了。这里鸿蒙可以使用 LazyForEach 从提供的数据源中按需迭代数据，并在每次迭代过程中创建相应的组件。<br>还可以分批渲染，先渲染重要标记再渲染次要的</p>
+<ol start="4">
+<li>异步数据加载：在用户操作时（如缩放或平移），异步请求加载新的地图瓦片或数据，而不是阻塞主线程。</li>
+</ol>
+<p>react 有 InteractionManager 保证触摸等交互完成后再执行回调<br>vue 有 webWorker，使用 onMessage 和 postMessage 和 js 主线程进行通讯<br>flutter 使用 Isolate，并且可以（使用 SendPort 和 ReceivePort）进行通信。<br>鸿蒙有 taskPool 和 worker，taskpool 上限是自行配置的，worker 同一个进程只能有 8 个，taskPool 能取消，worker 不能。固定的单次主任务使用 worker，交互性触发的用 taskPool</p>
+<ol start="5">
+<li>数据缓存：缓存已经加载的瓦片或数据，避免重复请求相同内容。利用浏览器缓存、服务工作者或自定义缓存策略。</li>
+</ol>
+<p>react native @react-native-async-storage/async-storage<br>flutter：SharedPreferences<br>鸿蒙 LocalStorage 是页面级的 UI 状态存储 ，AppStorage 是应用级的全局状态共享，PersistentStorage 将选定的 AppStorage 属性保留在设备磁盘上。</p>
+<h1 id="再按一次退出怎么实现-？"><a href="#再按一次退出怎么实现-？" class="headerlink" title="再按一次退出怎么实现 ？"></a>再按一次退出怎么实现 ？</h1><p>react-native 通过 BackHandler 拦截返回<br>flutter 通过 WillPopScope 组件进行拦截<br>鸿蒙通过 onBackPress 实现</p>
+<h1 id="怎么发起请求？"><a href="#怎么发起请求？" class="headerlink" title="怎么发起请求？"></a>怎么发起请求？</h1><p>react-native 都是用 axios<br>鸿蒙用@ohos.net.http<br>flutter 用 Dio 包</p>
+<h1 id="怎么布局-grid-和-flex-？"><a href="#怎么布局-grid-和-flex-？" class="headerlink" title="怎么布局(grid 和 flex) ？"></a>怎么布局(grid 和 flex) ？</h1><p>react-native 多使用 flex 布局</p>
+<h1 id="钻入动画怎么实现？"><a href="#钻入动画怎么实现？" class="headerlink" title="钻入动画怎么实现？"></a>钻入动画怎么实现？</h1><p>web 使用 threejs 做</p>
+<p>使用 flutter</p>
+<p>使用 AnimatedBuilder: Flutter 提供的 AnimatedBuilder 可以用来构建动画。你可以根据用户点击的位置，通过计算缩放、平移的目标值，进行平滑过渡。</p>
+<p>设置 Transform: 利用 Transform 进行缩放和平移操作。根据用户点击的目标区域，计算缩放比例和平移量，然后用动画控制这些值的变化。</p>
+<p>交叉淡化: 使用 FadeTransition 或 AnimatedOpacity 实现两个层级地图的透明度动画，当下钻到新层级时，逐渐淡出上一级的地图，淡入下一级的地图。</p>
+<h1 id="缓存页面，类似-keep-alive"><a href="#缓存页面，类似-keep-alive" class="headerlink" title="缓存页面，类似 keep-alive?"></a>缓存页面，类似 keep-alive?</h1><p>react-native 通过导航器 unmountOnBlur 属性保持整个页面缓存</p>
+<p>flutter 使用 AutomaticKeepAliveClientMixin 混入封装一个组件来缓存组件</p>
+<h1 id="地图手势？"><a href="#地图手势？" class="headerlink" title="地图手势？"></a>地图手势？</h1><p>react-native 通过 react-native-gesture-handler 和 react-native-reanimated<br>flutter 通过 GestureDetector 获取手势<br>鸿蒙通过 GestureGroup 获取组合手势</p>
+<h1 id="怎么申请权限？"><a href="#怎么申请权限？" class="headerlink" title="怎么申请权限？"></a>怎么申请权限？</h1><h1 id="怎么发送应用通知？"><a href="#怎么发送应用通知？" class="headerlink" title="怎么发送应用通知？"></a>怎么发送应用通知？</h1><h1 id="怎么微信登录？"><a href="#怎么微信登录？" class="headerlink" title="怎么微信登录？"></a>怎么微信登录？</h1><h1 id="怎么微信支付？"><a href="#怎么微信支付？" class="headerlink" title="怎么微信支付？"></a>怎么微信支付？</h1><h1 id="百度地图-sdk-是怎么做的？"><a href="#百度地图-sdk-是怎么做的？" class="headerlink" title="百度地图 sdk 是怎么做的？"></a>百度地图 sdk 是怎么做的？</h1><p>在针对 react-native 的 sdk 中，我们可以看到主组件 mapView 是通过 requireNativeComponent API 利用 react-native 的桥接机制，绑定并调用原生组件。</p>
+<p>在 flutter 中通过 MethodChannel 从 Flutter 端调用原生平台的方法，EventChannel 从原生平台向 Flutter 端发送数据流。</p>
+<p>在鸿蒙中与 JS 中一样封装出组件然后导出。</p>
+<h1 id="组件间通讯"><a href="#组件间通讯" class="headerlink" title="组件间通讯"></a>组件间通讯</h1><h1 id="小窗化"><a href="#小窗化" class="headerlink" title="小窗化"></a>小窗化</h1><h1 id="切换语言，暗黑模式"><a href="#切换语言，暗黑模式" class="headerlink" title="切换语言，暗黑模式"></a>切换语言，暗黑模式</h1><p>鸿蒙使用 Environment</p>
+<h1 id="为什么分运行时和-渲染线程？"><a href="#为什么分运行时和-渲染线程？" class="headerlink" title="为什么分运行时和 渲染线程？"></a>为什么分运行时和 渲染线程？</h1><h1 id="怎么使用路由？"><a href="#怎么使用路由？" class="headerlink" title="怎么使用路由？"></a>怎么使用路由？</h1><h1 id="LRU，keep-alive-的实现"><a href="#LRU，keep-alive-的实现" class="headerlink" title="LRU，keep-alive 的实现"></a>LRU，keep-alive 的实现</h1><h1 id="导航器是什么？"><a href="#导航器是什么？" class="headerlink" title="导航器是什么？"></a>导航器是什么？</h1><h1 id="react-的-hooks-的理解"><a href="#react-的-hooks-的理解" class="headerlink" title="react 的 hooks 的理解"></a>react 的 hooks 的理解</h1><h1 id="保持后台"><a href="#保持后台" class="headerlink" title="保持后台"></a>保持后台</h1><h1 id="最优路线怎么算？"><a href="#最优路线怎么算？" class="headerlink" title="最优路线怎么算？"></a>最优路线怎么算？</h1><p>堆排序</p>
+<h1 id="鸿蒙的高性能在于？"><a href="#鸿蒙的高性能在于？" class="headerlink" title="鸿蒙的高性能在于？"></a>鸿蒙的高性能在于？</h1><p>方舟字节码（Ark Bytecode），是由方舟编译器编译 ArkTS/TS/JS 生成的，提供给方舟运行时解释执行的二进制文件，字节码中的主要内容是方舟字节码指令。</p>
+<h1 id="为什么要分开渲染线程和运行时？"><a href="#为什么要分开渲染线程和运行时？" class="headerlink" title="为什么要分开渲染线程和运行时？"></a>为什么要分开渲染线程和运行时？</h1><p>主要目的是提高浏览器的性能、响应速度以及用户体验。通过将渲染和 JavaScript 的执行分离，浏览器可以更好地利用多核 CPU 的并发处理能力，使得渲染和脚本执行可以在不同的线程上同时进行，从而提高整体性能。这样渲染就不用等待代码的执行，代码的执行也不必阻塞渲染。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ReactNative/" class="print-no-link">#ReactNative</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ReactNative面试题</div>
+      <div>https://undercurre.github.io/2024/08/21/知识点积累/ReactNative面试题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E9%9D%A2%E8%AF%95%E9%A2%98%E5%87%86%E5%A4%87/" title="面试题准备">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">面试题准备</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%86%85%E6%A0%B8%E5%8E%9F%E7%90%86/" title="内核原理">
+                        <span class="hidden-mobile">内核原理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

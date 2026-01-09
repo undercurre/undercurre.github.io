@@ -1,0 +1,734 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CMS System development Record技术选型标准： Mysql 8.0.40 关系型数据库 Nestjs： 基于 express.js 的 node 后端服务框架 Geeker Admin：Vue3 的后台管理框架 Vue3：渐进式前端框架，用于制作 app 用的 h5，实现移动端功能  数据模型定义一个名为 mova_cms 的数据库  product 表   id: in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nest-CMS">
+<meta property="og:url" content="https://undercurre.github.io/2025/01/22/Node/Nest-CMS/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="CMS System development Record技术选型标准： Mysql 8.0.40 关系型数据库 Nestjs： 基于 express.js 的 node 后端服务框架 Geeker Admin：Vue3 的后台管理框架 Vue3：渐进式前端框架，用于制作 app 用的 h5，实现移动端功能  数据模型定义一个名为 mova_cms 的数据库  product 表   id: in">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-22T20:14:11.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.022Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Nest-CMS - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Nest-CMS"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-22 20:14" pubdate>
+          2025年1月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Nest-CMS</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="CMS-System-development-Record"><a href="#CMS-System-development-Record" class="headerlink" title="CMS System development Record"></a>CMS System development Record</h1><h2 id="技术选型标准："><a href="#技术选型标准：" class="headerlink" title="技术选型标准："></a>技术选型标准：</h2><ol>
+<li>Mysql 8.0.40 关系型数据库</li>
+<li>Nestjs： 基于 express.js 的 node 后端服务框架</li>
+<li>Geeker Admin：Vue3 的后台管理框架</li>
+<li>Vue3：渐进式前端框架，用于制作 app 用的 h5，实现移动端功能</li>
+</ol>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>定义一个名为 mova_cms 的数据库</p>
+<ol>
+<li>product 表</li>
+</ol>
+<ul>
+<li>id: int 类型，主键，自动递增。</li>
+<li>model: varchar(255) 类型，产品型号。</li>
+<li>imageUrl: varchar(255) 类型，产品图片 URL，允许为 NULL。</li>
+<li>sellingPoints: varchar(255) 类型，产品卖点。</li>
+<li>manualOssUrl: varchar(255) 类型，产品说明书的 URL，允许为 NULL。</li>
+<li>name: varchar(255) 类型，产品名称，使用 utf8mb4 字符集。<br>索引：</li>
+<li>主键 id。</li>
+</ul>
+<ol start="2">
+<li>consumable 表</li>
+</ol>
+<ul>
+<li>id: int 类型，主键，自动递增。</li>
+<li>model: varchar(255) 类型，耗材型号。</li>
+<li>name: varchar(255) 类型，耗材名称。</li>
+<li>description: text 类型，耗材描述，允许为 NULL。</li>
+<li>productId: int 类型，外键，引用 product 表的 id，允许为 NULL。</li>
+<li>imageUrl: varchar(255) 类型，耗材图片 URL，允许为 NULL。</li>
+<li>productLink: varchar(255) 类型，耗材的产品链接，允许为 NULL。<br>索引与约束：</li>
+<li>外键 FK_46308fa8a011371ceb6e6588a1b 关联到 product 表的 id 字段。</li>
+</ul>
+<ol start="3">
+<li>user 表</li>
+</ol>
+<ul>
+<li>id: int 类型，主键，自动递增。</li>
+<li>username: varchar(255) 类型，用户名，唯一。</li>
+<li>password: varchar(255) 类型，用户密码。</li>
+<li>thirdPartyId: varchar(255) 类型，第三方用户标识，允许为 NULL。</li>
+<li>isActive: tinyint 类型，用户是否激活，默认为 1。</li>
+<li>email: varchar(255) 类型，用户邮箱，唯一，允许为 NULL。</li>
+<li>role: enum(‘admin’, ‘user’) 类型，用户角色，默认为 user。</li>
+<li>createdAt: datetime(6) 类型，记录创建时间，默认当前时间。</li>
+<li>updatedAt: datetime(6) 类型，记录更新时间，默认当前时间，并在更新时自动变更。<br>索引：</li>
+<li>唯一索引 IDX_78a916df40e02a9deb1c4b75ed 针对 username 字段。</li>
+<li>唯一索引 IDX_e12875dfb3b1d92d7d7c5377e2 针对 email 字段。<br>移动端</li>
+</ul>
+<ol>
+<li>移动端就是正常的页面构造 pnpm create vue</li>
+<li>然后引入了一个原子化 css 来加速页面的构建速度 unocss</li>
+<li>新建一个文件夹 api 来定义接口和接口类型, 用 axios 封装一个简单的 request 发起请求</li>
+<li>路由加了固定前缀 markH5,通过动态路由来访问页面，路由参数是产品 id</li>
+<li>vite 部署 proxy 开发代理</li>
+<li>打包路径根据开发和生产区分使用相对和绝对路径</li>
+</ol>
+<h2 id="后台管理"><a href="#后台管理" class="headerlink" title="后台管理"></a>后台管理</h2><ol>
+<li>Geeker Admin 使用起来就简单多了，很多东西都是封装好的</li>
+<li>在文件夹 api 来定义接口和接口类型</li>
+<li>在 assets 换一下需要替换的图片资源</li>
+<li>在 views 添加新页面或者改改旧页面</li>
+<li>因为 Geeker Admin 的路由是动态请求实现的，开发阶段，该请求可以使用 assets/json/authMenuList.json 代替，在这个地方伪造路由参数请求结果。</li>
+<li>通过.env.development 的 VITE_PROXY = [[“/api”,”开发过程中的本地后端端口”]]配置开发代理</li>
+<li>修改环境参数 production 环境下的 VITE_PUBLIC_PATH = ./,VITE_API_URL = “你要请求的地址”</li>
+</ol>
+<h2 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h2><ol>
+<li>使用的是 Nestjs</li>
+<li>根据数据结构，编写 dto，entity，controller，service，module</li>
+<li>使用 interceptor 对响应进行规范化</li>
+<li>使用 middleware 打印请求日志</li>
+<li>注意：每个 module 都需要 import 数据库 orm 实例如【TypeOrmModule.forFeature([Product])】</li>
+<li>在 app.module.ts 需要集中配置数据库，拦截器，中间件</li>
+<li>在 main.ts 启用 CORS 解决跨域问题，加入 Swagger，改端口</li>
+<li>build 加– wepack 可以打包成一个文件，但注意：这里不打包依赖</li>
+</ol>
+<h2 id="Mysql-使用-8-0-40"><a href="#Mysql-使用-8-0-40" class="headerlink" title="Mysql: 使用 8.0.40"></a>Mysql: 使用 8.0.40</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs autohotkey">---<br><br><span class="hljs-title">-- 主机:</span> <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span><br><span class="hljs-title">-- 服务器版本:</span> <span class="hljs-number">8.0</span>.<span class="hljs-number">40</span> - MySQL Community Server - GPL<br><span class="hljs-title">-- 服务器操作系统:</span> Win64<br><span class="hljs-title">-- HeidiSQL 版本:</span> <span class="hljs-number">12.8</span>.<span class="hljs-number">0.6908</span><br><br>---<br><br>/_!<span class="hljs-number">40101</span> SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40101</span> SET NAMES utf8 _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">50503</span> SET NAMES utf8mb4 _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40103</span> SET @OLD_TIME_ZONE=@@TIME_ZONE _/<span class="hljs-comment">;</span><br><span class="hljs-title">/_!40103 SET TIME_ZONE=&#x27;+00:</span><span class="hljs-number">00</span>&#x27; _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40014</span> SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=<span class="hljs-number">0</span> _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40101</span> SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE=&#x27;NO_AUTO_VALUE_ON_ZERO&#x27; _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40111</span> SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=<span class="hljs-number">0</span> _/<span class="hljs-comment">;</span><br><br>-- 导出 mova*cms 的数据库结构<br>CREATE DATABASE IF <span class="hljs-literal">NOT</span> EXISTS `mov<span class="hljs-built_in">a_cms</span>` <span class="hljs-comment">/*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4*general_ci */</span> /_!<span class="hljs-number">80016</span> DEFAULT ENCRYPTION=&#x27;N&#x27; _/<span class="hljs-comment">;</span><br>USE `mov<span class="hljs-built_in">a_cms</span>`;<br><br>-- 导出 表 mov<span class="hljs-built_in">a_cms</span>.consumable 结构<br>CREATE TABLE IF <span class="hljs-literal">NOT</span> EXISTS `consumable` (<br>`id` int <span class="hljs-literal">NOT</span> NULL AUTO_INCREMENT,<br>`model` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`name` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`description` text,<br>`productId` int DEFAULT NULL,<br>`imageUrl` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>`productLink` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>PRIMARY KEY (`id`),<br>KEY `FK_46308fa8a011371ceb6e6588a1b` (`productId`),<br>CONSTRAINT `FK_46308fa8a011371ceb6e6588a1b` FOREIGN KEY (`productId`) REFERENCES `product` (`id`)<br>) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci<span class="hljs-comment">;</span><br><br>-- 正在导出表 mov<span class="hljs-built_in">a_cms</span>.consumable 的数据：~<span class="hljs-number">0</span> rows (大约)<br><br>-- 导出 表 mov<span class="hljs-built_in">a_cms</span>.product 结构<br>CREATE TABLE IF <span class="hljs-literal">NOT</span> EXISTS `product` (<br>`id` int <span class="hljs-literal">NOT</span> NULL AUTO_INCREMENT,<br>`model` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`imageUrl` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>`sellingPoints` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`manualOssUrl` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>`name` varchar(<span class="hljs-number">255</span>) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci <span class="hljs-literal">NOT</span> NULL,<br>PRIMARY KEY (`id`)<br>) ENGINE=InnoDB AUTO_INCREMENT=<span class="hljs-number">2</span> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci<span class="hljs-comment">;</span><br><br>-- 正在导出表 mov<span class="hljs-built_in">a_cms</span>.product 的数据：~<span class="hljs-number">0</span> rows (大约)<br>REPLACE INTO `product` (`id`, `model`, `imageUrl`, `sellingPoints`, `manualOssUrl`, `name`) VALUES<br><span class="hljs-title">(1, &#x27;test-1-1&#x27;, &#x27;https://p3.itc.cn/images01/20231223/5714a806729749f0930242ae7a743671.jpeg&#x27;, &#x27;好卖，好用,好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，好用好卖，&#x27;, &#x27;https:</span>//github.com/undercurre/File/raw/refs/heads/main/<span class="hljs-variable">%E4%</span>BA<span class="hljs-variable">%A7%</span>E5<span class="hljs-variable">%93%</span><span class="hljs-number">81</span><span class="hljs-variable">%E8%</span>AF<span class="hljs-variable">%B4%</span>E6<span class="hljs-variable">%98%</span><span class="hljs-number">8</span>E<span class="hljs-variable">%E4%</span>B9%A6demo.pdf&#x27;, &#x27;test 机器 <span class="hljs-number">1</span>-<span class="hljs-number">1</span>&#x27;)<span class="hljs-comment">;</span><br><br>-- 导出 表 mov<span class="hljs-built_in">a_cms</span>.user 结构<br>CREATE TABLE IF <span class="hljs-literal">NOT</span> EXISTS `user` (<br>`id` int <span class="hljs-literal">NOT</span> NULL AUTO_INCREMENT,<br>`username` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`password` varchar(<span class="hljs-number">255</span>) <span class="hljs-literal">NOT</span> NULL,<br>`thirdPartyId` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>`isActive` tinyint <span class="hljs-literal">NOT</span> NULL DEFAULT &#x27;<span class="hljs-number">1</span>&#x27;,<br>`email` varchar(<span class="hljs-number">255</span>) DEFAULT NULL,<br>`role` enum(&#x27;admin&#x27;,&#x27;user&#x27;) <span class="hljs-literal">NOT</span> NULL DEFAULT &#x27;user&#x27;,<br>`createdAt` datetime(<span class="hljs-number">6</span>) <span class="hljs-literal">NOT</span> NULL DEFAULT CURRENT_TIMESTAMP(<span class="hljs-number">6</span>),<br>`updatedAt` datetime(<span class="hljs-number">6</span>) <span class="hljs-literal">NOT</span> NULL DEFAULT CURRENT_TIMESTAMP(<span class="hljs-number">6</span>) ON UPDATE CURRENT_TIMESTAMP(<span class="hljs-number">6</span>),<br>PRIMARY KEY (`id`),<br>UNIQUE KEY `IDX_78a916df40e02a9deb1c4b75ed` (`username`),<br>UNIQUE KEY `IDX_e12875dfb3b1d92d7d7c5377e2` (`email`)<br>) ENGINE=InnoDB AUTO_INCREMENT=<span class="hljs-number">4</span> DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci<span class="hljs-comment">;</span><br><br>-- 正在导出表 mov<span class="hljs-built_in">a_cms</span>.user 的数据：~<span class="hljs-number">3</span> rows (大约)<br>REPLACE INTO `user` (`id`, `username`, `password`, `thirdPartyId`, `isActive`, `email`, `role`, `createdAt`, `updatedAt`) VALUES<br><span class="hljs-title">(1, &#x27;lirunhua&#x27;, &#x27;$2a$10$Ru3GkaZoo4rNAcTNNuXtXOCSjH0xzYS2pT4aUYuVGqHenMEJZPzsO&#x27;, NULL, 1, NULL, &#x27;user&#x27;, &#x27;2025-01-15 19:39:12.577733&#x27;, &#x27;2025-01-15 19:39:</span><span class="hljs-number">12.577733</span>&#x27;),<br><span class="hljs-title">(2, &#x27;test&#x27;, &#x27;$2a$10$aK1gV40y2CDvsVFIp61pP.LvrJCqa65gbn9j6qd/Gaet1eSZxT5Va&#x27;, NULL, 1, NULL, &#x27;user&#x27;, &#x27;2025-01-16 16:14:25.481797&#x27;, &#x27;2025-01-16 16:14:</span><span class="hljs-number">25.481797</span>&#x27;),<br><span class="hljs-title">(3, &#x27;test2&#x27;, &#x27;$2a$10$CTGSX3IUVy9a0of4uvJJWuLr17ybfReVFxAoqW21hKanXzjchvrom&#x27;, NULL, 1, NULL, &#x27;user&#x27;, &#x27;2025-01-16 16:15:32.797743&#x27;, &#x27;2025-01-16 16:15:</span><span class="hljs-number">32.797743</span>&#x27;)<span class="hljs-comment">;</span><br><br>/_!<span class="hljs-number">40103</span> SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, &#x27;system&#x27;) _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40101</span> SET SQL_MODE=IFNULL(@OLD_SQL_MODE, &#x27;&#x27;) _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40014</span> SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, <span class="hljs-number">1</span>) _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40101</span> SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT _/<span class="hljs-comment">;</span><br>/_!<span class="hljs-number">40111</span> SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, <span class="hljs-number">1</span>) _/<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Nginx-使用-1-27-0"><a href="#Nginx-使用-1-27-0" class="headerlink" title="Nginx: 使用 1.27.0"></a>Nginx: 使用 1.27.0</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">worker_processes</span> <span class="hljs-number">1</span>;<br><br><span class="hljs-section">events</span> &#123;<br><span class="hljs-attribute">worker_connections</span> <span class="hljs-number">1024</span>;<br>&#125;<br><br><span class="hljs-section">http</span> &#123;<br><span class="hljs-attribute">include</span> mime.types;<br><span class="hljs-attribute">default_type</span> application/octet-stream;<br><br>    <span class="hljs-attribute">sendfile</span>        <span class="hljs-literal">on</span>;<br><br>    <span class="hljs-attribute">keepalive_timeout</span>  <span class="hljs-number">65</span>;<br><br>    <span class="hljs-section">server</span> &#123;<br>        <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>        <span class="hljs-attribute">server_name</span>  localhost;<br><br>        <span class="hljs-attribute">root</span>   html;<br>        <span class="hljs-attribute">index</span>  index.html;<br>        <span class="hljs-comment"># 移动端映射</span><br>        <span class="hljs-section">location</span> /web/cms/markH5/ &#123;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> /app/index.html; <span class="hljs-comment"># vue3 history router</span><br>        &#125;<br><br><br>        <span class="hljs-section">location</span> /web/cms/markH5/product/assets/ &#123;<br>            <span class="hljs-attribute">alias</span> html/app/assets/;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ =<span class="hljs-number">404</span>;<br>        &#125;<br><br>        <span class="hljs-comment"># 管理后台映射</span><br>        <span class="hljs-section">location</span> /web/cms/admin/ &#123;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> /admin/index.html; <span class="hljs-comment"># vue3 history router</span><br>        &#125;<br><br>        <span class="hljs-section">location</span> /web/cms/admin/assets/ &#123;<br>            <span class="hljs-attribute">alias</span> html/admin/assets/;<br>            <span class="hljs-attribute">try_files</span> <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ =<span class="hljs-number">404</span>;<br>        &#125;<br><br>        <span class="hljs-section">location</span> /web/cms/api/mova-cms/ &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://mova_cms_backend:4000/;  <span class="hljs-comment"># 使用容器名称</span><br>            <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-Proto <span class="hljs-variable">$scheme</span>;<br>            <span class="hljs-attribute">rewrite</span><span class="hljs-regexp"> ^/api/(.*)</span> /<span class="hljs-variable">$1</span> <span class="hljs-literal">break</span>;  <span class="hljs-comment"># 去掉前缀，确保请求路径正确</span><br>        &#125;<br><br>        <span class="hljs-comment"># 后端映射</span><br>        <span class="hljs-section">location</span> /web/cms/mova-cms/ &#123;<br>            <span class="hljs-attribute">proxy_pass</span> http://mova_cms_backend:4000;<br>            <span class="hljs-attribute">proxy_set_header</span> Host <span class="hljs-variable">$host</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>            <span class="hljs-attribute">proxy_set_header</span> X-Forwarded-Proto <span class="hljs-variable">$scheme</span>;<br>        &#125;<br><br>        <span class="hljs-attribute">error_page</span>   <span class="hljs-number">500</span> <span class="hljs-number">502</span> <span class="hljs-number">503</span> <span class="hljs-number">504</span>  /50x.html;<br>        <span class="hljs-section">location</span> = /50x.html &#123;<br>            <span class="hljs-attribute">root</span>   html;<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h2><p>在 windows 运行 Docker Desktop， 需要提前安装 WSL2（模拟 Linux），还得在设置里的 Docker Engine 里配置镜像源</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;builder&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;gc&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br><span class="hljs-attr">&quot;defaultKeepStorage&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;20GB&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;experimental&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;registry-mirrors&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br><span class="hljs-string">&quot;https://dockerproxy.1panel.live&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-string">&quot;https://docker.1panel.live&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-string">&quot;https://docker.1panelproxy.com&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-string">&quot;https://proxy.1panel.live&quot;</span><br><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Docker-compose"><a href="#Docker-compose" class="headerlink" title="Docker compose"></a>Docker compose</h4><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-params">services:</span><br><br><span class="hljs-comment"># 后端服务</span><br><br><span class="hljs-params">mova_cms_backend:</span><br><span class="hljs-params">build:</span><br><span class="hljs-params">context:</span> <span class="hljs-symbol">./system</span><br><span class="hljs-params">dockerfile:</span> Dockerfile<br><span class="hljs-params">container_name:</span> mova_cms_backend<br><span class="hljs-params">environment:</span> <span class="hljs-operator">-</span> NODE_ENV<span class="hljs-operator">=</span>production<br><span class="hljs-params">networks:</span> <span class="hljs-operator">-</span> mova_network<br><span class="hljs-params">depends_on:</span> <span class="hljs-operator">-</span> mova_cms_mysql<br><br><span class="hljs-comment"># MySQL 数据库</span><br><br><span class="hljs-params">mova_cms_mysql:</span><br><span class="hljs-params">image:</span> mysql:<span class="hljs-number">8.0</span><br><span class="hljs-params">container_name:</span> mova_cms_mysql<br><span class="hljs-params">environment:</span><br><span class="hljs-params">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-number">123456</span><br><span class="hljs-params">MYSQL_DATABASE:</span> mova_cms<br><span class="hljs-params">volumes:</span> <span class="hljs-operator">-</span> .<span class="hljs-operator">/</span>mysql<span class="hljs-operator">/</span>movacms.sql:<span class="hljs-symbol">/docker-entrypoint-initdb.d/init.sql</span> <span class="hljs-comment"># 使用 sql 脚本创建数据库</span><br><span class="hljs-params">networks:</span> <span class="hljs-operator">-</span> mova_network<br><br><span class="hljs-comment"># Nginx 反向代理服务</span><br><br><span class="hljs-params">mova_cms_nginx:</span><br><span class="hljs-params">build:</span><br><span class="hljs-params">context:</span> <span class="hljs-symbol">./nginx</span><br><span class="hljs-params">dockerfile:</span> Dockerfile<br><span class="hljs-params">container_name:</span> mova_cms_nginx<br><span class="hljs-params">ports:</span> <span class="hljs-operator">-</span> <span class="hljs-string">&quot;9006:80&quot;</span> <span class="hljs-comment"># 你可以根据需要修改端口</span><br><span class="hljs-params">volumes:</span> <span class="hljs-operator">-</span> .<span class="hljs-operator">/</span>nginx<span class="hljs-operator">/</span>nginx.conf:<span class="hljs-symbol">/etc/nginx/nginx.conf</span> <span class="hljs-comment"># 同步 nginx 镜像配置 - ./app:/etc/nginx/html/app # 移动端前端静态资源配置 - ./admin:/etc/nginx/html/admin # 后台管理前端静态资源配置</span><br><span class="hljs-params">networks:</span> <span class="hljs-operator">-</span> mova_network <span class="hljs-comment"># 使用 mova_network 进行镜像链接</span><br><span class="hljs-params">depends_on:</span> <span class="hljs-operator">-</span> mova_cms_backend <span class="hljs-comment"># 在 mova_cms_backend 后执行</span><br><br><span class="hljs-params">networks:</span><br><span class="hljs-params">mova_network:</span><br><span class="hljs-params">driver:</span> bridge<br></code></pre></td></tr></table></figure>
+
+<h4 id="DockerFile-nginx"><a href="#DockerFile-nginx" class="headerlink" title="DockerFile(nginx)"></a>DockerFile(nginx)</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 使用官方 Nginx 镜像作为基础镜像</span><br><br><span class="hljs-keyword">FROM</span> nginx:alpine<br><br><span class="hljs-comment"># 将自定义的 nginx.conf 配置文件复制到容器中的配置目录</span><br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> nginx.conf /etc/nginx/nginx.conf</span><br><br><span class="hljs-comment"># 暴露 Nginx 默认的 HTTP 端口</span><br><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">80</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="DockerFile-nest"><a href="#DockerFile-nest" class="headerlink" title="DockerFile(nest)"></a>DockerFile(nest)</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> node:<span class="hljs-number">18.20</span>.<span class="hljs-number">0</span><br><br><span class="hljs-comment"># 设置工作目录为 /app</span><br><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /system</span><br><br><span class="hljs-comment"># 复制当前目录的所有文件到容器的工作目录中</span><br><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span><br><br><span class="hljs-comment"># 如果有 package.json，安装依赖</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> npm install</span><br><br><span class="hljs-comment"># 启动服务</span><br><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;node&quot;</span>, <span class="hljs-string">&quot;main.js&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Node/" class="category-chain-item">Node</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/" class="print-no-link">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Nest-CMS</div>
+      <div>https://undercurre.github.io/2025/01/22/Node/Nest-CMS/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/23/%E8%B4%A2%E7%BB%8F/%E7%89%A9%E8%81%94%E7%BD%91/" title="物联网">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">物联网</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/16/%E9%9D%A2%E8%AF%95/%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/" title="面试问答训练宝典">
+                        <span class="hidden-mobile">面试问答训练宝典</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

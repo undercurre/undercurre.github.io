@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="面试需求 微信小程序，公众号开发 typescript 数据结构 网络基础 Vue&#x2F;React Webpack&#x2F;Rollup 组件库&#x2F;工具库编写 Express&#x2F;Nest RN,Weex,Flutter 充电宝小程序  1.小程序简述微信小程序原理小程序本质就是一个单页面应用，所有的页面渲染和事件处理，都在一个页面内进行，但又可以通过微信客户端调用原生的各种接口； 微信小程序采用 JavaScri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈啰面试">
+<meta property="og:url" content="https://undercurre.github.io/2024/09/11/%E9%9D%A2%E8%AF%95/%E5%93%88%E5%95%B0%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="面试需求 微信小程序，公众号开发 typescript 数据结构 网络基础 Vue&#x2F;React Webpack&#x2F;Rollup 组件库&#x2F;工具库编写 Express&#x2F;Nest RN,Weex,Flutter 充电宝小程序  1.小程序简述微信小程序原理小程序本质就是一个单页面应用，所有的页面渲染和事件处理，都在一个页面内进行，但又可以通过微信客户端调用原生的各种接口； 微信小程序采用 JavaScri">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-11T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.097Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="自研">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>哈啰面试 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="哈啰面试"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-11 19:49" pubdate>
+          2024年9月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">哈啰面试</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="面试需求"><a href="#面试需求" class="headerlink" title="面试需求"></a>面试需求</h1><ol>
+<li>微信小程序，公众号开发</li>
+<li>typescript</li>
+<li>数据结构</li>
+<li>网络基础</li>
+<li>Vue/React</li>
+<li>Webpack/Rollup</li>
+<li>组件库/工具库编写</li>
+<li>Express/Nest</li>
+<li>RN,Weex,Flutter</li>
+<li>充电宝小程序</li>
+</ol>
+<h2 id="1-小程序"><a href="#1-小程序" class="headerlink" title="1.小程序"></a>1.小程序</h2><h4 id="简述微信小程序原理"><a href="#简述微信小程序原理" class="headerlink" title="简述微信小程序原理"></a>简述微信小程序原理</h4><p>小程序本质就是一个单页面应用，所有的页面渲染和事件处理，都在一个页面内进行，但又可以通过微信客户端调用原生的各种接口；</p>
+<p>微信小程序采用 JavaScript、WXML、WXSS 三种技术进行开发，跟普通的前端语法差不多。</p>
+<p>小程序分为两个部分 webview 和 appService。其中 webview 主要用来展现 UI，appService 有来处理业务逻辑、数据及接口调用。它们在两个进程中运行，通过系统层 JSBridge 实现通信，实现 UI 的渲染、事件的处理。</p>
+<p><strong>JSBridge 在当中的作用？</strong></p>
+<p>JSBridge 充当逻辑层和视图层之间的桥梁，允许这两个线程安全地交换数据和消息。当逻辑层需要更新视图层时，会通过 JSBridge 将数据发送到视图层进行渲染。反之，视图层也可以通过 JSBridge 向逻辑层发送用户交互事件（如点击、输入等）。</p>
+<p><strong>JSBridge 的本质是什么？</strong></p>
+<p>JSBridge 的本质是在原生端通过对 JavaScript 环境中的 window 对象注入特定的方法来实现通信和调用。</p>
+<h4 id="如何实现一个充电宝租借小程序？"><a href="#如何实现一个充电宝租借小程序？" class="headerlink" title="如何实现一个充电宝租借小程序？"></a>如何实现一个充电宝租借小程序？</h4><p>权限申请，定位导航，扫码租借，押金系统，支付系统，个人中心以及微信登录 7 大功能</p>
+<p><strong>实现权限申请</strong></p>
+<p>通过 app.json 的 permissions 来配置</p>
+<p><strong>实现定位导航</strong></p>
+<ol>
+<li>获取用户位置 （wx.getLocation）记得 type: ‘gcj02’, // 返回可以用于 <code>wx.openLocation</code> 的经纬度</li>
+<li>用微信小程序的 map 组件来开地图</li>
+</ol>
+<p><strong>实现扫码租借</strong></p>
+<p>通过 wx.scanCode 可以调起客户端扫码界面进行扫码</p>
+<p><strong>实现押金和支付系统</strong></p>
+<p>通过<code>wx.requestPayment</code>发起微信支付</p>
+<p>需要注意支付流程，要先向自己的后端（已经配置好微信支付）发起下单请求向微信支付服务后台生成预支付交易单，返回预支付签名数据 timeStamp, nonceStr, package, signType, paySign，再发起微信支付</p>
+<p><strong>实现个人中心以及微信登录</strong></p>
+<p>先调用 wx.login 微信登录接口获取临时登录凭证（code），再将临时登录凭证发送到服务器进行登录凭证的校验和用户信息的获取，即发送 res.code 到后台换取 openId, sessionKey, unionId，最后 wx.setStorageSync 保存用户信息</p>
+<h4 id="小程序的生命周期"><a href="#小程序的生命周期" class="headerlink" title="小程序的生命周期"></a>小程序的生命周期</h4><p>分应用，页面和组件的生命周期</p>
+<p>应用 onLaunch，onShow，onHide<br>页面 onLoad，onShow，onReady，onUnload<br>组件 attached，ready，detached</p>
+<h2 id="2-公众号"><a href="#2-公众号" class="headerlink" title="2. 公众号"></a>2. 公众号</h2><ol>
+<li>配置完密钥和后端服务器（使用 express）之后</li>
+<li>因为公众号交流通过 xml 来通讯，所以需要 xml2js 库来解析用户的行为事件类型 msgType 和内容 content</li>
+<li>做出相应的处理返回 xml 体</li>
+</ol>
+<h2 id="3-Express"><a href="#3-Express" class="headerlink" title="3.Express"></a>3.Express</h2><ol>
+<li>主要特点是洋葱模型</li>
+<li>NestJS 是一个构建在 Express 之上的框架，它利用了 Express 的中间件机制和路由系统，同时增加了许多功能和结构化设计，使开发者能够更容易地构建可维护、可扩展的大型应用程序。</li>
+</ol>
+<h2 id="4-typescript"><a href="#4-typescript" class="headerlink" title="4.typescript"></a>4.typescript</h2><h4 id="Typescript-中的-interface-和-type-到底有什么区别"><a href="#Typescript-中的-interface-和-type-到底有什么区别" class="headerlink" title="Typescript 中的 interface 和 type 到底有什么区别?"></a>Typescript 中的 interface 和 type 到底有什么区别?</h4><p>用 interface 描述<strong>数据结构</strong>，用 type 描述<strong>类型关系</strong>，能用 interface 的情况尽量是用 interface，由于它在类型约束和演算时的兼容性和确定性较强。</p>
+<h4 id="什么是泛型（generic），如何创建泛型函数和泛型类，实际用途？"><a href="#什么是泛型（generic），如何创建泛型函数和泛型类，实际用途？" class="headerlink" title="什么是泛型（generic），如何创建泛型函数和泛型类，实际用途？"></a>什么是泛型（generic），如何创建泛型函数和泛型类，实际用途？</h4><p>泛型是一种在定义函数、类或接口时使用类型参数构造新的确定类型的类型定义方式，以增加代码的灵活性和重用性。当一个函数的返回值的类型需要与此函数的参数类型想关联的时候，就需要使用泛型。</p>
+<h4 id="为什么要使用-TypeScript-TypeScript-相对于-JavaScript-的优势是什么？"><a href="#为什么要使用-TypeScript-TypeScript-相对于-JavaScript-的优势是什么？" class="headerlink" title="为什么要使用 TypeScript ? TypeScript 相对于 JavaScript 的优势是什么？"></a>为什么要使用 TypeScript ? TypeScript 相对于 JavaScript 的优势是什么？</h4><p>通过类型检查和类型推断，可以在编写脚本的时候提前知道运行时的类型状况，从而避免运行时的错误出现。<br>对于功能的编写和对接也有好处，明确指出输出输入的类型要求，使得对接更顺畅。</p>
+<h4 id="你知道哪些泛型约束的场景？"><a href="#你知道哪些泛型约束的场景？" class="headerlink" title="你知道哪些泛型约束的场景？"></a>你知道哪些泛型约束的场景？</h4><p>默认情况下，泛型函数的类型变量 T 可以代表多个类型，这导致在泛型函数内部无法访问任何属性</p>
+<p>当我们需要用到一些属性的时候，就无法使用，会报错，比如字符串、数组的长度</p>
+<p>这个时候我们通常使用 extends，让泛型明确继承某个类型</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// 定义一个函数，传入两个值，来比较哪个更长 ,相等就返回0</span><br><span class="hljs-keyword">function</span> compare&lt;T <span class="hljs-keyword">extends</span> &#123; <span class="hljs-attr">length</span>: <span class="hljs-built_in">number</span> &#125;&gt;(<span class="hljs-attr">a</span>: T, <span class="hljs-attr">b</span>: T) &#123;<br>  <span class="hljs-keyword">if</span> (a.<span class="hljs-property">length</span> &lt; b.<span class="hljs-property">length</span>) &#123;<br>    <span class="hljs-keyword">return</span> b;<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (a.<span class="hljs-property">length</span> === b.<span class="hljs-property">length</span>) &#123;<br>    <span class="hljs-keyword">return</span> a.<span class="hljs-property">length</span> - b.<span class="hljs-property">length</span>;<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-keyword">return</span> a;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="你用过哪些-typescript-工具类？"><a href="#你用过哪些-typescript-工具类？" class="headerlink" title="你用过哪些 typescript 工具类？"></a>你用过哪些 typescript 工具类？</h4><p><code>Partial&lt;T&gt;</code>将构造类型 T 的所有属性设置为可选。<br><code>Record&lt;K, T&gt;</code>构造一个键值对泛型<br><code>Pick&lt;T, K&gt;</code>从类型 T 中挑选部分属性 K 来构造新的类型<br><code>Exclude&lt;T, U&gt;</code>从类型 T 中，剔除所有能赋值给 U 的属性<br><code>Extract&lt;T, U&gt;</code>从类型 T 中提取所有可以赋值给 U 的类型<br><code>Omit&lt;T, K&gt;</code>从类型 T 中剔除所有能赋值给 K 的属性<br><code>NonNullable&lt;T&gt;</code>从 T 中剔除 null 和 undefined<br><code>ReturnType&lt;T&gt;</code>由函数类型 T 的返回值类型构造一个类型<br><code>Readonly&lt;T&gt;</code>将 T 中所有属性设为只读<br><code>InstanceType&lt;typeof Constructor&gt;</code>用于获取构造函数类型（类）实例的类型</p>
+<h2 id="5-网络基础"><a href="#5-网络基础" class="headerlink" title="5.网络基础"></a>5.网络基础</h2><h4 id="介绍下-http1-0、http1-1、http2-0-协议的区别？"><a href="#介绍下-http1-0、http1-1、http2-0-协议的区别？" class="headerlink" title="介绍下 http1.0、http1.1、http2.0 协议的区别？"></a>介绍下 http1.0、http1.1、http2.0 协议的区别？</h4><p>http1.0 的特点是每次请求和响应完毕后都会销毁 TCP 连接，<br>http1.1 是 http1.0 的改进版, 能够长连接，<br>http2.0 有多路复用提高吞吐量，同时支持二进制传输（2.0 之前是文本传输）。HTTP/2.0 通过引入二进制帧、多路复用和流的概念，使得同一连接上可以并行传输多个请求和响应，而不受制于请求的顺序性。</p>
+<h4 id="http-和-https-的区别"><a href="#http-和-https-的区别" class="headerlink" title="http 和 https 的区别"></a>http 和 https 的区别</h4><ol>
+<li>HTTP 明文传输，数据都是未加密的，安全性较差，HTTPS（SSL+HTTP） 数据传输过程是加密的，安全性较好。</li>
+<li>端口不一样，http 是 80，https 是 443</li>
+<li>使用 HTTPS 协议需要到 CA（Certificate Authority，数字证书认证机构） 申请证书（在服务端）。</li>
+<li>HTTP 页面响应速度比 HTTPS 快，因为多了 ssl 握手</li>
+<li>HTTPS 其实就是建构在 SSL/TLS 之上的 HTTP 协议，所以，要比较 HTTPS 比 HTTP 要更耗费服务器资源。</li>
+<li>总的来说，https 比 http 多了一个 rsa+aes 的混合加密过程</li>
+</ol>
+<h4 id="说说常见的-http-状态码"><a href="#说说常见的-http-状态码" class="headerlink" title="说说常见的 http 状态码"></a>说说常见的 http 状态码</h4><p>1xx,代表接受请求正在处理，2xx,代表请求正常处理完毕，3xx，代表需要附加操作已完成请求，4xx，代表客户端请求错误，服务器无法处理请求，5xx，代表服务器处理请求出错</p>
+<p>201：Created 已创建。成功请求并创建了新的资源。<br>204：服务器成功处理，但未返回内容。<br>206：服务器成功处理了部分 GET 请求。<br>301：永久重定向<br>302：临时重定向<br>（301 和 302 的区别对搜索引擎 SEO 有效，用户体验到的都是重定向体验）<br>304：资源未修改，服务器通过该状态码告诉客户端，请求的资源和过去一样，并没有任何变化，建议自行使用过去的缓存。通常，304 状态码的响应中，服务器不会附带任何的响应体。<br>401：请求要求用户的身份认证<br>403：服务器理解请求客户端的请求，但是拒绝执行此请求，通常是权限不足<br>404：服务器无法根据客户端的请求找到资源（网页）<br>501：服务器不支持请求的功能，无法完成请求。<br>503：由于超载或系统维护，服务器暂时的无法处理客户端的请求。</p>
+<h4 id="前端如何实现即时通讯？"><a href="#前端如何实现即时通讯？" class="headerlink" title="前端如何实现即时通讯？"></a>前端如何实现即时通讯？</h4><ol>
+<li>短轮询。即客户端每隔一段时间就向服务器发送消息，询问有没有新的数据</li>
+<li>长轮询，发起一次请求询问服务器，服务器可以将该请求挂起，等到有新消息时再进行响应。响应后，客户端立即又发起一次请求，重复整个流程。</li>
+<li>websocket，握手完毕后会建立持久性的连接通道，随后服务器可以在任何时候推送新消息给客户端</li>
+</ol>
+<h4 id="如何解决跨域问题？"><a href="#如何解决跨域问题？" class="headerlink" title="如何解决跨域问题？"></a>如何解决跨域问题？</h4><p>同源策略是指只有具有相同源的页面才能够共享数据，比如 cookie，同源是指页面具有相同的协议、域名、端口号，有一项不同就不是同源。 有同源策略能够保证 web 网页的安全性。<br>解决方案有 JSONP，CORS, 代理服务器三种方案，前两种要求服务器在己方控制范围内。并且 JSONP 只能适用于 get 请求，CORS 适用于所有请求。</p>
+<h4 id="介绍一下-xss-csrf-攻击"><a href="#介绍一下-xss-csrf-攻击" class="headerlink" title="介绍一下 xss csrf 攻击"></a>介绍一下 xss csrf 攻击</h4><p>XSS 是指跨站脚本攻击。攻击者利用站点的漏洞，在表单提交时，在表单内容中加入一些恶意脚本，当其他正常用户浏览页面，而页面中刚好出现攻击者的恶意脚本时，脚本被执行，从而使得页面遭到破坏，或者用户信息被窃取。</p>
+<p>要防范 XSS 攻击，需要在服务器端过滤脚本代码，将一些危险的元素和属性去掉或对元素进行 HTML 实体编码。cookie 加 httponly</p>
+<p>CSRF 是跨站请求伪造，是一种挟制用户在当前已登录的 Web 应用上执行非本意的操作的攻击方法</p>
+<p>它首先引导用户访问一个危险网站，当用户访问网站后，网站会发送请求到被攻击的站点，这次请求会携带用户的 cookie 发送，因此就利用了用户的身份信息完成攻击</p>
+<p>防御 CSRF 攻击有多种手段：</p>
+<p>为表单添加校验的 token 校验<br>cookie 中使用 sameSite 字段<br>服务器检查 referer 字段</p>
+<h4 id="Get-和-Post-的区别"><a href="#Get-和-Post-的区别" class="headerlink" title="Get 和 Post 的区别"></a>Get 和 Post 的区别</h4><p>浏览器在发送 GET 请求时，不会附带请求体</p>
+<h2 id="6-Vue"><a href="#6-Vue" class="headerlink" title="6.Vue"></a>6.Vue</h2><h4 id="谈谈你对-vue-的理解"><a href="#谈谈你对-vue-的理解" class="headerlink" title="谈谈你对 vue 的理解"></a>谈谈你对 vue 的理解</h4><p>1.数据驱动视图 2.组件化 3.指令系统和声明式渲染</p>
+<h4 id="谈谈-vue-的响应式数据"><a href="#谈谈-vue-的响应式数据" class="headerlink" title="谈谈 vue 的响应式数据"></a>谈谈 vue 的响应式数据</h4><p>本质上就是响应式数据触发被监控的函数</p>
+<h4 id="谈谈你对-MVVM-的理解"><a href="#谈谈你对-MVVM-的理解" class="headerlink" title="谈谈你对 MVVM 的理解"></a>谈谈你对 MVVM 的理解</h4><p>就是 Model-View-ViewModel,Model 就是数据模型层，也就是 data，View 就是视图层，也就是 DOM，ViewModel 就是视图模型层，也就是 vue 实例对象，用于连接 View 和 Model，核心是提供双向数据绑定，能够监听到数据的变化去改变视图，也能通过用户交互，视图的变化操作数据，实现 View 和 Model 的同步。</p>
+<h4 id="watchEffect-和-watch-有什么区别？"><a href="#watchEffect-和-watch-有什么区别？" class="headerlink" title="watchEffect 和 watch 有什么区别？"></a>watchEffect 和 watch 有什么区别？</h4><p>watchEffect 会自动收集依赖</p>
+<h4 id="聊聊生命周期？"><a href="#聊聊生命周期？" class="headerlink" title="聊聊生命周期？"></a>聊聊生命周期？</h4><p>beforeCreate：已被移除，使用 setup 代替。 created：已被移除，使用 setup 代替。</p>
+<p>beforeMount：在挂载之前被调用，相关的 render 函数首次被调用。</p>
+<p>mounted：组件被挂载后调用。</p>
+<p>beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。</p>
+<p>updated：由于数据更改导致虚拟 DOM 重新渲染和打补丁之后调用。</p>
+<p>beforeUnmount：组件卸载前调用。</p>
+<p>unmounted：组件卸载后调用。</p>
+<p>activated：keep-alive 组件激活时调用。</p>
+<p>deactivated：keep-alive 组件停用时调用.</p>
+<h4 id="谈一谈-keep-alive-这个组件，它的一个实现原理？"><a href="#谈一谈-keep-alive-这个组件，它的一个实现原理？" class="headerlink" title="谈一谈 keep alive 这个组件，它的一个实现原理？"></a>谈一谈 keep alive 这个组件，它的一个实现原理？</h4><ol>
+<li>创建一个 Map 来管理缓存</li>
+<li>拦截缓存组件的挂载和销毁然后从 map 中 get 和 set，这个过程中要用正则匹配 exclude 和 include</li>
+<li>max 的时候，用 lru 算法删除最久未使用的组件</li>
+</ol>
+<h4 id="谈一谈-nextTick"><a href="#谈一谈-nextTick" class="headerlink" title="谈一谈 nextTick"></a>谈一谈 nextTick</h4><p>Vue 在更新 DOM 时是异步执行的,使用这个方法可以获取更新后最新的 DOM。实现原理就是个 promise 和回调队列，进入队列的先后取决于 nextick 调用的先后</p>
+<h4 id="谈谈路由模式"><a href="#谈谈路由模式" class="headerlink" title="谈谈路由模式"></a>谈谈路由模式</h4><p>history 和 hash</p>
+<ol>
+<li>url 不同，hash 有#</li>
+<li>history 要 ng 配置</li>
+<li>hash 通过 hashchange 实现，history 通过 pushState 和 replaceState 实现</li>
+<li>history 的实现是依赖 html5 的 historyAPI，所以兼容性没有 hash 模式好。</li>
+</ol>
+<h2 id="7-Webpack-Vite"><a href="#7-Webpack-Vite" class="headerlink" title="7.Webpack/Vite"></a>7.Webpack/Vite</h2><h4 id="打包工具的打包产物默认是什么格式？"><a href="#打包工具的打包产物默认是什么格式？" class="headerlink" title="打包工具的打包产物默认是什么格式？"></a>打包工具的打包产物默认是什么格式？</h4><p>webpack 是 IIFE，vite 和 rollup 默认是 ESM</p>
+<p>IIFE (Immediately Invoked Function Expression)：适用于直接在浏览器环境中使用。适合使用需要 script 标签引入的方式</p>
+<p>UMD (Universal Module Definition)：兼容 AMD、CommonJS 和全局变量的加载方式。适合使用需要 script 标签引入的方式</p>
+<p>ESM (ECMAScript Module)：现代浏览器和工具链支持的模块系统。适合应用场景兼容 ES6</p>
+<p>CommonJS (CJS)：Node.js 环境中常用的模块格式。主要适合 node 后端</p>
+<h4 id="谈一谈-webpack-的-loader-和-plugin-的区别？"><a href="#谈一谈-webpack-的-loader-和-plugin-的区别？" class="headerlink" title="谈一谈 webpack 的 loader 和 plugin 的区别？"></a>谈一谈 webpack 的 loader 和 plugin 的区别？</h4><p>loader 是资源处理器，把资源转成 js 模块，plugin 是功能扩展器，利用打包过程中的钩子扩展功能</p>
+<h4 id="为什么-vite-比-webpack-更快？"><a href="#为什么-vite-比-webpack-更快？" class="headerlink" title="为什么 vite 比 webpack 更快？"></a>为什么 vite 比 webpack 更快？</h4><p>1.按需加载，2.不需要每次都全部重新打包，3.构建器 esbuild 是 go 实现的比 webpack 的 javascript 实现的构建器 要快</p>
+<h4 id="webpack-打包流程？"><a href="#webpack-打包流程？" class="headerlink" title="webpack 打包流程？"></a>webpack 打包流程？</h4><p>第一，Webpack 会通过指定的入口文件（也就是 Entry）开始分析整个应用程序的依赖关系，生成一个依赖图谱。</p>
+<p>第二，通过模块加载器（也就是 Loader），Webpack 可以将所有类型的文件转换成 JavaScript 模块，以便能在浏览器中正常运行。</p>
+<p>第三，JavaScript 模块和其他类型的文件被加载并编译后，Webpack 会按照指示使用各种插件对他们进行优化，生成，压缩等处理。</p>
+<p>第四，Webpack 会根据配置项和插件的设置，将所有模块组合成一个或多个 Javascript 文件（也就是 Chunk），这些文件包含整个应用程序所有的代码和依赖项。</p>
+<p>第五，最后，Webpack 会将 Chunk 写入指定的输出目录，以便在 Web 服务器中或浏览器中使用。</p>
+<h4 id="webpack-的热更新功能如何实现的？"><a href="#webpack-的热更新功能如何实现的？" class="headerlink" title="webpack 的热更新功能如何实现的？"></a>webpack 的热更新功能如何实现的？</h4><p>通过 fs.watch</p>
+<h2 id="8-工具制作"><a href="#8-工具制作" class="headerlink" title="8.工具制作"></a>8.工具制作</h2><p>都是需要用 npm link 去调试</p>
+<h4 id="做过脚手架吗？"><a href="#做过脚手架吗？" class="headerlink" title="做过脚手架吗？"></a>做过脚手架吗？</h4><p>yeoman-generator，然后写一个类继承 Generator，并编写好 prompting 和 writing 这两成员函数</p>
+<h4 id="做过组件库吗？"><a href="#做过组件库吗？" class="headerlink" title="做过组件库吗？"></a>做过组件库吗？</h4><p>vitepress 写文档</p>
+<p>主要是要给每个组件都封装一个 install 方法，传入 Vue 实例，然后 install 方法里调用 app.component 实现注册</p>
+<h4 id="vue-如何编写一个-hooks？"><a href="#vue-如何编写一个-hooks？" class="headerlink" title="vue 如何编写一个 hooks？"></a>vue 如何编写一个 hooks？</h4><p>以交互界面为例子</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; ref, onMounted, onUnmounted, <span class="hljs-title class_">Ref</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">useIntersectionObserver</span>(<span class="hljs-params"></span><br><span class="hljs-params">  <span class="hljs-attr">target</span>: <span class="hljs-title class_">Ref</span>&lt;<span class="hljs-title class_">Element</span> | <span class="hljs-literal">null</span>&gt;,</span><br><span class="hljs-params">  options = &#123;&#125;</span><br><span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> isIntersecting = <span class="hljs-title function_">ref</span>(<span class="hljs-literal">false</span>);<br><br>  <span class="hljs-keyword">let</span> <span class="hljs-attr">observer</span>: <span class="hljs-title class_">IntersectionObserver</span>;<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">stopObserving</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-keyword">if</span> (observer &amp;&amp; target.<span class="hljs-property">value</span>) &#123;<br>      observer.<span class="hljs-title function_">unobserve</span>(target.<span class="hljs-property">value</span>);<br>      observer.<span class="hljs-title function_">disconnect</span>();<br>    &#125;<br>  &#125;;<br><br>  <span class="hljs-title function_">onMounted</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (!target.<span class="hljs-property">value</span>) <span class="hljs-keyword">return</span>;<br>    observer = <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntersectionObserver</span>(<span class="hljs-function">(<span class="hljs-params">[entry]</span>) =&gt;</span> &#123;<br>      <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;entry&quot;</span>, entry);<br>      isIntersecting.<span class="hljs-property">value</span> = entry.<span class="hljs-property">isIntersecting</span>;<br>    &#125;, options);<br><br>    observer.<span class="hljs-title function_">observe</span>(target.<span class="hljs-property">value</span>);<br>  &#125;);<br><br>  <span class="hljs-title function_">onUnmounted</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-title function_">stopObserving</span>();<br>  &#125;);<br><br>  <span class="hljs-keyword">return</span> &#123; isIntersecting, stopObserving &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h2><p>BFC 应用场景</p>
+<ol>
+<li>元素重叠，譬如浮动重叠</li>
+<li>高度坍塌，譬如浮动坍塌</li>
+<li>外边距塌陷</li>
+<li>外边距合并</li>
+</ol>
+<p>触发手段：overflow: hidden, position: absolute, float: left, display: flex</p>
+<h2 id="小程序优化"><a href="#小程序优化" class="headerlink" title="小程序优化"></a>小程序优化</h2><ol>
+<li>app.json 配置一下分包，整个小程序所有分包大小不超过 20M，单个分包/主包大小不能超过 2M</li>
+<li>将除底部菜单栏对应的页面之外的其他页面文件移动到 subPackages/pages 文件夹下。原 pages 文件夹下只保留底部菜单栏对应的页面，确保文件大小最小。</li>
+<li>根据小程序后台的那个访问统计分包</li>
+</ol>
+<h2 id="什么是-skyline"><a href="#什么是-skyline" class="headerlink" title="什么是 skyline"></a>什么是 skyline</h2><p>Skyline 是微信小程序推出的新渲染引擎，用于替代 WebView 渲染，其能够带来更好的渲染性能，并且添加了诸多增强特性，让小程序拥有更接近原生的交互体验。</p>
+<p>就是新建了一条渲染线程来独立负责渲染，有人说很像 flutter，但是其实我觉得比较像鸿蒙，但是整体上差不多</p>
+<h2 id="你平时如何监测页面性能？"><a href="#你平时如何监测页面性能？" class="headerlink" title="你平时如何监测页面性能？"></a>你平时如何监测页面性能？</h2><p>就是用 Chrome DevTools，从时间和空间上进行分析，时间上关注页面加载耗时、渲染耗时、网络耗时、脚本执行耗时，空间上关注 CPU 占用、内存占用、本地缓存占用，</p>
+<p>具体有 lighthouse 可以得到性能报告，performance 可以录制和分析运行时性能，分析帧动态和线程状态，FPS 标红为低帧率长任务, 需要任务分片处理; CPU 火焰图和 Bottom-up 能看到内存性能瓶颈的具体函数，通常需要优化处理大量数据的算法。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9D%A2%E8%AF%95/" class="category-chain-item">面试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%87%AA%E7%A0%94/" class="print-no-link">#自研</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>哈啰面试</div>
+      <div>https://undercurre.github.io/2024/09/11/面试/哈啰面试/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/13/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%A4%84%E7%90%86/" title="二叉树处理">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">二叉树处理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/09/07/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%A4%A7%E5%B1%8F%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86%E7%82%B9/" title="大屏开发知识点">
+                        <span class="hidden-mobile">大屏开发知识点</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

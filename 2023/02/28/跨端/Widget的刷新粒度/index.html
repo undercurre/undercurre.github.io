@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="如何降低 Flutter Widget 的刷新粒度, 提高页面的性能Flutter Widget 的刷新粒度取决于它们的依赖项，即它们依赖于哪些数据或状态。当依赖项发生变化时，相关的 Widget 会被重新构建和刷新。 如果你希望减少 Widget 的刷新粒度，可以尝试以下方法： 使用 StatefulWidgets：StatefulWidgets 允许你跟踪 Widget 的状态并更新它们，而无">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何降低flutter的Widget刷新粒度">
+<meta property="og:url" content="https://undercurre.github.io/2023/02/28/%E8%B7%A8%E7%AB%AF/Widget%E7%9A%84%E5%88%B7%E6%96%B0%E7%B2%92%E5%BA%A6/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="如何降低 Flutter Widget 的刷新粒度, 提高页面的性能Flutter Widget 的刷新粒度取决于它们的依赖项，即它们依赖于哪些数据或状态。当依赖项发生变化时，相关的 Widget 会被重新构建和刷新。 如果你希望减少 Widget 的刷新粒度，可以尝试以下方法： 使用 StatefulWidgets：StatefulWidgets 允许你跟踪 Widget 的状态并更新它们，而无">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-28T16:47:34.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.096Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>如何降低flutter的Widget刷新粒度 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="如何降低flutter的Widget刷新粒度"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-28 16:47" pubdate>
+          2023年2月28日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">如何降低flutter的Widget刷新粒度</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="如何降低-Flutter-Widget-的刷新粒度-提高页面的性能"><a href="#如何降低-Flutter-Widget-的刷新粒度-提高页面的性能" class="headerlink" title="如何降低 Flutter Widget 的刷新粒度, 提高页面的性能"></a>如何降低 Flutter Widget 的刷新粒度, 提高页面的性能</h1><p>Flutter Widget 的刷新粒度取决于它们的依赖项，即它们依赖于哪些数据或状态。当依赖项发生变化时，相关的 Widget 会被重新构建和刷新。</p>
+<h2 id="如果你希望减少-Widget-的刷新粒度，可以尝试以下方法："><a href="#如果你希望减少-Widget-的刷新粒度，可以尝试以下方法：" class="headerlink" title="如果你希望减少 Widget 的刷新粒度，可以尝试以下方法："></a>如果你希望减少 Widget 的刷新粒度，可以尝试以下方法：</h2><ol>
+<li><p>使用 StatefulWidgets：StatefulWidgets 允许你跟踪 Widget 的状态并更新它们，而无需重新构建整个 Widget 树。这意味着你可以更精确地控制 Widget 的刷新。</p>
+</li>
+<li><p>使用 const 构造函数：如果 Widget 不依赖于外部状态或数据，则可以使用 const 构造函数创建它们。这将使得 Widget 在第一次创建后不会再被重建。</p>
+</li>
+<li><p>使用 ValueKey：如果 Widget 依赖于某些数据或状态，但是只有某些特定的值发生变化时才需要刷新，你可以使用 ValueKey。ValueKey 允许你为 Widget 分配一个特定的值，只有当该值发生变化时才会重新构建 Widget。</p>
+</li>
+<li><p>使用 shouldRebuild：如果 Widget 依赖于某些数据或状态，但只有在这些数据或状态满足特定条件时才需要刷新，你可以通过实现 Widget 的 shouldRebuild 方法来达到目的。shouldRebuild 允许你检查 Widget 的旧属性和新属性是否相同，如果不同，则重新构建 Widget。</p>
+</li>
+<li><p>使用 InheritedWidget：如果多个 Widget 需要访问相同的数据或状态，你可以将它们包装在一个 InheritedWidget 中。InheritedWidget 允许你跨 Widget 树共享数据或状态，并确保只有在数据或状态发生变化时才会刷新相关的 Widget。</p>
+</li>
+</ol>
+<p><strong>总的来说，降低 Widget 的刷新粒度需要对 Widget 的依赖项进行精细的管理。你需要确定 Widget 的依赖项，确保只有在必要的情况下才会重新构建和刷新相关的 Widget。</strong></p>
+<h3 id="StatefulWidgets-使用示例"><a href="#StatefulWidgets-使用示例" class="headerlink" title="StatefulWidgets 使用示例"></a>StatefulWidgets 使用示例</h3><p>下面是一个简单的 StatefulWidgets 示例，用于创建一个带有计数器的按钮：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CounterButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> CounterButton(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  _CounterButtonState createState() =&gt; _CounterButtonState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_CounterButtonState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">CounterButton</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">int</span> _counter = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-keyword">void</span> _incrementCounter() &#123;<br>    setState(() &#123;<br>      _counter++;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> ElevatedButton(<br>      onPressed: _incrementCounter,<br>      child: Text(<span class="hljs-string">&#x27;Counter: <span class="hljs-subst">$_counter</span>&#x27;</span>),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个名为 CounterButton 的 StatefulWidgets，它包含一个名为 _CounterButtonState 的 State 类。StatefulWidgets 中包含的 State 对象是可变的，并且可以在需要时进行更新。在本例中，我们使用 _counter 变量来跟踪按钮被点击的次数，并在每次点击时更新该变量。每次更新 _counter 变量时，我们调用 setState 方法来通知 Flutter 框架需要重建相关的 Widget。</p>
+<p>在 build 方法中，我们返回一个带有按钮文本的 ElevatedButton Widget，该文本包括当前计数器的值。当用户点击按钮时，Flutter 将调用 _incrementCounter 方法并更新 _counter 变量的值。在每次 _counter 变量更新时，Flutter 将自动调用 build 方法来更新按钮的文本。由于我们使用了 StatefulWidgets，因此只有需要更新的 Widget 才会被重建，从而提高了 Flutter 应用程序的性能。</p>
+<h3 id="使用-const-构造函数使用示例"><a href="#使用-const-构造函数使用示例" class="headerlink" title="使用 const 构造函数使用示例"></a>使用 const 构造函数使用示例</h3><p>下面是一个使用 const 构造函数的示例，它创建了一个不会改变的带有文本的按钮：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StaticButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">const</span> StaticButton(&#123;Key? key&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> ElevatedButton(<br>      onPressed: () &#123;&#125;,<br>      child: <span class="hljs-keyword">const</span> Text(<span class="hljs-string">&#x27;Static Button&#x27;</span>),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个名为 StaticButton 的 StatelessWidget，并使用 const 关键字将其构造函数标记为常量构造函数。在 build 方法中，我们返回一个带有按钮文本的 ElevatedButton Widget，并使用 const 关键字将文本 Widget 标记为常量构造函数。这意味着文本 Widget 在第一次创建后不会再被重建，从而提高了 Flutter 应用程序的性能。</p>
+<p>请注意，只有当 Widget 不依赖于外部状态或数据时才能使用 const 构造函数。如果 Widget 依赖于外部状态或数据，则必须使用常规的构造函数，并使用其他技术来控制 Widget 的刷新粒度。</p>
+<h3 id="使用-ValueKey-的示例"><a href="#使用-ValueKey-的示例" class="headerlink" title="使用 ValueKey 的示例"></a>使用 ValueKey 的示例</h3><p>下面是一个使用 ValueKey 的示例，它创建了一个带有计数器的按钮，可以通过改变计数器的值来创建不同的 Widget：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CountButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">int</span> count;<br><br>  <span class="hljs-keyword">const</span> CountButton(&#123;Key? key, <span class="hljs-keyword">required</span> <span class="hljs-keyword">this</span>.count&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> ElevatedButton(<br>      onPressed: () &#123;&#125;,<br>      child: Text(<span class="hljs-string">&#x27;Count: <span class="hljs-subst">$count</span>&#x27;</span>),<br>      key: ValueKey(count),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个名为 CountButton 的 StatelessWidget，并使用一个名为 count 的属性来跟踪计数器的值。我们将一个 ValueKey 对象作为 CountButton 的 Widget 标识符传递，该对象使用 count 属性的值来唯一标识 CountButton 的 Widget 实例。</p>
+<p>当 count 的值发生变化时，Flutter 框架将根据 ValueKey 对象的值识别出 CountButton 的 Widget 实例是否已更改。如果 count 的值没有变化，Flutter 框架将不会重建 CountButton 的 Widget，并且将直接更新原来的 Widget。如果 count 的值发生变化，Flutter 框架将销毁原来的 Widget，并创建一个新的 Widget 来替换它。</p>
+<p>通过使用 ValueKey，我们可以控制 Flutter 框架何时重建 Widget，从而提高应用程序的性能。</p>
+<h3 id="使用-shouldRebuild-的示例"><a href="#使用-shouldRebuild-的示例" class="headerlink" title="使用 shouldRebuild 的示例"></a>使用 shouldRebuild 的示例</h3><p>下面是一个使用 shouldRebuild 的示例，它创建了一个带有计数器的按钮，可以通过改变计数器的值来控制 Widget 是否重建：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CountButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> <span class="hljs-built_in">int</span> count;<br><br>  <span class="hljs-keyword">const</span> CountButton(&#123;Key? key, <span class="hljs-keyword">required</span> <span class="hljs-keyword">this</span>.count&#125;) : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-meta">@override</span><br>  _CountButtonState createState() =&gt; _CountButtonState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_CountButtonState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State</span>&lt;<span class="hljs-title">CountButton</span>&gt; </span>&#123;<br>  <span class="hljs-built_in">int</span> _count = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-keyword">void</span> initState() &#123;<br>    <span class="hljs-keyword">super</span>.initState();<br>    _count = widget.count;<br>  &#125;<br><br>  <span class="hljs-keyword">void</span> _incrementCount() &#123;<br>    setState(() &#123;<br>      _count++;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-built_in">bool</span> shouldRebuild(CountButton oldWidget) &#123;<br>    <span class="hljs-keyword">return</span> _count != oldWidget.count;<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> ElevatedButton(<br>      onPressed: _incrementCount,<br>      child: Text(<span class="hljs-string">&#x27;Count: <span class="hljs-subst">$_count</span>&#x27;</span>),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个名为 CountButton 的 StatefulWidgets，并使用一个名为 count 的属性来跟踪计数器的值。在 initState 方法中，我们初始化了一个名为 _count 的变量，该变量存储了 count 属性的初始值。</p>
+<p>当用户点击按钮时，我们将 _count 变量的值增加一，并调用 setState 方法来通知 Flutter 框架需要重建 CountButton 的 Widget。</p>
+<p>在 shouldRebuild 方法中，我们使用 _count 变量的值和 oldWidget.count 属性的值来比较 CountButton 的 Widget 是否需要重建。如果 _count 的值与 oldWidget.count 的值相同，则返回 false，表示不需要重建 CountButton 的 Widget。否则，返回 true，表示需要重建 CountButton 的 Widget。</p>
+<p>在 build 方法中，我们返回一个带有按钮文本的 ElevatedButton Widget，该文本包括当前计数器的值。当用户点击按钮时，Flutter 将调用 _incrementCount 方法并更新 _count 变量的值。由于我们实现了 shouldRebuild 方法，因此只有需要更新的 Widget 才会被重建，从而提高了 Flutter 应用程序的性能。</p>
+<h3 id="使用-InheritedWidget-的示例"><a href="#使用-InheritedWidget-的示例" class="headerlink" title="使用 InheritedWidget 的示例"></a>使用 InheritedWidget 的示例</h3><p>下面是一个使用 InheritedWidget 的示例，它创建了一个带有主题的应用程序，可以通过更改主题来更新整个应用程序的外观：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;package:flutter/material.dart&#x27;</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThemeModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">InheritedWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> ThemeData themeData;<br><br>  <span class="hljs-keyword">const</span> ThemeModel(&#123;Key? key, <span class="hljs-keyword">required</span> <span class="hljs-keyword">this</span>.themeData, <span class="hljs-keyword">required</span> Widget child&#125;)<br>      : <span class="hljs-keyword">super</span>(key: key, child: child);<br><br>  <span class="hljs-keyword">static</span> ThemeModel? of(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> context.dependOnInheritedWidgetOfExactType&lt;ThemeModel&gt;();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-built_in">bool</span> updateShouldNotify(<span class="hljs-keyword">covariant</span> ThemeModel oldWidget) &#123;<br>    <span class="hljs-keyword">return</span> themeData != oldWidget.themeData;<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">return</span> ThemeModel(<br>      themeData: ThemeData.light(),<br>      child: MaterialApp(<br>        title: <span class="hljs-string">&#x27;My App&#x27;</span>,<br>        home: HomePage(),<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  Widget build(BuildContext context) &#123;<br>    <span class="hljs-keyword">final</span> themeModel = ThemeModel.of(context)!;<br><br>    <span class="hljs-keyword">return</span> Scaffold(<br>      appBar: AppBar(<br>        title: Text(<span class="hljs-string">&#x27;My App&#x27;</span>),<br>      ),<br>      body: Center(<br>        child: Column(<br>          mainAxisAlignment: MainAxisAlignment.center,<br>          children: [<br>            Text(<br>              <span class="hljs-string">&#x27;Hello, World!&#x27;</span>,<br>              style: themeModel.themeData.textTheme.headline1,<br>            ),<br>            ElevatedButton(<br>              onPressed: () &#123;<br>                <span class="hljs-keyword">final</span> newThemeData =<br>                    Theme.of(context).brightness == Brightness.light<br>                        ? ThemeData.dark()<br>                        : ThemeData.light();<br>                ThemeModel(<br>                  themeData: newThemeData,<br>                  child: context.findAncestorWidgetOfExactType&lt;MyApp&gt;()!,<br>                );<br>              &#125;,<br>              child: Text(<span class="hljs-string">&#x27;Switch Theme&#x27;</span>),<br>            ),<br>          ],<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的示例中，我们创建了一个名为 ThemeModel 的 InheritedWidget，并将其作为应用程序的根 Widget。我们还实现了一个名为 ThemeModel.of 的静态方法，该方法接受一个 BuildContext 对象并返回最近的 ThemeModel Widget。我们还重写了 updateShouldNotify 方法，该方法返回 true，表示当 ThemeData 对象发生变化时需要更新整个 Widget 树。</p>
+<p>在 MyApp 类中，我们将一个名为 ThemeData.light() 的 ThemeData 对象作为初始主题传递给 ThemeModel Widget，并将其包装在一个 MaterialApp Widget 中。</p>
+<p>在 HomePage 类中，我们使用 ThemeModel.of 方法获取 ThemeModel Widget，并从中提取 themeData 属性。我们在 Text Widget 中使用 headline1 样式渲染“Hello, World!”文本，并在 ElevatedButton Widget 中添加一个切换主题的按钮。</p>
+<p>当用户点击切换主题的按钮时，我们使用 Theme.of 方法获取当前的主题，并使用三元运算符根据当前主题切换到相反的主题。然后，我们创建一个新的 ThemeModel Widget，并将其添加到 Widget 树中，以更新整个应用程序的外观。由于 ThemeModel 是一个 InheritedWidget，Flutter 框架将负责更新所有使用它的 Widget，而不需要手动管理它们的状态。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%B7%A8%E7%AB%AF/" class="category-chain-item">跨端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Flutter/" class="print-no-link">#Flutter</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>如何降低flutter的Widget刷新粒度</div>
+      <div>https://undercurre.github.io/2023/02/28/跨端/Widget的刷新粒度/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/10/%E8%B7%A8%E7%AB%AF/tauri%E5%BC%80%E5%8F%91%E6%A1%8C%E9%9D%A2%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/" title="tauri开发桌面登录流程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">tauri开发桌面登录流程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/27/GO/GO%E9%83%A8%E7%BD%B2%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="GO部署腾讯云服务器">
+                        <span class="hidden-mobile">GO部署腾讯云服务器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

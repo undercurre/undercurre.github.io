@@ -1,0 +1,657 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="鸿蒙开发1.你怎么理解鸿蒙开发？就是 flutter 的声明式 UI 和布局，小程序的路由机制，Vue3 的组件化和双向绑定，TS 的类型混在一起 2.在开发中遇到什么是跟前端开发习惯不一样的地方？绝对定位不会浮到最上层级而是根据书写顺序层叠 3.怎么样通过鸿蒙去实现小程序的功能？通过 stage 模型的 UIAbility 组件去拉起小程序，因为一个应用可以拥有多个 UIAbility,通过上下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鸿蒙开发">
+<meta property="og:url" content="https://undercurre.github.io/2024/08/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E9%B8%BF%E8%92%99%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="鸿蒙开发1.你怎么理解鸿蒙开发？就是 flutter 的声明式 UI 和布局，小程序的路由机制，Vue3 的组件化和双向绑定，TS 的类型混在一起 2.在开发中遇到什么是跟前端开发习惯不一样的地方？绝对定位不会浮到最上层级而是根据书写顺序层叠 3.怎么样通过鸿蒙去实现小程序的功能？通过 stage 模型的 UIAbility 组件去拉起小程序，因为一个应用可以拥有多个 UIAbility,通过上下">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-15T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.093Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="抖音">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>鸿蒙开发 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="鸿蒙开发"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-15 19:49" pubdate>
+          2024年8月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          820 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          7 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">鸿蒙开发</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="鸿蒙开发"><a href="#鸿蒙开发" class="headerlink" title="鸿蒙开发"></a>鸿蒙开发</h1><h2 id="1-你怎么理解鸿蒙开发？"><a href="#1-你怎么理解鸿蒙开发？" class="headerlink" title="1.你怎么理解鸿蒙开发？"></a>1.你怎么理解鸿蒙开发？</h2><p>就是 flutter 的声明式 UI 和布局，小程序的路由机制，Vue3 的组件化和双向绑定，TS 的类型混在一起</p>
+<h2 id="2-在开发中遇到什么是跟前端开发习惯不一样的地方？"><a href="#2-在开发中遇到什么是跟前端开发习惯不一样的地方？" class="headerlink" title="2.在开发中遇到什么是跟前端开发习惯不一样的地方？"></a>2.在开发中遇到什么是跟前端开发习惯不一样的地方？</h2><p>绝对定位不会浮到最上层级而是根据书写顺序层叠</p>
+<h2 id="3-怎么样通过鸿蒙去实现小程序的功能？"><a href="#3-怎么样通过鸿蒙去实现小程序的功能？" class="headerlink" title="3.怎么样通过鸿蒙去实现小程序的功能？"></a>3.怎么样通过鸿蒙去实现小程序的功能？</h2><p>通过 stage 模型的 UIAbility 组件去拉起小程序，因为一个应用可以拥有多个 UIAbility,通过上下文对象 context 的 startAbility 方法就可以拉起小程序，通过 request.downloadFile 下载小程序包，通过 DOM 树映射原生 viewTree,调起加载代码原生 native 引擎做原生控件渲染。</p>
+<h2 id="4-应用侧的原生和-WebView-如何进行通讯？"><a href="#4-应用侧的原生和-WebView-如何进行通讯？" class="headerlink" title="4.应用侧的原生和 WebView 如何进行通讯？"></a>4.应用侧的原生和 WebView 如何进行通讯？</h2><p>通过 Webview 的 WebviewController 的 API 可以实现，其中 loadUrl 可以动态加载不同的资源（可以把小程序的包拉下来加载成小程序），其中 registerJavaScriptProxy 可以注入 JavaScript 对象到 window 对象中，并在 window 对象中调用该对象的方法。其中 runJavaScript 可以让原生侧调用 JavaScript 脚本中的方法。其中 createWebMessagePorts 可以创建 Web 消息端口，然后可以用 postMessage 和 html 通讯，html 使用 postMessage 发送，onmessage 接收，原生侧使用 postMessage 发送，postMessageEvent 接收</p>
+<h2 id="5-关于公众号怎么看？"><a href="#5-关于公众号怎么看？" class="headerlink" title="5.关于公众号怎么看？"></a>5.关于公众号怎么看？</h2><p>跟公众号服务器进行通讯实现问答和消息交互，必要的时候打开小程序。</p>
+<h2 id="6-如何实现搜索功能？"><a href="#6-如何实现搜索功能？" class="headerlink" title="6.如何实现搜索功能？"></a>6.如何实现搜索功能？</h2><p>第一个是 webview <strong>进行网络搜索</strong>，第二个是通过文件系统（file.fs 进行文件访问）和网络系统（net.http 进行 HTTP 请求）对，收藏和聊天记录做正则匹配搜索。</p>
+<h2 id="7-如何封装-sdk-包？"><a href="#7-如何封装-sdk-包？" class="headerlink" title="7.如何封装 sdk 包？"></a>7.如何封装 sdk 包？</h2><p>我印象中就好像封装一个前端工具包一样吧，不过有一些像微信登录这种需要调用 stage 模型去拉起其他应用或者模块这些是原生独有逻辑。</p>
+<h2 id="8-askts-和-ts-的关系？"><a href="#8-askts-和-ts-的关系？" class="headerlink" title="8.askts 和 ts 的关系？"></a>8.askts 和 ts 的关系？</h2><p>大部分一样，有些不一样，第一个不支持运行的时候更改对象布局，就是说原来通过类型定义好一个对象是什么样，有什么成员，不能中途去给他加减更换。对象里的属性必须标注类型，没有鸭子效应，一个类型 A 有另一个类型 B 的一部分属性，不代表 A 在业务的时候能让代替 B 去工作。</p>
+<h2 id="9-arkts-或者-ts-和-js-源码在编译时使用的时什么底层？"><a href="#9-arkts-或者-ts-和-js-源码在编译时使用的时什么底层？" class="headerlink" title="9.arkts 或者 ts 和 js 源码在编译时使用的时什么底层？"></a>9.arkts 或者 ts 和 js 源码在编译时使用的时什么底层？</h2><p>ts/js 运行在方舟编译器中，最终编译成字节码，方舟字节码（Ark Bytecode），是由方舟编译器编译 ArkTS/TS/JS 生成的，提供给方舟运行时解释执行的二进制文件，字节码中的主要内容是方舟字节码指令。字节码已直达机器指令。如果需要对 ts 和 JavaScript 做传统的支持，需要应用自带 v8 引擎并根据提供的 native 工具链来运行。</p>
+<h2 id="10-鸿蒙是如何渲染-UI-的？"><a href="#10-鸿蒙是如何渲染-UI-的？" class="headerlink" title="10. 鸿蒙是如何渲染 UI 的？"></a>10. 鸿蒙是如何渲染 UI 的？</h2><p>首先他通过好像 Vue 一样的 JS 架构层让开发者构建应用代码，然后使用 JS 引擎把代码转成字节码，然后调用他的渲染引擎进行渲染。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%96%E9%9F%B3/" class="print-no-link">#抖音</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>鸿蒙开发</div>
+      <div>https://undercurre.github.io/2024/08/15/知识点积累/鸿蒙开发/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%97%B6%E9%97%B4%E5%92%8C%E7%A9%BA%E9%97%B4%E7%9A%84%E6%8A%89%E6%8B%A9/" title="时间和空间的抉择">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">时间和空间的抉择</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/05/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/vue%E5%8A%A8%E7%94%BB%E6%9C%BA%E5%88%B6/" title="vue动画机制">
+                        <span class="hidden-mobile">vue动画机制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="做一个Node文件服务的雏形创建新项目首先，你需要安装Node.js和npm。接下来，我们将使用Nest CLI创建一个新的NestJS项目。请打开终端并执行以下命令： 12npm i -g @nestjs&#x2F;clinest new file-storage-service  这个命令会在你的计算机上安装Nest CLI，并创建一个名为file-storage-service的新项目。一旦Nest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node文件服务器">
+<meta property="og:url" content="https://undercurre.github.io/2021/04/05/Node/Node%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="做一个Node文件服务的雏形创建新项目首先，你需要安装Node.js和npm。接下来，我们将使用Nest CLI创建一个新的NestJS项目。请打开终端并执行以下命令： 12npm i -g @nestjs&#x2F;clinest new file-storage-service  这个命令会在你的计算机上安装Nest CLI，并创建一个名为file-storage-service的新项目。一旦Nest">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-05T01:46:46.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.022Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Node文件服务器 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Node文件服务器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-05 01:46" pubdate>
+          2021年4月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Node文件服务器</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="做一个Node文件服务的雏形"><a href="#做一个Node文件服务的雏形" class="headerlink" title="做一个Node文件服务的雏形"></a>做一个Node文件服务的雏形</h1><h2 id="创建新项目"><a href="#创建新项目" class="headerlink" title="创建新项目"></a>创建新项目</h2><p>首先，你需要安装Node.js和npm。接下来，我们将使用Nest CLI创建一个新的NestJS项目。请打开终端并执行以下命令：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> i -g @nestjs/cli<br>nest <span class="hljs-keyword">new</span> file-storage-service<br></code></pre></td></tr></table></figure>
+
+<p>这个命令会在你的计算机上安装Nest CLI，并创建一个名为file-storage-service的新项目。一旦Nest CLI创建了新项目，你可以进入新项目目录并启动服务器。</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">cd</span> <span class="hljs-keyword">file</span>-storage-service<br>npm run <span class="hljs-keyword">star</span><span class="hljs-variable">t:dev</span><br></code></pre></td></tr></table></figure>
+<p>这将启动开发服务器并在<a href="http://localhost:3000上监听请求。我们将在这个端口上开发我们的在线文件存储微服务。">http://localhost:3000上监听请求。我们将在这个端口上开发我们的在线文件存储微服务。</a></p>
+<h2 id="安装依赖项"><a href="#安装依赖项" class="headerlink" title="安装依赖项"></a>安装依赖项</h2><p>下一步是安装我们需要的依赖项。我们需要使用@nestjs/common和@nestjs/core，这是NestJS的核心依赖项。此外，我们还需要安装@nestjs/platform-express和multer，它们将帮助我们处理HTTP请求和文件上传。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> install @nestjs/common @nestjs/core @nestjs/platform-express multer<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建文件的上传服务"><a href="#创建文件的上传服务" class="headerlink" title="创建文件的上传服务"></a>创建文件的上传服务</h2><p>我们将从创建一个文件上传服务开始。我们将使用multer来处理文件上传。</p>
+<p>首先，我们需要创建一个新的控制器。在终端中输入以下命令：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">nest <span class="hljs-selector-tag">g</span> controller upload<br></code></pre></td></tr></table></figure>
+
+<p>这将创建一个名为upload.controller.ts的文件，并在文件中创建一个名为UploadController的类。我们需要为这个类添加一个POST路由，以处理上传文件请求。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Controller</span>, <span class="hljs-title class_">Post</span>, <span class="hljs-title class_">UploadedFile</span>, <span class="hljs-title class_">UseInterceptors</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/common&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">FileInterceptor</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/platform-express&#x27;</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">&#x27;upload&#x27;</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UploadController</span> &#123;<br>  <span class="hljs-meta">@Post</span>()<br>  <span class="hljs-meta">@UseInterceptors</span>(<span class="hljs-title class_">FileInterceptor</span>(<span class="hljs-string">&#x27;file&#x27;</span>))<br>  <span class="hljs-title function_">uploadFile</span>(<span class="hljs-params"><span class="hljs-meta">@UploadedFile</span>() file</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(file);<br>    <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;File uploaded successfully!&#x27;</span> &#125;;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个路由将接受一个名为file的文件，并使用FileInterceptor中间件来处理文件上传。一旦文件上传成功，将触发uploadFile方法，并返回一个成功消息。</p>
+<p>接下来，我们需要在app.module.ts中为我们的上传服务创建一个模块。我们将在模块中导入我们的控制器，并使用@nestjs/platform-express中的MulterModule来处理文件上传。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Module</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/common&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">MulterModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/platform-express&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">UploadController</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./upload.controller&#x27;</span>;<br><br><span class="hljs-meta">@Module</span>(&#123;<br>  <span class="hljs-attr">imports</span>: [<br>    <span class="hljs-title class_">MulterModule</span>.<span class="hljs-title function_">register</span>(&#123;<br>      <span class="hljs-attr">dest</span>: <span class="hljs-string">&#x27;./uploads&#x27;</span>,<br>    &#125;),<br>  ],<br>  <span class="hljs-attr">controllers</span>: [<span class="hljs-title class_">UploadController</span>],<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UploadModule</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个模块将在应用程序启动时自动注册，并将我们的上传控制器添加到路由中。</p>
+<h2 id="创建文件下载服务"><a href="#创建文件下载服务" class="headerlink" title="创建文件下载服务"></a>创建文件下载服务</h2><p>我们将在新的控制器中创建文件下载服务。在终端中输入以下命令：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">nest <span class="hljs-selector-tag">g</span> controller download<br></code></pre></td></tr></table></figure>
+
+<p>这将创建一个名为download.controller.ts的文件，并在文件中创建一个名为DownloadController的类。我们需要为这个类添加一个GET路由，以处理文件下载请求。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Controller</span>, <span class="hljs-title class_">Get</span>, <span class="hljs-title class_">Param</span>, <span class="hljs-title class_">Res</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@nestjs/common&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Response</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;express&#x27;</span>;<br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span>;<br><br><span class="hljs-meta">@Controller</span>(<span class="hljs-string">&#x27;download&#x27;</span>)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DownloadController</span> &#123;<br>  <span class="hljs-meta">@Get</span>(<span class="hljs-string">&#x27;:fileName&#x27;</span>)<br>  <span class="hljs-title function_">downloadFile</span>(<span class="hljs-params"><span class="hljs-meta">@Param</span>(<span class="hljs-string">&#x27;fileName&#x27;</span>) <span class="hljs-attr">fileName</span>: <span class="hljs-built_in">string</span>, <span class="hljs-meta">@Res</span>() <span class="hljs-attr">res</span>: <span class="hljs-title class_">Response</span></span>) &#123;<br>    <span class="hljs-keyword">const</span> file = <span class="hljs-string">`<span class="hljs-subst">$&#123;__dirname&#125;</span>/../uploads/<span class="hljs-subst">$&#123;fileName&#125;</span>`</span>;<br>    fs.<span class="hljs-title function_">readFile</span>(file, <span class="hljs-function">(<span class="hljs-params">err, data</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (err) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err);<br>        res.<span class="hljs-title function_">status</span>(<span class="hljs-number">500</span>).<span class="hljs-title function_">send</span>(err.<span class="hljs-property">message</span>);<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Content-Disposition&#x27;</span>, <span class="hljs-string">`attachment; filename=<span class="hljs-subst">$&#123;fileName&#125;</span>`</span>);<br>        res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;application/octet-stream&#x27;</span>);<br>        res.<span class="hljs-title function_">send</span>(data);<br>      &#125;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个路由将接受一个名为fileName的参数，并使用fs模块读取相应的文件。一旦文件被读取，将设置响应头来将文件作为附件下载，并将文件数据发送给客户端。</p>
+<p>接下来，我们需要为我们的下载服务创建一个模块。我们将在模块中导入我们的控制器。</p>
+<h2 id="测试文件上传和下载服务"><a href="#测试文件上传和下载服务" class="headerlink" title="测试文件上传和下载服务"></a>测试文件上传和下载服务</h2><p>我们已经完成了我们的在线文件存储微服务，现在我们需要测试它是否正常工作。</p>
+<p>首先，我们将使用Postman测试文件上传服务。打开Postman并创建一个新的POST请求，将请求URL设置为<a target="_blank" rel="noopener" href="http://localhost:3000/upload%EF%BC%8C%E5%B9%B6%E5%B0%86%E8%AF%B7%E6%B1%82%E4%BD%93%E4%B8%AD%E7%9A%84Content-Type%E8%AE%BE%E7%BD%AE%E4%B8%BAmultipart/form-data%E3%80%82%E5%9C%A8%E8%AF%B7%E6%B1%82%E4%BD%93%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAfile%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E7%82%B9%E5%87%BB%E5%8F%91%E9%80%81%E3%80%82">http://localhost:3000/upload，并将请求体中的Content-Type设置为multipart/form-data。在请求体中添加一个名为file的文件，并点击发送。</a></p>
+<p>如果一切正常，你应该能够看到一个成功消息，文件已成功上传到服务器。</p>
+<p>接下来，我们将使用浏览器测试文件下载服务。打开浏览器并访问<a target="_blank" rel="noopener" href="http://localhost:3000/download/fileName%EF%BC%8C%E5%85%B6%E4%B8%ADfileName%E6%98%AF%E4%BD%A0%E4%B9%8B%E5%89%8D%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%90%8E%E7%9A%84%E5%90%8D%E7%A7%B0%E3%80%82">http://localhost:3000/download/fileName，其中fileName是你之前的文件上传后的名称。</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Node/" class="category-chain-item">Node</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/" class="print-no-link">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Node文件服务器</div>
+      <div>https://undercurre.github.io/2021/04/05/Node/Node文件服务器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E6%90%9C%E7%B4%A2%E6%A1%86%E7%BB%84%E4%BB%B6/" title="搜索框组件">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">搜索框组件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/04/04/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/Typescript%E7%B1%BB%E5%9E%8B%E7%90%86%E8%A7%A3up%F0%9F%91%86/" title="Typescript类型理解up👆">
+                        <span class="hidden-mobile">Typescript类型理解up👆</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

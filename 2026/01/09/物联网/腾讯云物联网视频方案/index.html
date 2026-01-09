@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="腾讯云物联网视频方案行业版NVR全称网络视频录像机 NVR 是如何工作的？一个典型的 NVR 监控系统工作流程如下： 拍摄与编码：每个网络摄像头（IPC）自己拍摄画面，并在摄像头内部完成视频的压缩编码（如 H.264&#x2F;H.265）。 网络传输：编码后的数字视频流通过网线（通常支持 PoE 供电）、Wi-Fi 等网络，传输到局域网中。 接收与存储：NVR 设备从网络上接收这些数字流，并将其存储到内置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jack Blog">
+<meta property="og:url" content="https://undercurre.github.io/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/%E8%85%BE%E8%AE%AF%E4%BA%91%E7%89%A9%E8%81%94%E7%BD%91%E8%A7%86%E9%A2%91%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="腾讯云物联网视频方案行业版NVR全称网络视频录像机 NVR 是如何工作的？一个典型的 NVR 监控系统工作流程如下： 拍摄与编码：每个网络摄像头（IPC）自己拍摄画面，并在摄像头内部完成视频的压缩编码（如 H.264&#x2F;H.265）。 网络传输：编码后的数字视频流通过网线（通常支持 PoE 供电）、Wi-Fi 等网络，传输到局域网中。 接收与存储：NVR 设备从网络上接收这些数字流，并将其存储到内置">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-09T16:35:00.087Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.087Z">
+<meta property="article:author" content="Jack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-09 16:35" pubdate>
+          2026年1月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          995 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="腾讯云物联网视频方案"><a href="#腾讯云物联网视频方案" class="headerlink" title="腾讯云物联网视频方案"></a>腾讯云物联网视频方案</h1><h2 id="行业版"><a href="#行业版" class="headerlink" title="行业版"></a>行业版</h2><h3 id="NVR"><a href="#NVR" class="headerlink" title="NVR"></a>NVR</h3><p>全称网络视频录像机</p>
+<h4 id="NVR-是如何工作的？"><a href="#NVR-是如何工作的？" class="headerlink" title="NVR 是如何工作的？"></a>NVR 是如何工作的？</h4><p>一个典型的 NVR 监控系统工作流程如下：</p>
+<p>拍摄与编码：每个网络摄像头（IPC）自己拍摄画面，并在摄像头内部完成视频的压缩编码（如 H.264/H.265）。</p>
+<p>网络传输：编码后的数字视频流通过网线（通常支持 PoE 供电）、Wi-Fi 等网络，传输到局域网中。</p>
+<p>接收与存储：NVR 设备从网络上接收这些数字流，并将其存储到内置或外接的硬盘中。</p>
+<p>管理与查看：你可以通过连接 NVR 的显示器、电脑客户端或手机 APP，远程查看实时画面、回放录像、管理摄像头等。</p>
+<h3 id="SIP-服务器"><a href="#SIP-服务器" class="headerlink" title="SIP 服务器"></a>SIP 服务器</h3><p>实时音视频通信（特别是 VoIP 电话和视频通话）的“智能总机”。它不直接传输你的语音或视频数据流，而是负责建立、管理和终止这些通信会话。</p>
+<p>简单来说，如果把一次视频通话比作一通电话：</p>
+<p>你的语音/视频数据 = 通话内容（通过 RTP/RTCP 协议直接传输）。</p>
+<p>SIP 服务器 = 电话交换机/总机台，负责处理“谁打给谁、振铃、接通、转接、挂断”所有这些控制信令。</p>
+<p>一般情况下使用腾讯云 TRTC 服务模块</p>
+<h3 id="通讯协议"><a href="#通讯协议" class="headerlink" title="通讯协议"></a>通讯协议</h3><table>
+<thead>
+<tr>
+<th>协议类型</th>
+<th>说明</th>
+<th>特点与适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GB/T 28181-2016</td>
+<td>国标协议，视频监控领域的通用标准</td>
+<td>主流推荐。平台原生支持，集成度高，功能全面（如录像回放、PTZ 控制等）。适合国内项目及需要标准级联功能的场景</td>
+</tr>
+<tr>
+<td>RTMP</td>
+<td>实时消息传输协议，广泛用于直播推流</td>
+<td>实现简单、延迟低。适合将 NVR 或摄像头视频流快速推送到云平台</td>
+</tr>
+<tr>
+<td>ONVIF</td>
+<td>国际通用的网络视频设备互操作性标准</td>
+<td>通过“网关接入”方式支持。可兼容不同品牌的设备，适合混合品牌环境的接入。</td>
+</tr>
+<tr>
+<td><strong>RTSP</strong></td>
+<td>实时流协议，用于控制音视频流</td>
+<td>常作为设备输出视频流的通用方式。平台可通过网关或转换模块利用此协议获取视频流</td>
+</tr>
+</tbody></table>
+<p>如何选择与接入<br>首选推荐：对于国内项目，建议优先采用 GB/T 28181-2016。这是腾讯云智能视图计算平台和物联网智能视频服务（行业版）均原生支持的标准协议，功能集成度最高。</p>
+<p>灵活方案：如果您的 NVR 设备不支持国标，或网络环境复杂（如局域网无法直连公网），可以采用 “网关接入” 模式。在局域网内部署一个上云网关，这个网关会集成海康、大华等主流厂商的 SDK 以及 ONVIF 协议，将本地 NVR 的视频流统一转换后推送上云。这是一种解决多品牌、私有协议兼容性的有效方法。</p>
+<p>简易推流：如果您的核心需求只是将 NVR 的某个通道画面直播上云，可以关注 NVR 是否支持 RTMP 推流功能。这是一种相对简单直接的接入方式</p>
+<h3 id="密码和编码"><a href="#密码和编码" class="headerlink" title="密码和编码"></a>密码和编码</h3><p>设备密码用于：在首次连接云端时，建立双向的、加密的安全通信链路。</p>
+<p>设备编码用于：</p>
+<ol>
+<li>在云端唯一识别你的这台设备。</li>
+<li>作为 APP 或后台管理、操作该设备的凭据（如拉取视频流、发送指令）。</li>
+<li>绑定设备产生的所有数据（录像、告警等）。</li>
+</ol>
+<h3 id="视频通道"><a href="#视频通道" class="headerlink" title="视频通道"></a>视频通道</h3><p>一个视频源通过软件或协议虚拟出来的独立流，一个摄像头同时输出主码流（高清录像）和子码流（低清预览），这两个流可被系统识别为两个逻辑通道。</p>
+<h3 id="音视频编码"><a href="#音视频编码" class="headerlink" title="音视频编码"></a>音视频编码</h3><p>视频选择 H.264</p>
+<p>音频选择 AAC</p>
+<h3 id="TRTC-推流"><a href="#TRTC-推流" class="headerlink" title="TRTC 推流"></a>TRTC 推流</h3><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/647/116547">https://cloud.tencent.com/document/product/647/116547</a></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>https://undercurre.github.io/2026/01/09/物联网/腾讯云物联网视频方案/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/%E7%9F%AD%E6%9C%9F%E9%9B%86%E6%88%90/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/%E5%B5%8C%E5%85%A5%E5%BC%8F/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="wechaty-everyDays需求定义每日定时 8：00 发送天气及 git-contributions 信息到个人微信 方案设计 定时发送业务实现方式使用 node-schedule 业务可以使用爬虫爬取页面数据或者做接口转发实现方式使用 superagent 避免机器人检测——每次回复做不定时延时 重点针对如何在 wechaty 的 API 中获取并过滤出用户或者群，避免微信其他机器人把">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wechaty-everyDays">
+<meta property="og:url" content="https://undercurre.github.io/2021/05/20/Wechat/%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BAwechaty%E4%B9%8B%E6%AF%8F%E6%97%A5%E6%8F%90%E9%86%92/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="wechaty-everyDays需求定义每日定时 8：00 发送天气及 git-contributions 信息到个人微信 方案设计 定时发送业务实现方式使用 node-schedule 业务可以使用爬虫爬取页面数据或者做接口转发实现方式使用 superagent 避免机器人检测——每次回复做不定时延时 重点针对如何在 wechaty 的 API 中获取并过滤出用户或者群，避免微信其他机器人把">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-20T02:27:09.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.023Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="每日提醒">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>wechaty-everyDays - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="wechaty-everyDays"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-05-20 02:27" pubdate>
+          2021年5月20日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">wechaty-everyDays</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="wechaty-everyDays"><a href="#wechaty-everyDays" class="headerlink" title="wechaty-everyDays"></a>wechaty-everyDays</h1><h2 id="需求定义"><a href="#需求定义" class="headerlink" title="需求定义"></a>需求定义</h2><p>每日定时 8：00 发送天气及 git-contributions 信息到个人微信</p>
+<h2 id="方案设计"><a href="#方案设计" class="headerlink" title="方案设计"></a>方案设计</h2><ol>
+<li>定时发送业务实现方式使用 node-schedule</li>
+<li>业务可以使用爬虫爬取页面数据或者做接口转发实现方式使用 superagent</li>
+<li>避免机器人检测——每次回复做不定时延时</li>
+<li>重点针对如何在 wechaty 的 API 中获取并过滤出用户或者群，避免微信其他机器人把 AI 的 token 全部洗掉</li>
+<li>收集数据，指定剧本，放给 AI 来做智能建议</li>
+</ol>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><h3 id="接入星火大模型处理指定群消息"><a href="#接入星火大模型处理指定群消息" class="headerlink" title="接入星火大模型处理指定群消息"></a>接入星火大模型处理指定群消息</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> base64 <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;base-64&quot;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">CryptoJs</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;crypto-js&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; log &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;wechaty&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title class_">WebSocket</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;ws&quot;</span>);<br><br><span class="hljs-keyword">const</span> config = &#123;<br>  <span class="hljs-attr">APPID</span>: <span class="hljs-string">&quot;1288b463&quot;</span>,<br>  <span class="hljs-title class_">APISecret</span>: <span class="hljs-string">&quot;YjExNmM2ODAyMmEyNzU1ZTVlMDFhNDJj&quot;</span>,<br>  <span class="hljs-title class_">APIKey</span>: <span class="hljs-string">&quot;bc22669633ed221cd5d15c36a9e15eb7&quot;</span>,<br>  <span class="hljs-title class_">Uid</span>: <span class="hljs-string">&quot;lirh42&quot;</span>,<br>  <span class="hljs-attr">sparkResult</span>: <span class="hljs-string">&quot;&quot;</span>,<br>&#125;;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sendMsg</span>(<span class="hljs-params"></span><br><span class="hljs-params">  <span class="hljs-attr">text</span>: <span class="hljs-built_in">string</span>,</span><br><span class="hljs-params">  <span class="hljs-attr">callback</span>: (error: <span class="hljs-built_in">Error</span> | <span class="hljs-literal">null</span>, result: <span class="hljs-built_in">any</span>) =&gt; <span class="hljs-built_in">void</span></span><br><span class="hljs-params"></span>) &#123;<br>  log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;发送信息，请求AI处理&quot;</span>);<br>  <span class="hljs-comment">// 获取请求地址</span><br>  <span class="hljs-keyword">const</span> myUrl = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getWebsocketUrl</span>();<br>  <span class="hljs-comment">// 每次发送问题 都是一个新的websocketqingqiu</span><br>  <span class="hljs-keyword">const</span> socket = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(myUrl <span class="hljs-keyword">as</span> <span class="hljs-built_in">string</span>);<br>  <span class="hljs-comment">// 本次对话的完整回答的存储</span><br>  <span class="hljs-keyword">let</span> tres = <span class="hljs-string">&quot;&quot;</span>;<br>  log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;socket&quot;</span>, socket.<span class="hljs-property">active</span>);<br>  <span class="hljs-comment">// 监听websocket的各阶段事件 并做相应处理</span><br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;open&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;开启连接！！&quot;</span>);<br>    <span class="hljs-comment">// 发送消息</span><br>    <span class="hljs-keyword">const</span> params = &#123;<br>      <span class="hljs-attr">header</span>: &#123;<br>        <span class="hljs-attr">app_id</span>: config.<span class="hljs-property">APPID</span>,<br>        <span class="hljs-attr">uid</span>: <span class="hljs-string">&quot;lirh42&quot;</span>,<br>      &#125;,<br>      <span class="hljs-attr">parameter</span>: &#123;<br>        <span class="hljs-attr">chat</span>: &#123;<br>          <span class="hljs-attr">domain</span>: <span class="hljs-string">&quot;general&quot;</span>,<br>          <span class="hljs-attr">temperature</span>: <span class="hljs-number">0.5</span>,<br>          <span class="hljs-attr">max_tokens</span>: <span class="hljs-number">1024</span>,<br>        &#125;,<br>      &#125;,<br>      <span class="hljs-attr">payload</span>: &#123;<br>        <span class="hljs-attr">message</span>: &#123;<br>          <span class="hljs-comment">// 如果想获取结合上下文的回答，需要开发者每次将历史问答信息一起传给服务端，如下示例</span><br>          <span class="hljs-comment">// 注意：text里面的所有content内容加一起的tokens需要控制在8192以内，开发者如有较长对话需求，需要适当裁剪历史信息</span><br>          <span class="hljs-attr">text</span>: [<br>            &#123; <span class="hljs-attr">role</span>: <span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&quot;你是谁&quot;</span> &#125;, <span class="hljs-comment">//# 用户的历史问题</span><br>            &#123; <span class="hljs-attr">role</span>: <span class="hljs-string">&quot;assistant&quot;</span>, <span class="hljs-attr">content</span>: <span class="hljs-string">&quot;我是AI助手&quot;</span> &#125;, <span class="hljs-comment">//# AI的历史回答结果</span><br>            <span class="hljs-comment">// ....... 省略的历史对话</span><br>            &#123; <span class="hljs-attr">role</span>: <span class="hljs-string">&quot;user&quot;</span>, <span class="hljs-attr">content</span>: text &#125;, <span class="hljs-comment">//# 最新的一条问题，如无需上下文，可只传最新一条问题</span><br>          ],<br>        &#125;,<br>      &#125;,<br>    &#125;;<br>    log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;发送消息&quot;</span>);<br>    socket.<span class="hljs-title function_">send</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(params));<br>  &#125;);<br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">event</span>: <span class="hljs-built_in">any</span></span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> data = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(event);<br>    log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;收到消息！！&quot;</span>, data);<br>    config.<span class="hljs-property">sparkResult</span> += data.<span class="hljs-property">payload</span>.<span class="hljs-property">choices</span>.<span class="hljs-property">text</span>[<span class="hljs-number">0</span>].<span class="hljs-property">content</span>;<br>    tres += data.<span class="hljs-property">payload</span>.<span class="hljs-property">choices</span>.<span class="hljs-property">text</span>[<span class="hljs-number">0</span>].<span class="hljs-property">content</span>;<br>    <span class="hljs-keyword">if</span> (data.<span class="hljs-property">header</span>.<span class="hljs-property">code</span> !== <span class="hljs-number">0</span>) &#123;<br>      log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;出错了&quot;</span>, data.<span class="hljs-property">header</span>.<span class="hljs-property">code</span>, <span class="hljs-string">&quot;:&quot;</span>, data.<span class="hljs-property">header</span>.<span class="hljs-property">message</span>);<br>      <span class="hljs-comment">// 出错了&quot;手动关闭连接&quot;</span><br>      socket.<span class="hljs-title function_">close</span>();<br>    &#125;<br>    <span class="hljs-keyword">if</span> (data.<span class="hljs-property">header</span>.<span class="hljs-property">code</span> === <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-comment">// 对话已经完成</span><br>      <span class="hljs-keyword">if</span> (data.<span class="hljs-property">payload</span>.<span class="hljs-property">choices</span>.<span class="hljs-property">text</span> &amp;&amp; data.<span class="hljs-property">header</span>.<span class="hljs-property">status</span> === <span class="hljs-number">2</span>) &#123;<br>        config.<span class="hljs-property">sparkResult</span> += data.<span class="hljs-property">payload</span>.<span class="hljs-property">choices</span>.<span class="hljs-property">text</span>[<span class="hljs-number">0</span>].<span class="hljs-property">content</span>;<br>        <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>          <span class="hljs-comment">// &quot;对话完成，手动关闭连接&quot;</span><br>          socket.<span class="hljs-title function_">close</span>();<br>        &#125;, <span class="hljs-number">1000</span>);<br>      &#125;<br>    &#125;<br>  &#125;);<br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;close&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;连接关闭！！&quot;</span>);<br>    log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;本次回答&quot;</span>, tres);<br>    <span class="hljs-title function_">callback</span>(<span class="hljs-literal">null</span>, tres);<br>    tres = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-comment">// 对话完成后socket会关闭，将聊天记录换行处理</span><br>    config.<span class="hljs-property">sparkResult</span> = config.<span class="hljs-property">sparkResult</span> + <span class="hljs-string">&quot;\n&quot;</span>;<br>  &#125;);<br><br>  <span class="hljs-comment">// 处理连接错误</span><br>  socket.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;error&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;连接错误:&quot;</span>);<br>  &#125;);<br>&#125;<br><br><span class="hljs-keyword">const</span> <span class="hljs-title function_">getWebsocketUrl</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resovle</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">let</span> url = <span class="hljs-string">&quot;wss://spark-api.xf-yun.com/v1.1/chat&quot;</span>;<br>    <span class="hljs-keyword">const</span> host = <span class="hljs-string">&quot;spark-api.xf-yun.com/v1.1/chat&quot;</span>;<br>    <span class="hljs-keyword">const</span> apiKeyName = <span class="hljs-string">&quot;api_key&quot;</span>;<br>    <span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>().<span class="hljs-title function_">toUTCString</span>();<br>    <span class="hljs-keyword">const</span> algorithm = <span class="hljs-string">&quot;hmac-sha256&quot;</span>;<br>    <span class="hljs-keyword">const</span> headers = <span class="hljs-string">&quot;host date request-line&quot;</span>;<br>    <span class="hljs-keyword">const</span> signatureOrigin = <span class="hljs-string">`host: <span class="hljs-subst">$&#123;host&#125;</span>\ndate: <span class="hljs-subst">$&#123;date&#125;</span>\nGET /v1.1/chat HTTP/1.1`</span>;<br>    <span class="hljs-keyword">const</span> signatureSha = <span class="hljs-title class_">CryptoJs</span>.<span class="hljs-title class_">HmacSHA256</span>(signatureOrigin, config.<span class="hljs-property">APISecret</span>);<br>    <span class="hljs-keyword">const</span> signature = <span class="hljs-title class_">CryptoJs</span>.<span class="hljs-property">enc</span>.<span class="hljs-property">Base64</span>.<span class="hljs-title function_">stringify</span>(signatureSha);<br><br>    <span class="hljs-keyword">const</span> authorizationOrigin = <span class="hljs-string">`<span class="hljs-subst">$&#123;apiKeyName&#125;</span>=&quot;<span class="hljs-subst">$&#123;config.APIKey&#125;</span>&quot;, algorithm=&quot;<span class="hljs-subst">$&#123;algorithm&#125;</span>&quot;, headers=&quot;<span class="hljs-subst">$&#123;headers&#125;</span>&quot;, signature=&quot;<span class="hljs-subst">$&#123;signature&#125;</span>&quot;`</span>;<br><br>    <span class="hljs-keyword">const</span> authorization = base64.<span class="hljs-title function_">encode</span>(authorizationOrigin);<br><br>    <span class="hljs-comment">// 将空格编码</span><br>    url = <span class="hljs-string">`<span class="hljs-subst">$&#123;url&#125;</span>?authorization=<span class="hljs-subst">$&#123;authorization&#125;</span>&amp;date=<span class="hljs-subst">$&#123;<span class="hljs-built_in">encodeURI</span>(</span></span><br><span class="hljs-subst"><span class="hljs-string">      date</span></span><br><span class="hljs-subst"><span class="hljs-string">    )&#125;</span>&amp;host=<span class="hljs-subst">$&#123;host&#125;</span>`</span>;<br><br>    <span class="hljs-title function_">resovle</span>(url);<br>  &#125;);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; log, <span class="hljs-title class_">Message</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;wechaty&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; sendMsg &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;../utils/xunfei&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">onMessage</span>(<span class="hljs-params"><span class="hljs-attr">msg</span>: <span class="hljs-title class_">Message</span></span>) &#123;<br>  <span class="hljs-keyword">const</span> contact = msg.<span class="hljs-title function_">talker</span>(); <span class="hljs-comment">// 发消息人</span><br>  <span class="hljs-keyword">const</span> content = msg.<span class="hljs-title function_">text</span>().<span class="hljs-title function_">trim</span>(); <span class="hljs-comment">// 消息内容</span><br>  <span class="hljs-keyword">const</span> room = msg.<span class="hljs-title function_">room</span>(); <span class="hljs-comment">// 是否是群消息</span><br><br>  <span class="hljs-keyword">if</span> (room) &#123;<br>    <span class="hljs-comment">// 如果是群消息 目前只处理文字消息</span><br>    <span class="hljs-keyword">const</span> topic = <span class="hljs-keyword">await</span> room.<span class="hljs-title function_">topic</span>();<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>      <span class="hljs-string">`群名: <span class="hljs-subst">$&#123;topic&#125;</span> 发消息人: <span class="hljs-subst">$&#123;<span class="hljs-keyword">await</span> contact.name()&#125;</span> 内容: <span class="hljs-subst">$&#123;content&#125;</span>`</span><br>    );<br>    <span class="hljs-keyword">if</span> (content &amp;&amp; topic === <span class="hljs-string">&quot;生活助手&quot;</span>) &#123;<br>      <span class="hljs-title function_">sendMsg</span>(content, <span class="hljs-function">(<span class="hljs-params">error, result</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">if</span> (!error) &#123;<br>          msg.<span class="hljs-title function_">say</span>(result);<br>        &#125;<br>      &#125;);<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">import</span> &#123; log, <span class="hljs-title class_">WechatyBuilder</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;wechaty&quot;</span>;<br><br><span class="hljs-keyword">import</span> botHandle <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./handle&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ContactSelfInterface</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;wechaty/impls&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; setSchedule &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./utils/schedule&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; getContributions &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./utils/github&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; delay &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./utils/avoid&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">LoginOrganizeMe</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./utils/organizeMe&quot;</span>;<br><br><span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;dotenv&quot;</span>).<span class="hljs-title function_">config</span>();<br><br><span class="hljs-keyword">const</span> bot = <span class="hljs-title class_">WechatyBuilder</span>.<span class="hljs-title function_">build</span>(&#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;WechatEveryDay&quot;</span>,<br>  <span class="hljs-attr">puppet</span>: <span class="hljs-string">&quot;wechaty-puppet-wechat4u&quot;</span>,<br>&#125;);<br><br><span class="hljs-comment">// 登录</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">onLogin</span>(<span class="hljs-params"><span class="hljs-attr">user</span>: <span class="hljs-title class_">ContactSelfInterface</span></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`贴心小助理<span class="hljs-subst">$&#123;user&#125;</span>登录了`</span>);<br>  <span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`当前容器时间:<span class="hljs-subst">$&#123;date&#125;</span>`</span>);<br><br>  <span class="hljs-comment">// 登陆后创建定时任务</span><br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">initDay</span>();<br>&#125;<br><br><span class="hljs-comment">// 登出</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">onLogout</span>(<span class="hljs-params"><span class="hljs-attr">user</span>: <span class="hljs-title class_">ContactSelfInterface</span></span>) &#123;<br>  bot.<span class="hljs-title function_">logout</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`小助手<span class="hljs-subst">$&#123;user&#125;</span> 已经登出`</span>);<br>&#125;<br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">login2organizeMe</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> loginRes = <span class="hljs-keyword">await</span> <span class="hljs-title class_">LoginOrganizeMe</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;登录&quot;</span>, loginRes);<br>  <span class="hljs-keyword">return</span> loginRes.<span class="hljs-property">data</span>.<span class="hljs-property">access_token</span>;<br>&#125;<br><br><span class="hljs-comment">// 创建微信每日说定时任务</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">initDay</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`已经设定每日说任务`</span>);<br><br>  <span class="hljs-title function_">setSchedule</span>(<span class="hljs-string">&quot;10 00 8 * * *&quot;</span>, <span class="hljs-title function_">async</span> () =&gt; &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;你的贴心小助理开始工作啦！&quot;</span>);<br>    <span class="hljs-keyword">const</span> organizeMeToken = <span class="hljs-keyword">await</span> <span class="hljs-title function_">login2organizeMe</span>();<br>    <span class="hljs-keyword">let</span> logMsg;<br>    <span class="hljs-keyword">const</span> contact =<br>      (<span class="hljs-keyword">await</span> bot.<span class="hljs-property">Contact</span>.<span class="hljs-title function_">find</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;懒猪不回顾&quot;</span> &#125;)) ||<br>      (<span class="hljs-keyword">await</span> bot.<span class="hljs-property">Contact</span>.<span class="hljs-title function_">find</span>(&#123; <span class="hljs-attr">alias</span>: <span class="hljs-string">&quot;懒猪不回顾&quot;</span> &#125;)); <span class="hljs-comment">// 获取你要发送的联系人</span><br>    <span class="hljs-keyword">const</span> contributionsRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getContributions</span>(organizeMeToken); <span class="hljs-comment">// 获取contributions</span><br>    <span class="hljs-keyword">const</span> lastDayCount =<br>      contributionsRes.<span class="hljs-property">data</span>.<span class="hljs-property">data</span>.<span class="hljs-property">user</span>.<span class="hljs-property">contributionsCollection</span>.<span class="hljs-property">contributionCalendar</span>.<span class="hljs-property">weeks</span><br>        .<span class="hljs-title function_">slice</span>(-<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]<br>        .<span class="hljs-property">contributionDays</span>.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>].<span class="hljs-property">contributionCount</span>;<br><br>    <span class="hljs-keyword">const</span> str = <span class="hljs-string">`你昨天的贡献数为<span class="hljs-subst">$&#123;lastDayCount&#125;</span>`</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>      logMsg = str;<br>      <span class="hljs-keyword">await</span> <span class="hljs-title function_">delay</span>(<span class="hljs-number">2000</span>);<br>      <span class="hljs-keyword">if</span> (contact) <span class="hljs-keyword">await</span> contact.<span class="hljs-title function_">say</span>(str); <span class="hljs-comment">// 发送消息</span><br>    &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>      logMsg = e;<br>    &#125;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(logMsg);<br>  &#125;);<br>&#125;<br><br>bot.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;scan&quot;</span>, botHandle.<span class="hljs-property">onScan</span>);<br>bot.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;login&quot;</span>, onLogin);<br>bot.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;logout&quot;</span>, onLogout);<br>bot.<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;message&quot;</span>, botHandle.<span class="hljs-property">onMessage</span>);<br><br>bot<br>  .<span class="hljs-title function_">start</span>()<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-function">() =&gt;</span> log.<span class="hljs-title function_">info</span>(<span class="hljs-string">&quot;StarterBot&quot;</span>, <span class="hljs-string">&quot;Starter Bot Started.&quot;</span>))<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">e</span>) =&gt;</span> log.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;StarterBot&quot;</span>, e));<br></code></pre></td></tr></table></figure>
+
+<h3 id="AI-智能建议"><a href="#AI-智能建议" class="headerlink" title="AI 智能建议"></a>AI 智能建议</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">initDay</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`已经设定每日说任务`</span>);<br><br>  <span class="hljs-title function_">setSchedule</span>(<span class="hljs-string">&quot;10 36 10 * * *&quot;</span>, <span class="hljs-title function_">async</span> () =&gt; &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;你的贴心小助理开始工作啦！&quot;</span>);<br>    <span class="hljs-keyword">const</span> organizeMeToken = <span class="hljs-keyword">await</span> <span class="hljs-title function_">login2organizeMe</span>();<br>    <span class="hljs-keyword">let</span> logMsg;<br>    <span class="hljs-keyword">const</span> contact =<br>      (<span class="hljs-keyword">await</span> bot.<span class="hljs-property">Contact</span>.<span class="hljs-title function_">find</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;懒猪不回顾&quot;</span> &#125;)) ||<br>      (<span class="hljs-keyword">await</span> bot.<span class="hljs-property">Contact</span>.<span class="hljs-title function_">find</span>(&#123; <span class="hljs-attr">alias</span>: <span class="hljs-string">&quot;懒猪不回顾&quot;</span> &#125;)); <span class="hljs-comment">// 获取你要发送的联系人</span><br>    <span class="hljs-keyword">const</span> contributionsRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getContributions</span>(organizeMeToken); <span class="hljs-comment">// 获取contributions</span><br>    <span class="hljs-keyword">const</span> oneMsgRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getOne</span>();<br>    <span class="hljs-keyword">const</span> <span class="hljs-title class_">WeatherRes</span> = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getWeather</span>();<br>    <span class="hljs-keyword">const</span> lastDayCount =<br>      contributionsRes.<span class="hljs-property">data</span>.<span class="hljs-property">data</span>.<span class="hljs-property">user</span>.<span class="hljs-property">contributionsCollection</span>.<span class="hljs-property">contributionCalendar</span>.<span class="hljs-property">weeks</span><br>        .<span class="hljs-title function_">slice</span>(-<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]<br>        .<span class="hljs-property">contributionDays</span>.<span class="hljs-title function_">slice</span>(-<span class="hljs-number">2</span>, -<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>].<span class="hljs-property">contributionCount</span>;<br>    <span class="hljs-keyword">const</span> taskRes = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getTasks</span>(organizeMeToken);<br>    <span class="hljs-keyword">const</span> tasksStr = taskRes.<span class="hljs-property">data</span>.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.<span class="hljs-property">title</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    <span class="hljs-title function_">sendMsg</span>(<br>      <span class="hljs-title function_">standardForAI</span>(lastDayCount, <span class="hljs-title class_">WeatherRes</span>.<span class="hljs-property">temperature</span>),<br>      <span class="hljs-title function_">async</span> (error, result) =&gt; &#123;<br>        <span class="hljs-keyword">if</span> (!error) &#123;<br>          <span class="hljs-keyword">const</span> str = <span class="hljs-string">`🧑‍💼你昨天的贡献数为<span class="hljs-subst">$&#123;lastDayCount&#125;</span>\n\n💬<span class="hljs-subst">$&#123;oneMsgRes&#125;</span>\n\n🌡️今早温度<span class="hljs-subst">$&#123;</span></span><br><span class="hljs-subst"><span class="hljs-string">            WeatherRes.temperature</span></span><br><span class="hljs-subst"><span class="hljs-string">          &#125;</span>\n\n☂️<span class="hljs-subst">$&#123;</span></span><br><span class="hljs-subst"><span class="hljs-string">            WeatherRes.weather.includes(<span class="hljs-string">&quot;雨&quot;</span>) ? <span class="hljs-string">&quot;需要带伞&quot;</span> : <span class="hljs-string">&quot;没有下雨&quot;</span></span></span><br><span class="hljs-subst"><span class="hljs-string">          &#125;</span>\n\n📝今日任务：\n<span class="hljs-subst">$&#123;tasksStr&#125;</span>\n\n智能建议：\n<span class="hljs-subst">$&#123;result&#125;</span>`</span>;<br>          <span class="hljs-keyword">try</span> &#123;<br>            logMsg = str;<br>            <span class="hljs-keyword">await</span> <span class="hljs-title function_">delay</span>(<span class="hljs-number">2000</span>);<br>            <span class="hljs-keyword">if</span> (contact) <span class="hljs-keyword">await</span> contact.<span class="hljs-title function_">say</span>(str); <span class="hljs-comment">// 发送消息</span><br>          &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>            logMsg = e;<br>          &#125;<br>          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(logMsg);<br>        &#125;<br>      &#125;<br>    );<br>  &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// standard.ts</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">standardForAI</span> = (<span class="hljs-params"><span class="hljs-attr">contributions</span>: <span class="hljs-built_in">number</span>, <span class="hljs-attr">temperature</span>: <span class="hljs-built_in">string</span></span>) =&gt; &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`我生活在中国广东佛山市顺德区，今日气温<span class="hljs-subst">$&#123;temperature&#125;</span>摄氏度，请给我一些针对天气情况的穿衣建议，我还是一名web前端工程师，昨天我在github的contributions数量为<span class="hljs-subst">$&#123;contributions&#125;</span>个，我自律地以每天五个为目标，请对我的成果做出评价并为我开展新一天的工作给出积极的意见`</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Wechat/" class="category-chain-item">Wechat</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%AF%8F%E6%97%A5%E6%8F%90%E9%86%92/" class="print-no-link">#每日提醒</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>wechaty-everyDays</div>
+      <div>https://undercurre.github.io/2021/05/20/Wechat/微信机器人wechaty之每日提醒/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年5月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/20/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%AD%A6%E4%B8%8D%E4%BC%9A%E7%9A%84css/" title="学不会的css">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">学不会的css</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/20/Wechat/%E5%BE%AE%E4%BF%A1%E7%99%BB%E5%BD%95/" title="Wechat-login">
+                        <span class="hidden-mobile">Wechat-login</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

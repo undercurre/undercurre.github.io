@@ -1,0 +1,908 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Question one: 谈谈你对 vue 的理解第一个就是数据驱动视图，vue 出生前的 jQuery 时代，仍然需要操作 dom 去操作视图。vue 的数据响应式能由数据驱动视图的变更。 第二个是独特的指令系统和声明式渲染，Vue 基于标准 HTML 拓展了一套模板语法，使得我们可以声明式地描述最终输出的 HTML 和 JavaScript 状态之间的关系。v-if,v-for 这些指令在开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue模拟面试">
+<meta property="og:url" content="https://undercurre.github.io/2024/07/17/%E9%9D%A2%E8%AF%95/vue%E6%A8%A1%E6%8B%9F%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="Question one: 谈谈你对 vue 的理解第一个就是数据驱动视图，vue 出生前的 jQuery 时代，仍然需要操作 dom 去操作视图。vue 的数据响应式能由数据驱动视图的变更。 第二个是独特的指令系统和声明式渲染，Vue 基于标准 HTML 拓展了一套模板语法，使得我们可以声明式地描述最终输出的 HTML 和 JavaScript 状态之间的关系。v-if,v-for 这些指令在开">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-17T19:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.096Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="抖音">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>vue模拟面试 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="vue模拟面试"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-17 19:49" pubdate>
+          2024年7月17日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          118 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">vue模拟面试</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Question-one-谈谈你对-vue-的理解"><a href="#Question-one-谈谈你对-vue-的理解" class="headerlink" title="Question one: 谈谈你对 vue 的理解"></a>Question one: 谈谈你对 vue 的理解</h2><p>第一个就是数据驱动视图，vue 出生前的 jQuery 时代，仍然需要操作 dom 去操作视图。vue 的数据响应式能由数据驱动视图的变更。</p>
+<p>第二个是独特的指令系统和声明式渲染，Vue 基于标准 HTML 拓展了一套模板语法，使得我们可以声明式地描述最终输出的 HTML 和 JavaScript 状态之间的关系。v-if,v-for 这些指令在开发中更好地完成数据驱动视图的逻辑。</p>
+<p>第三个是组件化，细化开发单元，抽离了重复的开发区域并加以复用，降低整个系统的耦合度，并且借此来对业务进行和代码按职责进行分离，有更好的开发、调试和维护体验。</p>
+<h2 id="Question-two-谈谈-vue-的响应式数据"><a href="#Question-two-谈谈-vue-的响应式数据" class="headerlink" title="Question two: 谈谈 vue 的响应式数据"></a>Question two: 谈谈 vue 的响应式数据</h2><p>本质上就是数据和函数的关联，数据发生变换函数重新运行，这里的数据必须是响应式数据，函数必须是被监控的函数，响应式数据是 vue2 使用的是 Object 的 defineProperty 定义的数据，vue3 使用 Proxy 定义的数据，被监控的函数在 vue2 是使用 watcher 进行监控的，vue3 是使用 effect 进行监控的，像 render，watch， computed， watchEffect ,那模板是怎么回事，界面又是怎么变化的呢，其实模板在运行时是一个 render 函数,他被重新执行导致的视图更新。这里经常会有这样一个问题就是在定义响应式数据时传入响应式对象的属性值但是想象中的响应式没有生效，其实这个问题的根本原因就在于在赋值的一瞬间，你的这个赋值是原始值，所以 vueuse 这种工具库经常在传参时需要传入两个参数，第一个是响应式对象，第二个是属性值的属性名字符串，通过属性名索引进行监控关联，保证响应式不会丢失，这样才能实现响应式传递。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs vue">// 父组件<br><br>&lt;template&gt;<br>  &lt;HelloWorld :count=&quot;count&quot;&gt;&lt;/HelloWorld&gt;<br>  &lt;button @click=&quot;inc&quot;&gt;+&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import HelloWorld from &quot;./components/HelloWorld.vue&quot;;<br>import &#123; ref &#125; from &quot;vue&quot;;<br><br>const count = ref(0);<br><br>function inc() &#123;<br>  count.value++;<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs vue">// 子组件<br><br>&lt;template&gt;<br>  &lt;div&gt;得到传入的属性： &#123;&#123; count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;doubled: &#123;&#123; doubleCount &#125;&#125;&lt;/div&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; watchEffect, ref &#125; from &quot;vue&quot;;<br><br>const props = defineProps(&#123;<br>  count: Number,<br>&#125;);<br><br>function useDouble(props, keyName) &#123;<br>  const doubleCount = ref(props[keyName] * 2);<br>  watchEffect(() =&gt; &#123;<br>    doubleCount.value = props[keyName] * 2;<br>  &#125;);<br>  return doubleCount;<br>&#125;<br><br>const doubleCount = useDouble(props, &quot;count&quot;);<br><br>// 这样就会失效<br>// function useDouble(count) &#123;<br>//   const doubleCount = ref(count * 2);<br>//   watchEffect(() =&gt; &#123;<br>//     doubleCount.value = count * 2;<br>//   &#125;);<br>//   return doubleCount;<br>// &#125;<br><br>// const doubleCount = useDouble(props.count * 2);<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-three-vue3-是所有的浏览器都支持吗？"><a href="#Question-three-vue3-是所有的浏览器都支持吗？" class="headerlink" title="Question three: vue3 是所有的浏览器都支持吗？"></a>Question three: vue3 是所有的浏览器都支持吗？</h2><p>旧版浏览器不支持，Internet Explorer: 所有版本均不支持 Proxy，早期版本的 Android 浏览器，早期版本的 iOS Safari，由于这些浏览器不支持 Proxy，Vue 3 无法在这些环境中正常工作。</p>
+<h2 id="Question-four-vue2-是所有浏览器都支持吗？"><a href="#Question-four-vue2-是所有浏览器都支持吗？" class="headerlink" title="Question four: vue2 是所有浏览器都支持吗？"></a>Question four: vue2 是所有浏览器都支持吗？</h2><p>几乎是的，因为 Vue 2 的响应式系统主要依赖于 Object.defineProperty 来实现数据的劫持和依赖收集。</p>
+<h2 id="Question-five-script-setup-标签的作用是什么？"><a href="#Question-five-script-setup-标签的作用是什么？" class="headerlink" title="Question five: script setup 标签的作用是什么？"></a>Question five: script setup 标签的作用是什么？</h2><p>大幅度地简化手动暴露大量的状态和方法的代码</p>
+<h2 id="Question-six-为什么我们需要使用带有-value-的-ref，而不是普通的变量？"><a href="#Question-six-为什么我们需要使用带有-value-的-ref，而不是普通的变量？" class="headerlink" title="Question six: 为什么我们需要使用带有 .value 的 ref，而不是普通的变量？"></a>Question six: 为什么我们需要使用带有 .value 的 ref，而不是普通的变量？</h2><p>在标准的 JavaScript 中，检测普通变量的访问或修改是行不通的。然而，我们可以通过 getter 和 setter 方法来拦截对象属性的 get 和 set 操作。</p>
+<p>该 .value 属性给予了 Vue 一个机会来检测 ref 何时被访问或修改。在其内部，Vue 在它的 getter 中执行追踪，在它的 setter 中执行触发。</p>
+<h2 id="Question-seven-谈谈你对-MVVM-的理解"><a href="#Question-seven-谈谈你对-MVVM-的理解" class="headerlink" title="Question seven: 谈谈你对 MVVM 的理解"></a>Question seven: 谈谈你对 MVVM 的理解</h2><p>就是 Model-View-ViewModel,Model 就是数据模型层，也就是 data，View 就是视图层，也就是 DOM，ViewModel 就是视图模型层，也就是 vue 实例对象，用于连接 View 和 Model，核心是提供双向数据绑定，能够监听到数据的变化去改变视图，也能通过用户交互，视图的变化操作数据，实现 View 和 Model 的同步。</p>
+<h2 id="Question-eight-谈一下你对于-vue-指令的理解，怎么去封装一个-vue-的自定义指令？"><a href="#Question-eight-谈一下你对于-vue-指令的理解，怎么去封装一个-vue-的自定义指令？" class="headerlink" title="Question eight: 谈一下你对于 vue 指令的理解，怎么去封装一个 vue 的自定义指令？"></a>Question eight: 谈一下你对于 vue 指令的理解，怎么去封装一个 vue 的自定义指令？</h2><p>简单来说，vue 指令就是为了实现某种特定功能比如按条件渲染、绑定属性等，而封装的一些指令，这样使用者就能够快速实现一些功能。自定义指令通过 directives 和他的所处组件生命周期钩子实现。Vue 的指令系统是一种用于直接操作 DOM 的机制，提供了一种简洁且灵活的方式在模板中应用复杂的行为。自定义指令允许开发者封装常用的 DOM 操作并在模板中以简洁的语法使用。当 Vue 编译模板时，会解析指令并生成相应的渲染函数。渲染函数包含了指令的处理逻辑。在模板编译过程中，Vue 会识别指令并为每个指令创建一个指令实例。指令实例包含指令定义对象和一些相关的上下文信息，如绑定的元素、指令的值等。所以自定义指令还可以支持传参，指令定义对象可以包含多个钩子函数，使得这些钩子函数能在指令的不同生命周期阶段调用，在指令钩子函数中，开发者可以直接操作 DOM 元素。Vue 会将绑定的元素作为参数传递给钩子函数，开发者可以通过访问该元素来执行相应的 DOM 操作。Vue 的指令与其响应式系统集成。当指令的绑定值（如 v-model 绑定的数据）发生变化时，Vue 的响应式系统会通知相应的指令实例更新。指令实例会调用相应的钩子函数（如 updated）来更新 DOM。</p>
+<h2 id="Question-nine-vue2-和-vue3-的区别，以及发生了哪些变化？"><a href="#Question-nine-vue2-和-vue3-的区别，以及发生了哪些变化？" class="headerlink" title="Question nine: vue2 和 vue3 的区别，以及发生了哪些变化？"></a>Question nine: vue2 和 vue3 的区别，以及发生了哪些变化？</h2><p>第一个就是 vue3 可以引入了组合式 API，允许开发者使用 setup 函数和组合函数（Composition Functions）来组织逻辑（就有点像 react），使得代码更加模块化和可重用。这部分 vue2 以前是使用选项式 API（Options API）来组织代码，通过 data、methods、computed 等选项来定义组件的逻辑。</p>
+<p>第二个就是 vue3 使用 Proxy 替代 Vue 2 中的 Object.defineProperty 实现响应式系统，因为不再像 vue2 一样需要在初始化时递归遍历对象的所有属性，而实现了性能的提升。因为 Proxy 能拦截整个对象，响应式系统能够检测对象新增或删除属性的变化。</p>
+<p>第三个就是 vue3 有更快的虚拟 DOM，优化了 diff 算法和组件更新机制。</p>
+<p>第四个就是 Vue 3 使用 Tree-shaking 技术，使得打包体积更小。</p>
+<p>第五个就是 vue3 核心库是分离的，一些特性（如 响应式系统）可以按需抽离魔改。</p>
+<p>第六个就是生命周期，Vue 3 使用 onBeforeMount、onMounted、onBeforeUpdate、onUpdated 等钩子函数替代 Vue 2 中的生命周期钩子，提供更灵活的使用方式。</p>
+<p>第七个就是 Vue 2 组件模板必须有一个根元素。Vue 3 支持片段，组件模板可以返回多个根元素。</p>
+<p>第八个 Vue 3 新增 Teleport 组件，允许将模板的一部分渲染到 DOM 树中的不同位置。</p>
+<p>第九个更好的 TypeScript 支持，提供了更好的类型推断和类型检查。</p>
+<p>第十个 Vue 3 引入了自定义渲染器 API，允许开发者创建自定义渲染器，以便将 Vue 组件渲染到非 DOM 环境，如原生移动应用或 WebGL。</p>
+<p>第十一个 Vue 3 推出了新的开发工具 Vite，具有更快的热重载和构建速度。</p>
+<h2 id="Question-ten-computed-的计算属性和-watch-监听，还有-watchEffect-他们之间的区别？"><a href="#Question-ten-computed-的计算属性和-watch-监听，还有-watchEffect-他们之间的区别？" class="headerlink" title="Question ten: computed 的计算属性和 watch 监听，还有 watchEffect 他们之间的区别？"></a>Question ten: computed 的计算属性和 watch 监听，还有 watchEffect 他们之间的区别？</h2><p>computed：用于计算和缓存基于其他响应式数据的衍生数据。<br>只有在依赖数据变化时才会重新计算。<br>适用于依赖多个响应式数据的复杂计算。<br>watch：用于观察一个或多个响应式数据的变化并执行副作用。<br>可以处理复杂的变化逻辑，并可以指定深度监听。<br>适用于需要在数据变化时执行副作用的场景。<br>watchEffect：用于自动收集依赖并执行副作用函数。<br>更加自动化，不需要明确指定依赖。<br>适用于需要自动收集依赖的副作用逻辑。<br>当你需要基于其他响应式数据计算并缓存衍生数据时使用 computed。<br>当你需要在数据变化时执行副作用或复杂的变化逻辑时使用 watch。<br>当你需要自动收集依赖并执行副作用函数时使用 watchEffect。</p>
+<h2 id="Question-eleven-VNode-是什么？"><a href="#Question-eleven-VNode-是什么？" class="headerlink" title="Question eleven: VNode 是什么？"></a>Question eleven: VNode 是什么？</h2><p>VNode（虚拟节点，Virtual Node）是 Vue 和 React 等框架中的一个核心概念，用于描述 DOM 结构的 JavaScript 对象。VNode 是虚拟 DOM（Virtual DOM）实现的基础，虚拟 DOM 通过 VNode 来高效地更新和渲染实际的 DOM。VNode 通常是一个包含以下属性的 JavaScript 对象：tag：节点的标签名，例如 ‘div’、’span’ 等。data：节点的属性、样式、事件等信息。children：子节点数组，包含多个 VNode。text：文本节点的内容，如果节点是文本节点。elm：指向实际的 DOM 元素，初始为 null，渲染时会更新为对应的 DOM 元素。在 Vue 中，VNode 是 createVNode 函数的返回值。Vue 使用 VNode 来描述组件树和 DOM 树，通过比较新旧 VNode 树（称为 diffing），来高效地更新 DOM。总的来说 VNode 是虚拟 DOM 的节点，也就是基础结构。</p>
+<h2 id="Question-twelve-VNode-是如何渲染的？"><a href="#Question-twelve-VNode-是如何渲染的？" class="headerlink" title="Question twelve: VNode 是如何渲染的？"></a>Question twelve: VNode 是如何渲染的？</h2><p>VNode 本身是一个 JavaScript 对象，它不会直接被渲染到 DOM 上。渲染 VNode 到实际 DOM 倒是会发生。首先要创建 VNode 树：根据模板或 JSX 代码，框架生成一棵 VNode 树。每个 VNode 都是对一个实际 DOM 节点的抽象表示。其次 进行 VNode 比较（diffing）：当状态或属性变化时，框架会创建新的 VNode 树，并将其与旧的 VNode 树进行比较。这一步骤称为 diffing。通过 diffing，框架可以找出需要更新的部分。最后更新实际 DOM：根据 diffing 结果，框架会对实际 DOM 进行最小化的更新，只对有变化的部分进行操作。在 Vue 里， Vue 的模板编译器会将模板编译为渲染函数。渲染函数会根据组件的数据和模板生成 VNode 树。Vue 的响应式系统会监听数据变化。当数据变化时，Vue 会调用渲染函数生成新的 VNode 树。Vue 使用 patch 函数比较新旧 VNode 树，并生成差异。根据 patch 结果，Vue 会更新实际 DOM。Vue 只会对需要更新的部分进行操作，从而提高性能。</p>
+<h2 id="Question-Thirteen-ref-是怎么处理非原始值的"><a href="#Question-Thirteen-ref-是怎么处理非原始值的" class="headerlink" title="Question Thirteen: ref 是怎么处理非原始值的?"></a>Question Thirteen: ref 是怎么处理非原始值的?</h2><p>非原始值将通过 reactive() 转换为响应式代理.原始值实现了 getter 和 setter</p>
+<h2 id="Question-Fourteen-vue-生命周期的执行顺序？"><a href="#Question-Fourteen-vue-生命周期的执行顺序？" class="headerlink" title="Question Fourteen: vue 生命周期的执行顺序？"></a>Question Fourteen: vue 生命周期的执行顺序？</h2><p>在 Vue 2 中，生命周期钩子函数的执行顺序如下：</p>
+<p>beforeCreate：实例初始化之后，数据观测和事件配置之前调用。<br>created：实例已经创建，完成数据观测、属性和方法的运算，事件/回调还未配置。<br>beforeMount：在挂载之前被调用，相关的 render 函数首次被调用。<br>mounted：el 被新创建的 vm.$el 替换，并挂载到实例上。<br>beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。<br>updated：由于数据更改导致虚拟 DOM 重新渲染和打补丁之后调用。<br>activated：keep-alive 组件激活时调用。<br>deactivated：keep-alive 组件停用时调用。<br>beforeDestroy：实例销毁之前调用。<br>destroyed：实例销毁后调用。</p>
+<p>在 Vue 3 中，生命周期钩子函数的执行顺序如下：</p>
+<p>beforeCreate：已被移除，使用 setup 代替。<br>created：已被移除，使用 setup 代替。<br>beforeMount：在挂载之前被调用，相关的 render 函数首次被调用。<br>mounted：组件被挂载后调用。<br>beforeUpdate：数据更新时调用，发生在虚拟 DOM 打补丁之前。<br>updated：由于数据更改导致虚拟 DOM 重新渲染和打补丁之后调用。<br>beforeUnmount：组件卸载前调用。<br>unmounted：组件卸载后调用。<br>activated：keep-alive 组件激活时调用。<br>deactivated：keep-alive 组件停用时调用.</p>
+<h2 id="Question-fifteen-谈谈-vuex-的核心属性？"><a href="#Question-fifteen-谈谈-vuex-的核心属性？" class="headerlink" title="Question fifteen: 谈谈 vuex 的核心属性？"></a>Question fifteen: 谈谈 vuex 的核心属性？</h2><p>state: 即是数据源，用于存放数据，<br>getters: 是一个 getter，对 state 进行加工<br>mutations: 唯一可以修改 state 数据的途径<br>actions: 异步修改 state 中的数据（通过 commit 触发 mutation 中的方法）<br>modules: 拆分模块</p>
+<h2 id="Question-sixteen-vuex-的运行机制是怎么样的？"><a href="#Question-sixteen-vuex-的运行机制是怎么样的？" class="headerlink" title="Question sixteen: vuex 的运行机制是怎么样的？"></a>Question sixteen: vuex 的运行机制是怎么样的？</h2><p>当你创建一个 Vuex Store 实例时，Vuex 会接管传递给它的 state、mutations、actions、getters 和 modules，并将它们存储在单一状态树中。组件可以通过 this.store.state 访问全局状态。可以使用 mapState 辅助函数将状态映射为局部计算属性。组件通过 this.store.commit(‘mutationName’, payload) 提交 Mutations，以同步方式更改状态。组件通过 this.store.dispatch(‘actionName’, payload) 分发 Actions，以异步方式触发 Mutations 或其他 Actions。组件通过 this.store.getters 访问 Getters。通过模块化设计，将复杂的状态树拆分为多个模块，每个模块拥有自己的 state、mutations、actions 和 getters。</p>
+<h2 id="Question-seventeen-谈一谈-vuex-里，action，mutation-和-state-之间的运转方式？"><a href="#Question-seventeen-谈一谈-vuex-里，action，mutation-和-state-之间的运转方式？" class="headerlink" title="Question seventeen: 谈一谈 vuex 里，action，mutation 和 state 之间的运转方式？"></a>Question seventeen: 谈一谈 vuex 里，action，mutation 和 state 之间的运转方式？</h2><p>当我们着眼于数据的流动时，会发现组件调用 this.store.dispatch(‘actionName’, payload) 分发 Action。Action 可以包含异步操作，完成后提交 Mutation。Mutation 接收 state 作为第一个参数，直接同步更改 state。State 发生变化后，Vue 组件自动重新渲染以反映新的状态。</p>
+<h2 id="Question-eighteen-谈一谈-keep-alive-这个组件，它的一个实现原理？"><a href="#Question-eighteen-谈一谈-keep-alive-这个组件，它的一个实现原理？" class="headerlink" title="Question eighteen: 谈一谈 keep alive 这个组件，它的一个实现原理？"></a>Question eighteen: 谈一谈 keep alive 这个组件，它的一个实现原理？</h2><p>第一，定义 keep-alive 组件，接收 include、exclude 和 max 等属性。</p>
+<p>第二，在 setup 函数中，创建缓存对象和键列表。<br>监听 include 和 exclude 属性的变化，更新缓存内容。<br>第三，获取插槽中的第一个子组件，判断其是否符合缓存条件。使用或更新缓存中的组件实例，根据 key 唯一标识每个实例。设置虚拟节点的标志位，以表明它是一个缓存的节点。<br>第四，在组件卸载时，清理缓存中的所有实例。</p>
+<h2 id="Question-nineteen-我们如何在-vue-项目中应用权限？"><a href="#Question-nineteen-我们如何在-vue-项目中应用权限？" class="headerlink" title="Question nineteen: 我们如何在 vue 项目中应用权限？"></a>Question nineteen: 我们如何在 vue 项目中应用权限？</h2><p>页面级，首先通过状态管理存储用户状态和权限信息。然后通过 vue-router 的路由守卫去检查和匹配页面权限。<br>组件级，通过使用自定义指令（譬如通过指令去决定是否显示组件）和自定义组件（譬如通过 v-if 去决定是否显示插槽子组件）去检查和匹配页面权限。<br>函数级，则需要定义公共包裹方法去检查权限。</p>
+<h2 id="Question-twenty-如何在-vue-项目中做导航守卫？"><a href="#Question-twenty-如何在-vue-项目中做导航守卫？" class="headerlink" title="Question twenty: 如何在 vue 项目中做导航守卫？"></a>Question twenty: 如何在 vue 项目中做导航守卫？</h2><p>可以通过 vue-router 提供的前后守卫等钩子（钩子提供 to, from, next 三个参数获取路由对象和继续处理路由）设置全局守卫或者组件守卫。</p>
+<h2 id="Question-twenty-one-为什么-Vue3-具有更快的虚拟-DOM？"><a href="#Question-twenty-one-为什么-Vue3-具有更快的虚拟-DOM？" class="headerlink" title="Question twenty one: 为什么 Vue3 具有更快的虚拟 DOM？"></a>Question twenty one: 为什么 Vue3 具有更快的虚拟 DOM？</h2><p>Vue 3 的编译器生成的渲染函数更加高效，Vue 3 在编译阶段就会进行静态分析，将模板中的静态部分提取出来，只在初次渲染时处理，避免了在每次渲染时重复计算。模板中的静态内容会被缓存，从而减少了重复创建 VNode 的开销。</p>
+<h2 id="Question-twenty-two-如何放弃深层响应性？"><a href="#Question-twenty-two-如何放弃深层响应性？" class="headerlink" title="Question twenty two: 如何放弃深层响应性？"></a>Question twenty two: 如何放弃深层响应性？</h2><p>使用 ref 的浅层作用形式 shallowRef 或者 reactive 的浅层形式 shallowReactive,和 ref() 不同，浅层 ref 的内部值将会原样存储和暴露，并且不会被深层递归地转为响应式。只有对 .value 的访问是响应式的。shallowRef() 常常用于对大型数据结构的性能优化或是与外部的状态管理系统集成。</p>
+<h2 id="Question-twenty-three-nextTick-是干什么的？"><a href="#Question-twenty-three-nextTick-是干什么的？" class="headerlink" title="Question twenty three: nextTick 是干什么的？"></a>Question twenty three: nextTick 是干什么的？</h2><p>DOM 更新不是同步的而是异步的。Vue 会在“next tick”更新周期中缓冲所有状态的修改，以确保不管你进行了多少次状态修改，每个组件都只会被更新一次。要等待 DOM 更新完成（即确保获取到最新的 DOM）后再执行额外的代码，可以使用 nextTick() 全局 API。</p>
+<h2 id="Question-twenty-four-ref-和-reactive-的区别是什么？"><a href="#Question-twenty-four-ref-和-reactive-的区别是什么？" class="headerlink" title="Question twenty four: ref 和 reactive 的区别是什么？"></a>Question twenty four: ref 和 reactive 的区别是什么？</h2><p>主要有三点： 第一，ref 主要用于包装基本数据类型（如字符串、数字、布尔），当数据是个数组或者对象的时候该数据会通过 reactive 转为具有深层次的响应式数据</p>
+<p>第二，ref 返回一个对象， refImpl 对象，该对象中的 value 属性为数据的值，读取或者修改值时，必须通过该对象的 value 属性，但在模板中使用的时候不需要加 value,可直接调用，因为这里 vue3 已经帮我们处理过了。refImpl 对象在值是原始值时，value 就是该原始值，当值是对象或者数组则是 Proxy 对象。</p>
+<p>第三，reactive 只能包装数组或者部分对象，注意是部分，Date 对象或者空函数就不行，且具有深层次响应式。</p>
+<h2 id="Question-twenty-five-Vue3-中的-Proxy-和原始对象全等吗？"><a href="#Question-twenty-five-Vue3-中的-Proxy-和原始对象全等吗？" class="headerlink" title="Question twenty five: Vue3 中的 Proxy 和原始对象全等吗？"></a>Question twenty five: Vue3 中的 Proxy 和原始对象全等吗？</h2><p>不全等</p>
+<h2 id="Question-twenty-six-修改原始对象会触发更新吗？"><a href="#Question-twenty-six-修改原始对象会触发更新吗？" class="headerlink" title="Question twenty six: 修改原始对象会触发更新吗？"></a>Question twenty six: 修改原始对象会触发更新吗？</h2><p>只有代理对象是响应式的，更改原始对象不会触发更新。因此，使用 Vue 的响应式系统的最佳实践是仅使用你声明对象的代理版本。</p>
+<h2 id="Question-twenty-seven-对一个已存在的代理对象调用-reactive-会返回什么？"><a href="#Question-twenty-seven-对一个已存在的代理对象调用-reactive-会返回什么？" class="headerlink" title="Question twenty seven: 对一个已存在的代理对象调用 reactive() 会返回什么？"></a>Question twenty seven: 对一个已存在的代理对象调用 reactive() 会返回什么？</h2><p>其本身。</p>
+<h2 id="Question-twenty-eight-使用-reactive-对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-twenty-eight-使用-reactive-对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question twenty eight: 使用 reactive 对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？"></a>Question twenty eight: 使用 reactive 对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive &#125; from &quot;vue&quot;;<br>let state = reactive(&#123; count: 0 &#125;);<br><br>state = &#123; count: 1 &#125;;<br><br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量和对象将丢失响应式连接，原因是 reactive API 的局限性</p>
+<h2 id="Question-twenty-nine-使用-reactive-对变量进行响应式连接后再赋值给一个-reactive-包裹的响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-twenty-nine-使用-reactive-对变量进行响应式连接后再赋值给一个-reactive-包裹的响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question twenty nine: 使用 reactive 对变量进行响应式连接后再赋值给一个 reactive 包裹的响应式对象，该变量或者该对象是否具有响应式？"></a>Question twenty nine: 使用 reactive 对变量进行响应式连接后再赋值给一个 reactive 包裹的响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick &#125; from &quot;vue&quot;;<br>let state = reactive(&#123; msg: &quot;123&quot; &#125;);<br><br>state = reactive(&#123; count: 2 &#125;);<br><br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量的响应式连接丢失和该对象具有响应式连接，原因是赋值的仍然是一个响应式数据，但已经和源变量的对象不是同一个</p>
+<h2 id="Question-thirty：-使用-reactive-对变量进行响应式连接后再在-nextTick-中赋值给一个-reactive-包裹的响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-thirty：-使用-reactive-对变量进行响应式连接后再在-nextTick-中赋值给一个-reactive-包裹的响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question thirty： 使用 reactive 对变量进行响应式连接后再在 nextTick 中赋值给一个 reactive 包裹的响应式对象，该变量或者该对象是否具有响应式？"></a>Question thirty： 使用 reactive 对变量进行响应式连接后再在 nextTick 中赋值给一个 reactive 包裹的响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive &#125; from &quot;vue&quot;;<br>let state = reactive(&#123; count: 0 &#125;);<br><br>nextTick(() =&gt; &#123;<br>  state = reactive(&#123; count: 11 &#125;);<br>&#125;);<br><br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量和对象将丢失响应式连接，由于 变量 被重新赋值，原来与模板绑定的响应式对象就不再有效了。</p>
+<h2 id="Question-thirty-one-如何避免赋值时使用-reactive-所产生的响应式丢失？"><a href="#Question-thirty-one-如何避免赋值时使用-reactive-所产生的响应式丢失？" class="headerlink" title="Question thirty one: 如何避免赋值时使用 reactive 所产生的响应式丢失？"></a>Question thirty one: 如何避免赋值时使用 reactive 所产生的响应式丢失？</h2><p>第一，不要直接整个对象替换，而是对属性进行赋值<br>第二，可以使用 Object 的 assign 方法</p>
+<h2 id="Question-thirty-two-使用-reactive-对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？"><a href="#Question-thirty-two-使用-reactive-对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？" class="headerlink" title="Question thirty two: 使用 reactive 对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？"></a>Question thirty two: 使用 reactive 对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; n &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br><br>  &lt;button @click=&quot;increasen&quot;&gt;increasen&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick &#125; from &quot;vue&quot;;<br><br>let state = reactive(&#123; count: 0 &#125;);<br><br>let n = state.count;<br><br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br><br>const increasen = () =&gt; &#123;<br>  n++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>前者依然具有响应式，后者不具有响应式，原因时后者只是把原始值赋值过去了而已</p>
+<h2 id="Question-thirty-three-对使用-reactive-包裹的响应式对象进行解构-解构出的变量是否具有响应式？"><a href="#Question-thirty-three-对使用-reactive-包裹的响应式对象进行解构-解构出的变量是否具有响应式？" class="headerlink" title="Question thirty three: 对使用 reactive 包裹的响应式对象进行解构,解构出的变量是否具有响应式？"></a>Question thirty three: 对使用 reactive 包裹的响应式对象进行解构,解构出的变量是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br><br>  &lt;button @click=&quot;increasen&quot;&gt;increasen&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick &#125; from &quot;vue&quot;;<br><br>let state = reactive(&#123; count: 0 &#125;);<br>let &#123; count &#125; = state;<br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br><br>const increasen = () =&gt; &#123;<br>  count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>解构出的变量不具有响应式，因为 reactive API 的局限性</p>
+<h2 id="Question-thirty-four-如何解决解构-reactive-包裹对象创建的响应式变量导致的响应式连接丢失的问题？"><a href="#Question-thirty-four-如何解决解构-reactive-包裹对象创建的响应式变量导致的响应式连接丢失的问题？" class="headerlink" title="Question thirty four: 如何解决解构 reactive 包裹对象创建的响应式变量导致的响应式连接丢失的问题？"></a>Question thirty four: 如何解决解构 reactive 包裹对象创建的响应式变量导致的响应式连接丢失的问题？</h2><p>使用 toRefs 包裹该被解构对象，toRefs 在 vue3 中被专门设计干这个。</p>
+<h2 id="Question-thirty-five-使用-ref-对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-thirty-five-使用-ref-对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question thirty five: 使用 ref 对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？"></a>Question thirty five: 使用 ref 对变量进行响应式连接后再赋值一个非响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; ref &#125; from &quot;vue&quot;;<br>let state = ref(&#123; count: 0 &#125;);<br><br>state = &#123; count: 1 &#125;;<br><br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量或者该对象将丢失响应式连接，原因是赋值给了一个非响应式变量，其中没有发生任何响应式传递。</p>
+<h2 id="Question-thirty-six-使用-ref-对变量进行响应式连接后再赋值一个非响应式对象到点-value-属性，该变量或者该对象是否具有响应式"><a href="#Question-thirty-six-使用-ref-对变量进行响应式连接后再赋值一个非响应式对象到点-value-属性，该变量或者该对象是否具有响应式" class="headerlink" title="Question thirty six: 使用 ref 对变量进行响应式连接后再赋值一个非响应式对象到点 value 属性，该变量或者该对象是否具有响应式?"></a>Question thirty six: 使用 ref 对变量进行响应式连接后再赋值一个非响应式对象到点 value 属性，该变量或者该对象是否具有响应式?</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; ref &#125; from &quot;vue&quot;;<br>let state = ref(&#123; count: 0 &#125;);<br><br>state.value = &#123; count: 1 &#125;;<br><br>const increase = () =&gt; &#123;<br>  state.value.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量或者该对象仍具有响应式。</p>
+<h2 id="Question-thirty-seven-使用-ref-对变量进行响应式连接后再赋值给一个-ref-包裹的响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-thirty-seven-使用-ref-对变量进行响应式连接后再赋值给一个-ref-包裹的响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question thirty seven: 使用 ref 对变量进行响应式连接后再赋值给一个 ref 包裹的响应式对象，该变量或者该对象是否具有响应式？"></a>Question thirty seven: 使用 ref 对变量进行响应式连接后再赋值给一个 ref 包裹的响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick, ref &#125; from &quot;vue&quot;;<br>let state = ref(&#123; msg: &quot;123&quot; &#125;);<br><br>state = ref(&#123; count: 2 &#125;);<br><br>const increase = () =&gt; &#123;<br>  state.value.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量或者该对象仍具有响应式。</p>
+<h2 id="Question-thirty-eight-使用-ref-对变量进行响应式连接后再在-nextTick-中赋值给一个-ref-包裹的响应式对象，该变量或者该对象是否具有响应式？"><a href="#Question-thirty-eight-使用-ref-对变量进行响应式连接后再在-nextTick-中赋值给一个-ref-包裹的响应式对象，该变量或者该对象是否具有响应式？" class="headerlink" title="Question thirty eight: 使用 ref 对变量进行响应式连接后再在 nextTick 中赋值给一个 ref 包裹的响应式对象，该变量或者该对象是否具有响应式？"></a>Question thirty eight: 使用 ref 对变量进行响应式连接后再在 nextTick 中赋值给一个 ref 包裹的响应式对象，该变量或者该对象是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, ref, nextTick &#125; from &quot;vue&quot;;<br>let state = ref(&#123; count: 0 &#125;);<br><br>nextTick(() =&gt; &#123;<br>  state = ref(&#123; count: 11 &#125;);<br>&#125;);<br><br>const increase = () =&gt; &#123;<br>  state.value.count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>该变量和对象将丢失响应式连接,由于 变量 被重新赋值，原来与模板绑定的响应式对象就不再有效了。</p>
+<h2 id="Question-thirty-two-使用-ref-对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？"><a href="#Question-thirty-two-使用-ref-对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？" class="headerlink" title="Question thirty two: 使用 ref 对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？"></a>Question thirty two: 使用 ref 对变量进行响应式连接后再把其属性传给其他变量，前者和后者是否都具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; n &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br><br>  &lt;button @click=&quot;increasen&quot;&gt;increasen&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick, ref &#125; from &quot;vue&quot;;<br><br>let state = ref(&#123; count: 0 &#125;);<br><br>let n = state.value.count;<br><br>const increase = () =&gt; &#123;<br>  state.value.count++;<br>&#125;;<br><br>const increasen = () =&gt; &#123;<br>  n++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>前者依然具有响应式，后者不具有响应式，原因时后者只是把原始值赋值过去了而已</p>
+<h2 id="Question-forty-对使用-reactive-包裹的响应式对象进行解构-解构出的变量是否具有响应式？"><a href="#Question-forty-对使用-reactive-包裹的响应式对象进行解构-解构出的变量是否具有响应式？" class="headerlink" title="Question forty: 对使用 reactive 包裹的响应式对象进行解构,解构出的变量是否具有响应式？"></a>Question forty: 对使用 reactive 包裹的响应式对象进行解构,解构出的变量是否具有响应式？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;<br><br>  &lt;button @click=&quot;increase&quot;&gt;increase&lt;/button&gt;<br><br>  &lt;button @click=&quot;increasen&quot;&gt;increasen&lt;/button&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; reactive, nextTick &#125; from &quot;vue&quot;;<br><br>let state = reactive(&#123; count: 0 &#125;);<br>let &#123; count &#125; = state;<br>const increase = () =&gt; &#123;<br>  state.count++;<br>&#125;;<br><br>const increasen = () =&gt; &#123;<br>  count++;<br>&#125;;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>解构出的变量不具有响应式，因为 拿出来的是原始值。</p>
+<h2 id="Question-forty-one-一个-ref-会在作为响应式对象的属性被访问或修改时是否需要使用-value，使用和不使用有没有区别？"><a href="#Question-forty-one-一个-ref-会在作为响应式对象的属性被访问或修改时是否需要使用-value，使用和不使用有没有区别？" class="headerlink" title="Question forty one: 一个 ref 会在作为响应式对象的属性被访问或修改时是否需要使用 value，使用和不使用有没有区别？"></a>Question forty one: 一个 ref 会在作为响应式对象的属性被访问或修改时是否需要使用 value，使用和不使用有没有区别？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; ref, reactive &#125; from &quot;vue&quot;;<br>const count = ref(0);<br>const state = reactive(&#123;<br>  count,<br>&#125;);<br><br>console.log(state.count); // 0<br><br>state.count = 1;<br>console.log(count.value); // 1<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>没有区别，访问和赋值的时候 value 都不是必须的, 在深层响应式对象内，会发生 ref 解包，浅层则不会。</p>
+<h2 id="Question-forty-two-如果将一个新的-ref-赋值给一个关联了已有-ref-的属性-那么这个属性会？"><a href="#Question-forty-two-如果将一个新的-ref-赋值给一个关联了已有-ref-的属性-那么这个属性会？" class="headerlink" title="Question forty two: 如果将一个新的 ref 赋值给一个关联了已有 ref 的属性, 那么这个属性会？"></a>Question forty two: 如果将一个新的 ref 赋值给一个关联了已有 ref 的属性, 那么这个属性会？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; ref, reactive &#125; from &quot;vue&quot;;<br>const count = ref(0);<br>const state = reactive(&#123;<br>  count,<br>&#125;);<br><br>console.log(state.count); // 0<br><br>state.count = 1;<br>console.log(count.value); // 1<br><br>const otherCount = ref(2);<br><br>state.count = otherCount;<br>console.log(state.count); // 2<br>// 原始 ref 现在已经和 state.count 失去联系<br>console.log(count.value); // 1<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>新 ref 会替换掉旧的 ref</p>
+<h2 id="Question-forty-three-当-ref-作为响应式数组或原生集合类型-如-Map-中的元素被访问时，需不需要-value-？"><a href="#Question-forty-three-当-ref-作为响应式数组或原生集合类型-如-Map-中的元素被访问时，需不需要-value-？" class="headerlink" title="Question forty three: 当 ref 作为响应式数组或原生集合类型 (如 Map) 中的元素被访问时，需不需要 value ？"></a>Question forty three: 当 ref 作为响应式数组或原生集合类型 (如 Map) 中的元素被访问时，需不需要 value ？</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> books = <span class="hljs-title function_">reactive</span>([<span class="hljs-title function_">ref</span>(<span class="hljs-string">&quot;Vue 3 Guide&quot;</span>)]);<br><span class="hljs-comment">// 这里需要 .value</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(books[<span class="hljs-number">0</span>].<span class="hljs-property">value</span>);<br><br><span class="hljs-keyword">const</span> map = <span class="hljs-title function_">reactive</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>([[<span class="hljs-string">&quot;count&quot;</span>, <span class="hljs-title function_">ref</span>(<span class="hljs-number">0</span>)]]));<br><span class="hljs-comment">// 这里需要 .value</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(map.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;count&quot;</span>).<span class="hljs-property">value</span>);<br></code></pre></td></tr></table></figure>
+
+<p>需要的，这个时候 ref 不会自动解包</p>
+<h2 id="Question-forty-four-在模板渲染上下文中-ref-是否都会解包？"><a href="#Question-forty-four-在模板渲染上下文中-ref-是否都会解包？" class="headerlink" title="Question forty four: 在模板渲染上下文中, ref 是否都会解包？"></a>Question forty four: 在模板渲染上下文中, ref 是否都会解包？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template&gt;<br>  &lt;div&gt;&#123;&#123; count + 1 &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; object.id + 1 &#125;&#125;&lt;/div&gt;<br>  &lt;div&gt;&#123;&#123; object.id &#125;&#125;&lt;/div&gt;<br>&lt;/template&gt;<br><br>&lt;script setup&gt;<br>import &#123; ref, reactive, shallowReactive &#125; from &quot;vue&quot;;<br>const count = ref(0); // 1<br>const object = &#123; id: ref(1) &#125;; // [object Object]1<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在模板渲染上下文中，只有顶级的 ref 属性才会被解包。但如果双大括号（也就是文本插值）只包裹了 ref，那它能够正常被解包，这是双大括号的 vue3 便利特性。</p>
+<h2 id="Question-forty-five-如何理解-vue-是一个渐进式框架？"><a href="#Question-forty-five-如何理解-vue-是一个渐进式框架？" class="headerlink" title="Question forty five: 如何理解 vue 是一个渐进式框架？"></a>Question forty five: 如何理解 vue 是一个渐进式框架？</h2><p>它是一个可以与你共同成长、适应你不同需求的框架。Vue 的设计非常注重灵活性和“可以被逐步集成”这个特点。根据你的需求场景，你可以用不同的方式使用 Vue, 并且你的开发知识会随着你的开发的经验通用并逐步丰富。</p>
+<h2 id="Question-forty-six-如何创建一个-vue-应用？"><a href="#Question-forty-six-如何创建一个-vue-应用？" class="headerlink" title="Question forty six: 如何创建一个 vue 应用？"></a>Question forty six: 如何创建一个 vue 应用？</h2><p>pnpm create vue@latest</p>
+<h2 id="Question-forty-seven-每个-Vue-应用怎么创建一个新的应用实例？"><a href="#Question-forty-seven-每个-Vue-应用怎么创建一个新的应用实例？" class="headerlink" title="Question forty seven: 每个 Vue 应用怎么创建一个新的应用实例？"></a>Question forty seven: 每个 Vue 应用怎么创建一个新的应用实例？</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;vue&quot;</span>;<br><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">createApp</span>(&#123;<br>  <span class="hljs-comment">/* 根组件选项 */</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>通过 createApp 函数</p>
+<h2 id="Question-forty-eight-说说-vue-的根组件？"><a href="#Question-forty-eight-说说-vue-的根组件？" class="headerlink" title="Question forty eight: 说说 vue 的根组件？"></a>Question forty eight: 说说 vue 的根组件？</h2><p>我们传入 createApp 的对象实际上是一个组件，每个应用都需要一个“根组件”，其他组件将作为其子组件。</p>
+<h2 id="Question-forty-nine-如何挂载一个-vue-的应用实例？"><a href="#Question-forty-nine-如何挂载一个-vue-的应用实例？" class="headerlink" title="Question forty nine: 如何挂载一个 vue 的应用实例？"></a>Question forty nine: 如何挂载一个 vue 的应用实例？</h2><p>应用实例必须在调用了 .mount() 方法后才会渲染出来。该方法接收一个“容器”参数，可以是一个实际的 DOM 元素或是一个 CSS 选择器字符串。应用根组件的内容将会被渲染在容器元素里面。</p>
+<h2 id="Question-fifty-容器元素自己会不会被视为应用的一部分"><a href="#Question-fifty-容器元素自己会不会被视为应用的一部分" class="headerlink" title="Question fifty: 容器元素自己会不会被视为应用的一部分?"></a>Question fifty: 容器元素自己会不会被视为应用的一部分?</h2><p>不会。vue 实例只是挂载在上面。</p>
+<h2 id="Question-Fifty-one-mount-方法应该在什么时候被调用？"><a href="#Question-Fifty-one-mount-方法应该在什么时候被调用？" class="headerlink" title="Question Fifty one: .mount() 方法应该在什么时候被调用？"></a>Question Fifty one: .mount() 方法应该在什么时候被调用？</h2><p>.mount() 方法应该始终在整个应用配置和资源注册完成后被调用。</p>
+<h2 id="Question-Fifty-two-mount-方法的返回值是什么？"><a href="#Question-Fifty-two-mount-方法的返回值是什么？" class="headerlink" title="Question Fifty two: .mount()方法的返回值是什么？"></a>Question Fifty two: .mount()方法的返回值是什么？</h2><p>不同于其他资源注册方法，它的返回值是根组件实例而非应用实例。</p>
+<h2 id="Question-Fifty-three-当根组件没有设置-template-选项时，Vue-将使用什么作为模板？"><a href="#Question-Fifty-three-当根组件没有设置-template-选项时，Vue-将使用什么作为模板？" class="headerlink" title="Question Fifty three: 当根组件没有设置 template 选项时，Vue 将使用什么作为模板？"></a>Question Fifty three: 当根组件没有设置 template 选项时，Vue 将使用什么作为模板？</h2><p>当根组件没有设置 template 选项时，Vue 将自动使用容器的 innerHTML 作为模板。</p>
+<h2 id="Question-Fifty-four-vue-的-v-bind-是什么？"><a href="#Question-Fifty-four-vue-的-v-bind-是什么？" class="headerlink" title="Question Fifty four: vue 的 v-bind 是什么？"></a>Question Fifty four: vue 的 v-bind 是什么？</h2><p>也就是绑定响应式数据到视图，也就是常用的冒号</p>
+<h2 id="Question-Fifty-five-文本插值中是否支持所有-JavaScript-代码？"><a href="#Question-Fifty-five-文本插值中是否支持所有-JavaScript-代码？" class="headerlink" title="Question Fifty five: 文本插值中是否支持所有 JavaScript 代码？"></a>Question Fifty five: 文本插值中是否支持所有 JavaScript 代码？</h2><p>不是，只支持 JavaScript 表达式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;!-- 这是一个语句，而非表达式 --&gt;<br>&#123;&#123; var a = 1 &#125;&#125;<br><br>&lt;!-- 条件控制也不支持，请使用三元表达式 --&gt;<br>&#123;&#123; if (ok) &#123; return message &#125; &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-Fifty-six-如何添加全局的自定义对象？"><a href="#Question-Fifty-six-如何添加全局的自定义对象？" class="headerlink" title="Question Fifty six: 如何添加全局的自定义对象？"></a>Question Fifty six: 如何添加全局的自定义对象？</h2><p>通过 app.config.globalProperties 添加</p>
+<h2 id="Question-Fifty-seven-在-v-指令系统中如何使用动态参数？"><a href="#Question-Fifty-seven-在-v-指令系统中如何使用动态参数？" class="headerlink" title="Question Fifty seven: 在 v-指令系统中如何使用动态参数？"></a>Question Fifty seven: 在 v-指令系统中如何使用动态参数？</h2><p>通过中括号指定动态的 v-bind 或者 v-on 等指令 参数名</p>
+<h2 id="Question-Fifty-eight-动态参数中表达式的值有什么限制？"><a href="#Question-Fifty-eight-动态参数中表达式的值有什么限制？" class="headerlink" title="Question Fifty eight: 动态参数中表达式的值有什么限制？"></a>Question Fifty eight: 动态参数中表达式的值有什么限制？</h2><p>第一，动态参数中表达式的值应当是一个字符串，或者是 null。特殊值 null 意为显式移除该绑定。其他非字符串的值会触发警告。<br>第二，动态参数表达式因为某些字符的缘故有一些语法限制，比如空格和引号，在 HTML attribute 名称中都是不合法的。如果你需要传入一个复杂的动态参数，我们推荐使用计算属性替换复杂的表达式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;!-- 这会触发一个编译器警告 --&gt;<br>&lt;a :[&#x27;foo&#x27; + bar]=&quot;value&quot;&gt; ... &lt;/a&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-Fifty-nine-prevent-修饰符的作用是什么？"><a href="#Question-Fifty-nine-prevent-修饰符的作用是什么？" class="headerlink" title="Question Fifty nine: .prevent 修饰符的作用是什么？"></a>Question Fifty nine: .prevent 修饰符的作用是什么？</h2><p>告知 v-on 指令对触发的事件调用 event.preventDefault()</p>
+<h2 id="Question-sixty-详细说说-computed？"><a href="#Question-sixty-详细说说-computed？" class="headerlink" title="Question sixty: 详细说说 computed？"></a>Question sixty: 详细说说 computed？</h2><p>computed() 方法期望接收一个 getter 函数，返回值为一个计算属性 ref</p>
+<h2 id="Question-sixty-one-computed-计算属性和-method-的操作结果一样，他们有区别吗？"><a href="#Question-sixty-one-computed-计算属性和-method-的操作结果一样，他们有区别吗？" class="headerlink" title="Question sixty one: computed 计算属性和 method 的操作结果一样，他们有区别吗？"></a>Question sixty one: computed 计算属性和 method 的操作结果一样，他们有区别吗？</h2><p>若我们将同样的函数定义为一个方法而不是计算属性，两种方式在结果上确实是完全相同的，然而，不同之处在于计算属性值会基于其响应式依赖被缓存。一个计算属性仅会在其响应式依赖更新时才重新计算。这意味着只要 author.books 不改变，无论多少次访问 都会立即返回先前的计算结果，而不用重复执行 getter 函数。相比之下，方法调用总是会在重渲染发生时再次执行函数。为什么需要缓存呢？想象一下我们有一个非常耗性能的计算属性 list，需要循环一个巨大的数组并做许多计算逻辑，并且可能也有其他计算属性依赖于 list。没有缓存的话，我们会重复执行非常多次 list 的 getter，然而这实际上没有必要！如果你确定不需要缓存，那么也可以使用方法调用。</p>
+<h2 id="Question-sixty-two-计算属性是否可写？"><a href="#Question-sixty-two-计算属性是否可写？" class="headerlink" title="Question sixty two: 计算属性是否可写？"></a>Question sixty two: 计算属性是否可写？</h2><p>计算属性默认是只读的。当你尝试修改一个计算属性时，你会收到一个运行时警告。只在某些特殊场景中你可能才需要用到“可写”的属性，你可以通过同时提供 getter 和 setter 来创建.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;script setup&gt;<br>import &#123; ref, computed &#125; from &quot;vue&quot;;<br><br>const firstName = ref(&quot;John&quot;);<br>const lastName = ref(&quot;Doe&quot;);<br><br>const fullName = computed(&#123;<br>  // getter<br>  get() &#123;<br>    return firstName.value + &quot; &quot; + lastName.value;<br>  &#125;,<br>  // setter<br>  set(newValue) &#123;<br>    // 注意：我们这里使用的是解构赋值语法<br>    [firstName.value, lastName.value] = newValue.split(&quot; &quot;);<br>  &#125;,<br>&#125;);<br>&lt;/script&gt;<br>// 现在当你再运行 fullName.value = &#x27;John Doe&#x27; 时，setter 会被调用而 firstName 和<br>lastName 会随之更新。<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-sixty-three-v-show-和-v-if-有什么区别？"><a href="#Question-sixty-three-v-show-和-v-if-有什么区别？" class="headerlink" title="Question sixty three: v-show 和 v-if 有什么区别？"></a>Question sixty three: v-show 和 v-if 有什么区别？</h2><p>v-if 是“真实的”按条件渲染，因为它确保了在切换时，条件区块内的事件监听器和子组件都会被销毁与重建。</p>
+<p>v-if 也是惰性的：如果在初次渲染时条件值为 false，则不会做任何事。条件区块只有当条件首次变为 true 时才被渲染。</p>
+<p>相比之下，v-show 简单许多，元素无论初始条件如何，始终会被渲染，只有 CSS display 属性会被切换。</p>
+<p>总的来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要频繁切换，则使用 v-show 较好；如果在运行时绑定条件很少改变，则 v-if 会更合适。</p>
+<h2 id="Question-sixty-four-v-if-和-v-for-可以一起用吗？"><a href="#Question-sixty-four-v-if-和-v-for-可以一起用吗？" class="headerlink" title="Question sixty four: v-if 和 v-for 可以一起用吗？"></a>Question sixty four: v-if 和 v-for 可以一起用吗？</h2><p>当 v-if 和 v-for 同时存在于一个元素上的时候，v-if 会首先被执行。而我们的需求基本都是 v-if 控制整个 for 循环 list。当它们同时存在于一个节点上时，v-if 比 v-for 的优先级更高。这意味着 v-if 的条件将无法访问到 v-for 作用域内定义的变量别名.在外先包装一层 <template> 再在其上使用 v-for 可以解决这个问题 (这也更加明显易读).</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;template v-for=&quot;todo in todos&quot;&gt;<br>  &lt;li v-if=&quot;!todo.isComplete&quot;&gt;<br>    &#123;&#123; todo.name &#125;&#125;<br>  &lt;/li&gt;<br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-sixty-five-v-for-能够使用在对象身上吗？"><a href="#Question-sixty-five-v-for-能够使用在对象身上吗？" class="headerlink" title="Question sixty five: v-for 能够使用在对象身上吗？"></a>Question sixty five: v-for 能够使用在对象身上吗？</h2><p>可以使用 v-for 来遍历一个对象的所有属性。遍历的顺序会基于对该对象调用 Object.keys() 的返回值来决定。他提供三个参数，value,key,index.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs js">&lt;li v-<span class="hljs-keyword">for</span>=<span class="hljs-string">&quot;(value, key, index) in myObject&quot;</span>&gt;<br>  &#123;&#123; index &#125;&#125;. &#123;&#123; key &#125;&#125;: &#123;&#123; value &#125;&#125;<br>&lt;/li&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-sixty-six-在使用-v-for-指令为什么要定义-key"><a href="#Question-sixty-six-在使用-v-for-指令为什么要定义-key" class="headerlink" title="Question sixty six: 在使用 v-for 指令为什么要定义 key?"></a>Question sixty six: 在使用 v-for 指令为什么要定义 key?</h2><p>Vue 默认按照“就地更新”的策略来更新通过 v-for 渲染的元素列表。当数据项的顺序改变时，Vue 不会随之移动 DOM 元素的顺序，而是就地更新每个元素，确保它们在原本指定的索引位置上渲染。所以在没有 key 的情况下，vue 无法准确知道谁是谁，就会全部重新渲染一遍，但是有 key 则之后修改改变的索引部分。</p>
+<h2 id="Question-sixty-seven-如果在-v-for-调用时使用了-filter-和-concat-等方法，那么和元素组重叠部分的-DOM-会更新吗？"><a href="#Question-sixty-seven-如果在-v-for-调用时使用了-filter-和-concat-等方法，那么和元素组重叠部分的-DOM-会更新吗？" class="headerlink" title="Question sixty seven: 如果在 v-for 调用时使用了 filter 和 concat 等方法，那么和元素组重叠部分的 DOM 会更新吗？"></a>Question sixty seven: 如果在 v-for 调用时使用了 filter 和 concat 等方法，那么和元素组重叠部分的 DOM 会更新吗？</h2><p>不会，Vue 实现了一些巧妙的方法来最大化对 DOM 元素的重用，就地更新在 key 的引导下不会做多余的 DOM 更新。</p>
+<h2 id="Question-sixty-eight-计算属性中使用-reverse-和-sort-进行排序可以吗？"><a href="#Question-sixty-eight-计算属性中使用-reverse-和-sort-进行排序可以吗？" class="headerlink" title="Question sixty eight: 计算属性中使用 reverse() 和 sort()进行排序可以吗？"></a>Question sixty eight: 计算属性中使用 reverse() 和 sort()进行排序可以吗？</h2><p>可以，但是需要创建一个原数组的副本，因为他们会变更原始数组属于副作用，不该存在于计算属性中。最好使用解构创建副本。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs diff"><span class="hljs-deletion">- return numbers.reverse()</span><br><span class="hljs-addition">+ return [...numbers].reverse()</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-sixty-nine-在-vue-中如何访问事件触发的-DOM-元素？"><a href="#Question-sixty-nine-在-vue-中如何访问事件触发的-DOM-元素？" class="headerlink" title="Question sixty nine: 在 vue 中如何访问事件触发的 DOM 元素？"></a>Question sixty nine: 在 vue 中如何访问事件触发的 DOM 元素？</h2><p>能够通过 v-on 绑定的元素被触发事件的 event.target 访问到该 DOM 元素。</p>
+<h2 id="Question-seventy-如何停止单击事件传递？"><a href="#Question-seventy-如何停止单击事件传递？" class="headerlink" title="Question seventy: 如何停止单击事件传递？"></a>Question seventy: 如何停止单击事件传递？</h2><p>使用 click 事件加后缀 stop</p>
+<h2 id="Question-seventy-one-如何让提交事件将不再重新加载页面？"><a href="#Question-seventy-one-如何让提交事件将不再重新加载页面？" class="headerlink" title="Question seventy one: 如何让提交事件将不再重新加载页面？"></a>Question seventy one: 如何让提交事件将不再重新加载页面？</h2><p>使用 submit 事件加后缀 prevent</p>
+<h2 id="Question-seventy-two-如何让仅当-event-target-是元素本身时才会触发事件处理器？"><a href="#Question-seventy-two-如何让仅当-event-target-是元素本身时才会触发事件处理器？" class="headerlink" title="Question seventy two: 如何让仅当 event.target 是元素本身时才会触发事件处理器？"></a>Question seventy two: 如何让仅当 event.target 是元素本身时才会触发事件处理器？</h2><p>加.self 后缀</p>
+<h2 id="Question-seventy-three-click-prevent-self-和-click-self-prevent-有什么区别？"><a href="#Question-seventy-three-click-prevent-self-和-click-self-prevent-有什么区别？" class="headerlink" title="Question seventy three: @click.prevent.self 和 @click.self.prevent 有什么区别？"></a>Question seventy three: @click.prevent.self 和 @click.self.prevent 有什么区别？</h2><p>前者会阻止元素及其子元素的所有点击事件的默认行为，后者则只会阻止对元素本身的点击事件的默认行为。</p>
+<h2 id="Question-seventy-four-如何在添加事件监听器时，使用-capture-捕获模式"><a href="#Question-seventy-four-如何在添加事件监听器时，使用-capture-捕获模式" class="headerlink" title="Question seventy four: 如何在添加事件监听器时，使用 capture 捕获模式?"></a>Question seventy four: 如何在添加事件监听器时，使用 <code>capture</code> 捕获模式?</h2><p>加.capture 后缀</p>
+<h2 id="Question-seventy-five-如何使点击事件最多被触发一次？"><a href="#Question-seventy-five-如何使点击事件最多被触发一次？" class="headerlink" title="Question seventy five: 如何使点击事件最多被触发一次？"></a>Question seventy five: 如何使点击事件最多被触发一次？</h2><p>加.once 后缀</p>
+<h2 id="Question-seventy-six-如何滚动事件的默认行为-scrolling-将立即发生而非等待-onScroll-完成？"><a href="#Question-seventy-six-如何滚动事件的默认行为-scrolling-将立即发生而非等待-onScroll-完成？" class="headerlink" title="Question seventy six: 如何滚动事件的默认行为 (scrolling) 将立即发生而非等待 onScroll 完成？"></a>Question seventy six: 如何滚动事件的默认行为 (scrolling) 将立即发生而非等待 <code>onScroll</code> 完成？</h2><p>使用 scroll 事件并加 passive 后缀</p>
+<h2 id="Question-seventy-seven-passive-和-prevent，能够同时使用吗？"><a href="#Question-seventy-seven-passive-和-prevent，能够同时使用吗？" class="headerlink" title="Question seventy seven: .passive 和 .prevent，能够同时使用吗？"></a>Question seventy seven: .passive 和 .prevent，能够同时使用吗？</h2><p>不行，因为 .passive 已经向浏览器表明了你不想阻止事件的默认行为。如果你这么做了，则 .prevent 会被忽略，并且浏览器会抛出警告。</p>
+<h2 id="Question-seventy-eight-如何使-input-标签仅在-key-为-Enter-时调用-submit？"><a href="#Question-seventy-eight-如何使-input-标签仅在-key-为-Enter-时调用-submit？" class="headerlink" title="Question seventy eight: 如何使 input 标签仅在 key 为 Enter 时调用 submit？"></a>Question seventy eight: 如何使 input 标签仅在 <code>key</code> 为 <code>Enter</code> 时调用 <code>submit</code>？</h2><p>使用 keyup 事件并加 enter 后缀或者使用按键名后缀 page-down</p>
+<h2 id="Question-seventy-nine-如何使-input-标签仅在-key-为-Alt-Enter-时调用-submit？"><a href="#Question-seventy-nine-如何使-input-标签仅在-key-为-Alt-Enter-时调用-submit？" class="headerlink" title="Question seventy nine: 如何使 input 标签仅在 key 为 Alt + Enter 时调用 submit？"></a>Question seventy nine: 如何使 input 标签仅在 <code>key</code> 为 <code>Alt + Enter</code> 时调用 <code>submit</code>？</h2><p>使用 keyup 事件并先后加 alt 后缀和 enter 后缀</p>
+<h2 id="Question-eighty-如何使-一个-div-标签的点击事件通过-Ctrl-点击触发？"><a href="#Question-eighty-如何使-一个-div-标签的点击事件通过-Ctrl-点击触发？" class="headerlink" title="Question eighty: 如何使 一个 div 标签的点击事件通过 Ctrl + 点击触发？"></a>Question eighty: 如何使 一个 div 标签的点击事件通过 Ctrl + 点击触发？</h2><p>使用 click 事件并加 ctrl 后缀</p>
+<h2 id="Question-eighty-one-keyup-ctrl-单独松开-ctrl-键时会触发吗？"><a href="#Question-eighty-one-keyup-ctrl-单独松开-ctrl-键时会触发吗？" class="headerlink" title="Question eighty one: keyup.ctrl 单独松开 ctrl 键时会触发吗？"></a>Question eighty one: keyup.ctrl 单独松开 ctrl 键时会触发吗？</h2><p>不会，只会在你仍然按住 ctrl 但松开了另一个键时被触发。</p>
+<h2 id="Question-eighty-two-系统按键修饰符有哪些？"><a href="#Question-eighty-two-系统按键修饰符有哪些？" class="headerlink" title="Question eighty two: 系统按键修饰符有哪些？"></a>Question eighty two: 系统按键修饰符有哪些？</h2><p>.ctrl .alt .shift .meta</p>
+<h2 id="Question-eighty-three-click-ctrl-是否只会在仅当按下-Ctrl-且未按任何其他键时才会触发？"><a href="#Question-eighty-three-click-ctrl-是否只会在仅当按下-Ctrl-且未按任何其他键时才会触发？" class="headerlink" title="Question eighty three: @click.ctrl 是否只会在仅当按下 Ctrl 且未按任何其他键时才会触发？"></a>Question eighty three: @click.ctrl 是否只会在仅当按下 Ctrl 且未按任何其他键时才会触发？</h2><p>不是，想要精确控制触发事件所需的系统修饰符的组合需要加入 exact 后缀</p>
+<h2 id="Question-eighty-four-v-model-会在中文输入拼写时触发更新吗？"><a href="#Question-eighty-four-v-model-会在中文输入拼写时触发更新吗？" class="headerlink" title="Question eighty four: v-model 会在中文输入拼写时触发更新吗？"></a>Question eighty four: v-model 会在中文输入拼写时触发更新吗？</h2><p>不会，如果需要得切换 input 事件监听器</p>
+<h2 id="Question-eighty-five-自定义一个复选框，如何定义复选框选中和非选中时的值？"><a href="#Question-eighty-five-自定义一个复选框，如何定义复选框选中和非选中时的值？" class="headerlink" title="Question eighty five: 自定义一个复选框，如何定义复选框选中和非选中时的值？"></a>Question eighty five: 自定义一个复选框，如何定义复选框选中和非选中时的值？</h2><p>通过 true-value 和 false-true 两个属性定义</p>
+<h2 id="Question-eighty-six-组件库的-change-事件是如何实现的？"><a href="#Question-eighty-six-组件库的-change-事件是如何实现的？" class="headerlink" title="Question eighty six: 组件库的@change 事件是如何实现的？"></a>Question eighty six: 组件库的@change 事件是如何实现的？</h2><p>通过 v-model 加.lazy 后缀实现</p>
+<h2 id="Question-eighty-seven-生命周期钩子能否异步注册"><a href="#Question-eighty-seven-生命周期钩子能否异步注册" class="headerlink" title="Question eighty seven: 生命周期钩子能否异步注册?"></a>Question eighty seven: 生命周期钩子能否异步注册?</h2><p>异步注册时当前组件实例已丢失,注册将不会正常工作</p>
+<h2 id="Question-eighty-eight-生命周期钩子的调用必须放在-setup-或-script-setup-内的词法上下文中吗？"><a href="#Question-eighty-eight-生命周期钩子的调用必须放在-setup-或-script-setup-内的词法上下文中吗？" class="headerlink" title="Question eighty eight: 生命周期钩子的调用必须放在 setup() 或 script setup 内的词法上下文中吗？"></a>Question eighty eight: 生命周期钩子的调用必须放在 setup() 或 script setup 内的词法上下文中吗？</h2><p>不一定，也可以在一个外部函数中调用，只要调用栈是同步的，且最终起源自 setup() 就可以</p>
+<h2 id="Question-eighty-nine-现在有一个响应式对象，有原始值的属性一个，watch-能够监听这个这个属性吗？"><a href="#Question-eighty-nine-现在有一个响应式对象，有原始值的属性一个，watch-能够监听这个这个属性吗？" class="headerlink" title="Question eighty nine: 现在有一个响应式对象，有原始值的属性一个，watch 能够监听这个这个属性吗？"></a>Question eighty nine: 现在有一个响应式对象，有原始值的属性一个，watch 能够监听这个这个属性吗？</h2><p>不能，因为这里直接监听就是监听一个原始值，如果要成立，应该使用箭头函数构成一个 getter 去监听</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 提供一个 getter 函数</span><br><span class="hljs-title function_">watch</span>(<br>  <span class="hljs-function">() =&gt;</span> obj.<span class="hljs-property">count</span>,<br>  <span class="hljs-function">(<span class="hljs-params">count</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Count is: <span class="hljs-subst">$&#123;count&#125;</span>`</span>);<br>  &#125;<br>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-ninety-直接给-watch-传入一个响应式对象，在所有嵌套的变更时是否被触发？"><a href="#Question-ninety-直接给-watch-传入一个响应式对象，在所有嵌套的变更时是否被触发？" class="headerlink" title="Question ninety: 直接给 watch() 传入一个响应式对象，在所有嵌套的变更时是否被触发？"></a>Question ninety: 直接给 watch() 传入一个响应式对象，在所有嵌套的变更时是否被触发？</h2><p>是，直接给 watch() 传入一个响应式对象，会隐式地创建一个深层侦听器——该回调函数在所有嵌套的变更时都会被触发</p>
+<h2 id="Question-ninety-one-直接给-watch-传入一个，返回响应式对象的-getter-函数，在所有嵌套的变更时是否被触发？"><a href="#Question-ninety-one-直接给-watch-传入一个，返回响应式对象的-getter-函数，在所有嵌套的变更时是否被触发？" class="headerlink" title="Question ninety one: 直接给 watch() 传入一个，返回响应式对象的 getter 函数，在所有嵌套的变更时是否被触发？"></a>Question ninety one: 直接给 watch() 传入一个，返回响应式对象的 getter 函数，在所有嵌套的变更时是否被触发？</h2><p>否，只有在返回不同的对象时，才会触发，也可以加上 deep 选项，强制转成深层侦听器</p>
+<h2 id="Question-ninety-two-在创建侦听器时会立即执行吗？"><a href="#Question-ninety-two-在创建侦听器时会立即执行吗？" class="headerlink" title="Question ninety two: 在创建侦听器时会立即执行吗？"></a>Question ninety two: 在创建侦听器时会立即执行吗？</h2><p>不会，默认是不会的，除非设置 immediate</p>
+<h2 id="Question-ninety-three-如何创建一次性侦听器？"><a href="#Question-ninety-three-如何创建一次性侦听器？" class="headerlink" title="Question ninety three: 如何创建一次性侦听器？"></a>Question ninety three: 如何创建一次性侦听器？</h2><p>使用 once</p>
+<h2 id="Question-ninety-four-watchEffect-创建时会立即执行吗？"><a href="#Question-ninety-four-watchEffect-创建时会立即执行吗？" class="headerlink" title="Question ninety four: watchEffect 创建时会立即执行吗？"></a>Question ninety four: watchEffect 创建时会立即执行吗？</h2><p>会，</p>
+<h2 id="Question-ninety-five-watchEffect-和-watch-的区别？"><a href="#Question-ninety-five-watchEffect-和-watch-的区别？" class="headerlink" title="Question ninety five: watchEffect 和 watch 的区别？"></a>Question ninety five: watchEffect 和 watch 的区别？</h2><p>watchEffect 默认立即执行，watch 默认懒执行，watchEffect 追踪用到的依赖，watch 要么深追踪全部依赖，要么追踪 getter，从业务和编码来说，watchEffect 更方便高效</p>
+<h2 id="Question-ninety-six-watch-的调用时机是什么？"><a href="#Question-ninety-six-watch-的调用时机是什么？" class="headerlink" title="Question ninety six: watch 的调用时机是什么？"></a>Question ninety six: watch 的调用时机是什么？</h2><p>默认情况下，侦听器回调会在父组件更新 (如有) 之后、所属组件的 DOM 更新之前被调用。这意味着如果你尝试在侦听器回调中访问所属组件的 DOM，那么 DOM 将处于更新前的状态。</p>
+<h2 id="Question-ninety-seven-如果希望侦听器在-DOM-更新后执行？"><a href="#Question-ninety-seven-如果希望侦听器在-DOM-更新后执行？" class="headerlink" title="Question ninety seven: 如果希望侦听器在 DOM 更新后执行？"></a>Question ninety seven: 如果希望侦听器在 DOM 更新后执行？</h2><p>watch 侦听器需要指定 flush 为 ‘post’， watchEffect 则改为使用 watchPostEffect</p>
+<h2 id="Question-ninety-eight-如果希望侦听器在-vue-所有视图更新前执行？"><a href="#Question-ninety-eight-如果希望侦听器在-vue-所有视图更新前执行？" class="headerlink" title="Question ninety eight: 如果希望侦听器在 vue 所有视图更新前执行？"></a>Question ninety eight: 如果希望侦听器在 vue 所有视图更新前执行？</h2><p>也就是同步侦听器，<br>watch 侦听器需要指定 flush 为 ‘sync’， watchEffect 则改为使用 watchSyncEffect</p>
+<h2 id="Question-ninety-nine-同步将一千个项目推入被侦听的数组中，vue-会怎么做？"><a href="#Question-ninety-nine-同步将一千个项目推入被侦听的数组中，vue-会怎么做？" class="headerlink" title="Question ninety nine: 同步将一千个项目推入被侦听的数组中，vue 会怎么做？"></a>Question ninety nine: 同步将一千个项目推入被侦听的数组中，vue 会怎么做？</h2><p>用户创建的侦听器回调函数也会被批量处理以避免重复调用。但同步侦听器不会进行批处理，每当检测到响应式数据发生变化时就会触发。可以使用它来监视简单的布尔值，但应避免在可能多次同步修改的数据源 (如数组) 上使用。</p>
+<h2 id="Question-one-hundred-侦听器是怎么被停止侦听的？"><a href="#Question-one-hundred-侦听器是怎么被停止侦听的？" class="headerlink" title="Question one hundred: 侦听器是怎么被停止侦听的？"></a>Question one hundred: 侦听器是怎么被停止侦听的？</h2><p>在 setup() 或 script setup 中用同步语句创建的侦听器，会自动绑定到宿主组件实例上，并且会在宿主组件卸载时自动停止。因此，在大多数情况下，你无需关心怎么停止一个侦听器。</p>
+<p>一个关键点是，侦听器必须用同步语句创建：如果用异步回调创建一个侦听器，那么它不会绑定到当前组件上，你必须手动停止它，以防内存泄漏。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> unwatch = <span class="hljs-title function_">watchEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;&#125;); <span class="hljs-comment">// ...当该侦听器不再需要时</span><br><span class="hljs-title function_">unwatch</span>();<br></code></pre></td></tr></table></figure>
+
+<p>手动停止一个侦听器,调用 watch 或 watchEffect 返回的函数<br>尽可能选择同步创建。如果需要等待一些异步数据，可以使用条件式的侦听逻辑</p>
+<h2 id="Question-One-hundred-and-one-如果你需要侦听一个模板引用-ref-的变化-你需要考虑多少种情况？"><a href="#Question-One-hundred-and-one-如果你需要侦听一个模板引用-ref-的变化-你需要考虑多少种情况？" class="headerlink" title="Question One hundred and one: 如果你需要侦听一个模板引用 ref 的变化,你需要考虑多少种情况？"></a>Question One hundred and one: 如果你需要侦听一个模板引用 ref 的变化,你需要考虑多少种情况？</h2><p>三种，新状态，旧状态和 null</p>
+<h2 id="Question-One-hundred-and-two-如何在-v-for-中使用模板引用-ref？"><a href="#Question-One-hundred-and-two-如何在-v-for-中使用模板引用-ref？" class="headerlink" title="Question One hundred and two: 如何在 v-for 中使用模板引用 ref？"></a>Question One hundred and two: 如何在 v-for 中使用模板引用 ref？</h2><p>这个时候 ref 得到的是一个数组，通过操纵数组来操作 DOM</p>
+<h2 id="Question-One-hundred-and-three-知道函数模板引用吗？"><a href="#Question-One-hundred-and-three-知道函数模板引用吗？" class="headerlink" title="Question One hundred and three: 知道函数模板引用吗？"></a>Question One hundred and three: 知道函数模板引用吗？</h2><p>除了使用字符串值作名字，ref attribute 还可以绑定为一个函数，会在每次组件更新时都被调用。该函数会收到元素引用作为其第一个参数，可以将 el 赋值给一个数据属性或 ref 变量，当绑定的元素被卸载时，函数也会被调用一次，此时的 el 参数会是 null。</p>
+<h2 id="Question-One-hundred-and-four-使用了-script-setup-的-子组件，父组件能否通过模板引用-ref-访问子组件？"><a href="#Question-One-hundred-and-four-使用了-script-setup-的-子组件，父组件能否通过模板引用-ref-访问子组件？" class="headerlink" title="Question One hundred and four: 使用了 script setup 的 子组件，父组件能否通过模板引用 ref 访问子组件？"></a>Question One hundred and four: 使用了 script setup 的 子组件，父组件能否通过模板引用 ref 访问子组件？</h2><p>不能，除非子组件在其中通过 defineExpose 宏显式暴露，得到的示例类型为 defineExpose 的对象类型，并且其中的 ref 会自动解包</p>
+<h2 id="Question-One-hundred-and-five-Vue-单文件组件可以在编译中区分大小写吗？"><a href="#Question-One-hundred-and-five-Vue-单文件组件可以在编译中区分大小写吗？" class="headerlink" title="Question One hundred and five: Vue 单文件组件可以在编译中区分大小写吗？"></a>Question One hundred and five: Vue 单文件组件可以在编译中区分大小写吗？</h2><p>是的</p>
+<h2 id="Question-One-hundred-and-six-setup-函数的第二个参数是什么？"><a href="#Question-One-hundred-and-six-setup-函数的第二个参数是什么？" class="headerlink" title="Question One hundred and six: setup 函数的第二个参数是什么？"></a>Question One hundred and six: setup 函数的第二个参数是什么？</h2><p>ctx，里面包含了 emit 等上下文对象。</p>
+<h2 id="Question-One-hundred-and-seven-当使用-component-标签即是动态组件-来在多个组件间作切换时，被切换掉的组件会被卸载吗？"><a href="#Question-One-hundred-and-seven-当使用-component-标签即是动态组件-来在多个组件间作切换时，被切换掉的组件会被卸载吗？" class="headerlink" title="Question One hundred and seven: 当使用 component 标签即是动态组件 来在多个组件间作切换时，被切换掉的组件会被卸载吗？"></a>Question One hundred and seven: 当使用 component 标签即是动态组件 来在多个组件间作切换时，被切换掉的组件会被卸载吗？</h2><p>是的。我们可以通过 KeepAlive 组件强制被切换掉的组件仍然保持“存活”的状态。</p>
+<h2 id="Question-One-hundred-and-eight：vuex-和-pinia-的差别？"><a href="#Question-One-hundred-and-eight：vuex-和-pinia-的差别？" class="headerlink" title="Question One hundred and eight：vuex 和 pinia 的差别？"></a>Question One hundred and eight：vuex 和 pinia 的差别？</h2><p>第一，pinia 支持选项式 api 写法也支持组合式 api 写法<br>第二，pinia 没有 mutations, 只有 state，getters,actions<br>第三，pinia 分模块不需要 modules<br>第四，typescript 支持的更好<br>第五，自动化代码拆分<br>第六，pinia 体积更小，性能更高</p>
+<h2 id="Question-One-hundred-and-nine-keep-alive-会深度缓存吗？"><a href="#Question-One-hundred-and-nine-keep-alive-会深度缓存吗？" class="headerlink" title="Question One hundred and nine: keep-alive 会深度缓存吗？"></a>Question One hundred and nine: keep-alive 会深度缓存吗？</h2><p>会的，不仅会缓存其直接子组件，还会缓存子组件的子组件。它的工作方式是在整个组件树中进行缓存，确保整个树结构在缓存时保持完整。它式通过缓存虚拟节点树（VNode），实现了对整个组件树的缓存。</p>
+<h2 id="Question-One-hundred-and-ten-如果要建立一个组件库，如何做到连接到使用它的-Vue-项目？"><a href="#Question-One-hundred-and-ten-如果要建立一个组件库，如何做到连接到使用它的-Vue-项目？" class="headerlink" title="Question One hundred and ten: 如果要建立一个组件库，如何做到连接到使用它的 Vue 项目？"></a>Question One hundred and ten: 如果要建立一个组件库，如何做到连接到使用它的 Vue 项目？</h2><p>我会先编写好一个个组件，然后把每一个组件作为一个模块导出，为了实现按需和全量导入，我会封装出封装一个工具方法去包裹导出对象，该工具方法通过输入一个组件对象，内部通过定义该对象的 install 方法去使用 app.component 方法进行全局组件注册。这样当使用 app.use 时，组件将被注册。该方法通过实现 vue 资源插件的形式进行组件导出封装。然后通过一个入口文件收集所有的插件化后的组件，并封装导出总的插件对象，封装的 install 方法遍历整个组件库的导出的插件方法，通过 app.use 全部启用，已达到一次性注册所有插件的目的。</p>
+<h2 id="Question-One-hundred-and-eleven-什么是单向数据流？-为什么要保持单向数据流？"><a href="#Question-One-hundred-and-eleven-什么是单向数据流？-为什么要保持单向数据流？" class="headerlink" title="Question One hundred and eleven: 什么是单向数据流？ 为什么要保持单向数据流？"></a>Question One hundred and eleven: 什么是单向数据流？ 为什么要保持单向数据流？</h2><p>所有的 props 都遵循着单向绑定原则，props 因父组件的更新而变化，自然地将新的状态向下流往子组件，而不会逆向传递。这避免了子组件意外修改父组件的状态的情况，不然应用的数据流将很容易变得混乱而难以理解。</p>
+<h2 id="Question-One-hundred-and-twelve-子组件可以修改传入的-props-吗？"><a href="#Question-One-hundred-and-twelve-子组件可以修改传入的-props-吗？" class="headerlink" title="Question One hundred and twelve: 子组件可以修改传入的 props 吗？"></a>Question One hundred and twelve: 子组件可以修改传入的 props 吗？</h2><p>每次父组件更新后，所有的子组件中的 props 都会被更新到最新值，这意味着你不应该在子组件中去更改一个 prop。若你这么做了，Vue 会在控制台上向你抛出警告。</p>
+<h2 id="Question-one-hundred-and-thirteen-prop-被用于传入初始值；而子组件想在之后将其作为一个局部数据属性。这种情况下要怎么做？"><a href="#Question-one-hundred-and-thirteen-prop-被用于传入初始值；而子组件想在之后将其作为一个局部数据属性。这种情况下要怎么做？" class="headerlink" title="Question one hundred and thirteen: prop 被用于传入初始值；而子组件想在之后将其作为一个局部数据属性。这种情况下要怎么做？"></a>Question one hundred and thirteen: prop 被用于传入初始值；而子组件想在之后将其作为一个局部数据属性。这种情况下要怎么做？</h2><p>在这种情况下，最好是新定义一个局部数据属性，从 props 上获取初始值即可.</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> props = <span class="hljs-title function_">defineProps</span>([<span class="hljs-string">&quot;initialCounter&quot;</span>]);<br><br><span class="hljs-comment">// 计数器只是将 props.initialCounter 作为初始值</span><br><span class="hljs-comment">// 像下面这样做就使 prop 和后续更新无关了</span><br><span class="hljs-keyword">const</span> counter = <span class="hljs-title function_">ref</span>(props.<span class="hljs-property">initialCounter</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-fourteen-需要对传入的-prop-值做进一步的转换。这种情况下该怎么做？"><a href="#Question-one-hundred-and-fourteen-需要对传入的-prop-值做进一步的转换。这种情况下该怎么做？" class="headerlink" title="Question one hundred and fourteen: 需要对传入的 prop 值做进一步的转换。这种情况下该怎么做？"></a>Question one hundred and fourteen: 需要对传入的 prop 值做进一步的转换。这种情况下该怎么做？</h2><p>在这种情况中，最好是基于该 prop 值定义一个计算属性。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> props = <span class="hljs-title function_">defineProps</span>([<span class="hljs-string">&quot;size&quot;</span>]);<br><br><span class="hljs-comment">// 该 prop 变更时计算属性也会自动更新</span><br><span class="hljs-keyword">const</span> normalizedSize = <span class="hljs-title function_">computed</span>(<span class="hljs-function">() =&gt;</span> props.<span class="hljs-property">size</span>.<span class="hljs-title function_">trim</span>().<span class="hljs-title function_">toLowerCase</span>());<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-One-hundred-and-fifteen-vue-允许你对-props-传入的对象和数组进行修改吗？"><a href="#Question-One-hundred-and-fifteen-vue-允许你对-props-传入的对象和数组进行修改吗？" class="headerlink" title="Question One-hundred and fifteen: vue 允许你对 props 传入的对象和数组进行修改吗？"></a>Question One-hundred and fifteen: vue 允许你对 props 传入的对象和数组进行修改吗？</h2><p>允许，但不提倡。当对象或数组作为 props 被传入时，虽然子组件无法更改 props 绑定，但仍然可以更改对象或数组内部的值。这是因为 JavaScript 的对象和数组是按引用传递，对 Vue 来说，阻止这种更改需要付出的代价异常昂贵。</p>
+<h2 id="Question-One-hundred-and-sixteen-怎么像其他组件库的-button-一样限制传入的-type-为几个特定的字符串吗？"><a href="#Question-One-hundred-and-sixteen-怎么像其他组件库的-button-一样限制传入的-type-为几个特定的字符串吗？" class="headerlink" title="Question One-hundred and sixteen: 怎么像其他组件库的 button 一样限制传入的 type 为几个特定的字符串吗？"></a>Question One-hundred and sixteen: 怎么像其他组件库的 button 一样限制传入的 type 为几个特定的字符串吗？</h2><p>使用 prop 校验中的自定义类型校验函数</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-attr">propG</span>: &#123;<br>   <span class="hljs-title function_">validator</span>(<span class="hljs-params">value, props</span>) &#123;<br>     <span class="hljs-comment">// The value must match one of these strings</span><br>     <span class="hljs-keyword">return</span> [<span class="hljs-string">&#x27;success&#x27;</span>, <span class="hljs-string">&#x27;warning&#x27;</span>, <span class="hljs-string">&#x27;danger&#x27;</span>].<span class="hljs-title function_">includes</span>(value)<br>   &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-seventeen-定义-props-时，如果传入的是对象，默认值该如何定义？"><a href="#Question-one-hundred-and-seventeen-定义-props-时，如果传入的是对象，默认值该如何定义？" class="headerlink" title="Question one hundred and seventeen: 定义 props 时，如果传入的是对象，默认值该如何定义？"></a>Question one hundred and seventeen: 定义 props 时，如果传入的是对象，默认值该如何定义？</h2><p>默认值 必须从一个工厂函数返回。该函数接收组件所接收到的原始 prop 作为参数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-attr">propF</span>: &#123;<br>   <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,<br>   <span class="hljs-comment">// 对象或数组的默认值</span><br>   <span class="hljs-comment">// 必须从一个工厂函数返回。</span><br>   <span class="hljs-comment">// 该函数接收组件所接收到的原始 prop 作为参数。</span><br>   <span class="hljs-title function_">default</span>(<span class="hljs-params">rawProps</span>) &#123;<br>     <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello&#x27;</span> &#125;<br>   &#125;<br> &#125;,<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-eighteen-定义-props-时，如果传入的是数组，默认值该如何定义？"><a href="#Question-one-hundred-and-eighteen-定义-props-时，如果传入的是数组，默认值该如何定义？" class="headerlink" title="Question one hundred and eighteen: 定义 props 时，如果传入的是数组，默认值该如何定义？"></a>Question one hundred and eighteen: 定义 props 时，如果传入的是数组，默认值该如何定义？</h2><p>默认值 必须从一个工厂函数返回。该函数接收组件所接收到的原始 prop 作为参数。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-attr">propF</span>: &#123;<br>   <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,<br>   <span class="hljs-comment">// 对象或数组的默认值</span><br>   <span class="hljs-comment">// 必须从一个工厂函数返回。</span><br>   <span class="hljs-comment">// 该函数接收组件所接收到的原始 prop 作为参数。</span><br>   <span class="hljs-title function_">default</span>(<span class="hljs-params">rawProps</span>) &#123;<br>     <span class="hljs-keyword">return</span> &#123; <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;hello&#x27;</span> &#125;<br>   &#125;<br> &#125;,<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-nineteen-定义-props-时，如果传入的是函数，默认值该如何定义？"><a href="#Question-one-hundred-and-nineteen-定义-props-时，如果传入的是函数，默认值该如何定义？" class="headerlink" title="Question one hundred and nineteen: 定义 props 时，如果传入的是函数，默认值该如何定义？"></a>Question one hundred and nineteen: 定义 props 时，如果传入的是函数，默认值该如何定义？</h2><p>默认值 是一个用来作为默认值的函数即可</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ts"><span class="hljs-attr">propH</span>: &#123;<br>   <span class="hljs-attr">type</span>: <span class="hljs-title class_">Function</span>,<br>   <span class="hljs-comment">// 不像对象或数组的默认，这不是一个</span><br>   <span class="hljs-comment">// 工厂函数。这会是一个用来作为默认值的函数</span><br>   <span class="hljs-title function_">default</span>(<span class="hljs-params"></span>) &#123;<br>     <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;Default function&#x27;</span><br>   &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-twenty-defineProps-宏中的参数可以访问-script-setup-中定义的其他变量吗"><a href="#Question-one-hundred-and-twenty-defineProps-宏中的参数可以访问-script-setup-中定义的其他变量吗" class="headerlink" title="Question one hundred and twenty: defineProps()宏中的参数可以访问 script setup 中定义的其他变量吗?"></a>Question one hundred and twenty: defineProps()宏中的参数可以访问 script setup 中定义的其他变量吗?</h2><p>不可以，因为在编译时整个表达式都会被移到外部的函数中。</p>
+<h2 id="Question-one-hundred-and-twenty-one-props-未传时是什么？"><a href="#Question-one-hundred-and-twenty-one-props-未传时是什么？" class="headerlink" title="Question one hundred and twenty-one: props 未传时是什么？"></a>Question one hundred and twenty-one: props 未传时是什么？</h2><p>boolean 类型的是 false，其他都是 undefined</p>
+<h2 id="Question-one-hundred-and-twenty-two-如果-boolean-类型的-props-设置了-default-为-undefined，当他没用传入时是什么？"><a href="#Question-one-hundred-and-twenty-two-如果-boolean-类型的-props-设置了-default-为-undefined，当他没用传入时是什么？" class="headerlink" title="Question one hundred and twenty-two: 如果 boolean 类型的 props 设置了 default 为 undefined，当他没用传入时是什么？"></a>Question one hundred and twenty-two: 如果 boolean 类型的 props 设置了 default 为 undefined，当他没用传入时是什么？</h2><p>是 undefined，如果声明了 default 值，那么在 prop 的值被解析为 undefined 时，无论 prop 是未被传递还是显式指明的 undefined，都会改为 default 值。</p>
+<h2 id="Question-one-hundred-and-twenty-three-如果使用了-ts-声明，类型中没有问号，那么该-props-是否一定要传？"><a href="#Question-one-hundred-and-twenty-three-如果使用了-ts-声明，类型中没有问号，那么该-props-是否一定要传？" class="headerlink" title="Question one hundred and twenty-three: 如果使用了 ts 声明，类型中没有问号，那么该 props 是否一定要传？"></a>Question one hundred and twenty-three: 如果使用了 ts 声明，类型中没有问号，那么该 props 是否一定要传？</h2><p>是，编译时将严格按照类型附加 require: true 等属性</p>
+<h2 id="Question-one-hundred-and-twenty-four-props-是如何检查类型是否匹配的？"><a href="#Question-one-hundred-and-twenty-four-props-是如何检查类型是否匹配的？" class="headerlink" title="Question one hundred and twenty-four: props 是如何检查类型是否匹配的？"></a>Question one hundred and twenty-four: props 是如何检查类型是否匹配的？</h2><p>Vue 将会通过 instanceof 来检查类型是否匹配。</p>
+<h2 id="Question-one-hundred-and-twenty-five-如果-props-的-type-为-null-那这个-prop-将能够接收哪些类型的值？"><a href="#Question-one-hundred-and-twenty-five-如果-props-的-type-为-null-那这个-prop-将能够接收哪些类型的值？" class="headerlink" title="Question one hundred and twenty-five: 如果 props 的 type 为 null, 那这个 prop 将能够接收哪些类型的值？"></a>Question one hundred and twenty-five: 如果 props 的 type 为 null, 那这个 prop 将能够接收哪些类型的值？</h2><p>所有类型</p>
+<h2 id="Question-one-hundred-and-twenty-six-如果-props-声明为类型-Boolean-Number-，-那么如果传入-1，该-props-的类型为？"><a href="#Question-one-hundred-and-twenty-six-如果-props-声明为类型-Boolean-Number-，-那么如果传入-1，该-props-的类型为？" class="headerlink" title="Question one hundred and twenty-six: 如果 props 声明为类型[Boolean, Number]， 那么如果传入 1，该 props 的类型为？"></a>Question one hundred and twenty-six: 如果 props 声明为类型[Boolean, Number]， 那么如果传入 1，该 props 的类型为？</h2><p>为 true, props 声明为 Boolean 类型，或包含 Boolean 类型的数组，会自动类型转换为布尔值。</p>
+<h2 id="Question-one-hundred-and-twenty-seven-v-on-和-emit-事件机制是否具有冒泡机制？"><a href="#Question-one-hundred-and-twenty-seven-v-on-和-emit-事件机制是否具有冒泡机制？" class="headerlink" title="Question one hundred and twenty-seven: v-on 和 emit 事件机制是否具有冒泡机制？"></a>Question one hundred and twenty-seven: v-on 和 emit 事件机制是否具有冒泡机制？</h2><p>没有。</p>
+<h2 id="Question-one-hundred-and-twenty-eight-defineEmits-宏能否在子函数中使用？"><a href="#Question-one-hundred-and-twenty-eight-defineEmits-宏能否在子函数中使用？" class="headerlink" title="Question one hundred and twenty-eight: defineEmits() 宏能否在子函数中使用？"></a>Question one hundred and twenty-eight: defineEmits() 宏能否在子函数中使用？</h2><p>不能，它必须直接放置在 script setup 的顶级作用域下。</p>
+<h2 id="Question-one-hundred-and-twenty-nine-如果一个原生事件的名字-例如-click-被定义在-emits-选项中，则监听器会监听哪一个事件？"><a href="#Question-one-hundred-and-twenty-nine-如果一个原生事件的名字-例如-click-被定义在-emits-选项中，则监听器会监听哪一个事件？" class="headerlink" title="Question one hundred and twenty-nine: 如果一个原生事件的名字 (例如 click) 被定义在 emits 选项中，则监听器会监听哪一个事件？"></a>Question one hundred and twenty-nine: 如果一个原生事件的名字 (例如 click) 被定义在 emits 选项中，则监听器会监听哪一个事件？</h2><p>监听组件触发的 click 事件而不会再响应原生的 click 事件。</p>
+<h2 id="Question-one-hundred-and-thirty-如何为事件做校验？"><a href="#Question-one-hundred-and-thirty-如何为事件做校验？" class="headerlink" title="Question one hundred and thirty: 如何为事件做校验？"></a>Question one hundred and thirty: 如何为事件做校验？</h2><p>要为事件添加校验，那么事件可以被赋值为一个函数，接受的参数就是抛出事件时传入 emit 的内容，返回一个布尔值来表明事件是否合法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;script setup&gt;<br>const emit = defineEmits(&#123;<br>  // 没有校验<br>  click: null,<br><br>  // 校验 submit 事件<br>  submit: (&#123; email, password &#125;) =&gt; &#123;<br>    if (email &amp;&amp; password) &#123;<br>      return true;<br>    &#125; else &#123;<br>      console.warn(&quot;Invalid submit event payload!&quot;);<br>      return false;<br>    &#125;<br>  &#125;,<br>&#125;);<br><br>function submitForm(email, password) &#123;<br>  emit(&quot;submit&quot;, &#123; email, password &#125;);<br>&#125;<br>&lt;/script&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-thirty-one-谈谈-Attributes-在父子组件中的透传现象？"><a href="#Question-one-hundred-and-thirty-one-谈谈-Attributes-在父子组件中的透传现象？" class="headerlink" title="Question one hundred and thirty-one: 谈谈 Attributes 在父子组件中的透传现象？"></a>Question one hundred and thirty-one: 谈谈 Attributes 在父子组件中的透传现象？</h2><p>如果一个子组件的根元素已经有了 class 或 style v-on，它会和从父组件上继承的值合并。但是 v-on 和 emit 会逐级消费，如需要透传需要符合声明。</p>
+<h2 id="Question-one-hundred-and-thirty-two-如果父组件有一个-click-事件，子组件是一个原生-button，点击这个-button，父组件事件会不会执行？"><a href="#Question-one-hundred-and-thirty-two-如果父组件有一个-click-事件，子组件是一个原生-button，点击这个-button，父组件事件会不会执行？" class="headerlink" title="Question one hundred and thirty-two: 如果父组件有一个 click 事件，子组件是一个原生 button，点击这个 button，父组件事件会不会执行？"></a>Question one hundred and thirty-two: 如果父组件有一个 click 事件，子组件是一个原生 button，点击这个 button，父组件事件会不会执行？</h2><p>会</p>
+<h2 id="Question-one-hundred-and-thirty-three-如何禁用-Attributes-继承？"><a href="#Question-one-hundred-and-thirty-three-如何禁用-Attributes-继承？" class="headerlink" title="Question one hundred and thirty-three: 如何禁用 Attributes 继承？"></a>Question one hundred and thirty-three: 如何禁用 Attributes 继承？</h2><p>通过 defineOptions 设置 inheritAttrs: false</p>
+<h2 id="Question-one-hundred-and-thirty-four-如何精准控制-Attributes-继承-？"><a href="#Question-one-hundred-and-thirty-four-如何精准控制-Attributes-继承-？" class="headerlink" title="Question one hundred and thirty-four: 如何精准控制 Attributes 继承 ？"></a>Question one hundred and thirty-four: 如何精准控制 Attributes 继承 ？</h2><p>这些透传进来的 attribute 可以在模板的表达式中直接用 <code>$attrs</code> 访问到。使用<code>inheritAttrs: false</code>和<code>v-bind=&quot;$attrs&quot;</code>可以控制透传到根元素外的元素上。</p>
+<h2 id="Question-one-hundred-and-thirty-five-多个根节点的组件有没有自动-attribute-透传行为？"><a href="#Question-one-hundred-and-thirty-five-多个根节点的组件有没有自动-attribute-透传行为？" class="headerlink" title="Question one hundred and thirty-five: 多个根节点的组件有没有自动 attribute 透传行为？"></a>Question one hundred and thirty-five: 多个根节点的组件有没有自动 attribute 透传行为？</h2><p>没有，如果 <code>$attrs</code> 没有被显式绑定，将会抛出一个运行时警告。</p>
+<h2 id="Question-one-hundred-and-thirty-six-attrs是响应式的吗？"><a href="#Question-one-hundred-and-thirty-six-attrs是响应式的吗？" class="headerlink" title="Question one hundred and thirty-six: $attrs是响应式的吗？"></a>Question one hundred and thirty-six: <code>$attrs</code>是响应式的吗？</h2><p>不是，如果你需要响应性，可以使用 prop。或者你也可以使用 onUpdated() 使得在每次更新时结合最新的 attrs 执行副作用。</p>
+<h2 id="Question-one-hundred-and-thirty-seven-如何在-JavaScript-中访问透传-Attributes？"><a href="#Question-one-hundred-and-thirty-seven-如何在-JavaScript-中访问透传-Attributes？" class="headerlink" title="Question one hundred and thirty-seven: 如何在 JavaScript 中访问透传 Attributes？"></a>Question one hundred and thirty-seven: 如何在 JavaScript 中访问透传 Attributes？</h2><p>可以在 <code>&lt;script setup&gt;</code> 中使用 <code>useAttrs()</code> API 来访问一个组件的所有透传 attribute</p>
+<h2 id="Question-one-hundred-and-thirty-eight-如何通过插槽把组件内的参数传出到外层？"><a href="#Question-one-hundred-and-thirty-eight-如何通过插槽把组件内的参数传出到外层？" class="headerlink" title="Question one hundred and thirty-eight: 如何通过插槽把组件内的参数传出到外层？"></a>Question one hundred and thirty-eight: 如何通过插槽把组件内的参数传出到外层？</h2><p>组件内通过传入 slot 标签一些 attributes，然后父组件通过子组件标签上的 v-slot 指令，直接接收到了一个插槽 props 对象</p>
+<h2 id="Question-one-hundred-and-thirty-nine-插槽上的-name-会作为-props-传递给父组件吗？"><a href="#Question-one-hundred-and-thirty-nine-插槽上的-name-会作为-props-传递给父组件吗？" class="headerlink" title="Question one hundred and thirty-nine: 插槽上的 name 会作为 props 传递给父组件吗？"></a>Question one hundred and thirty-nine: 插槽上的 name 会作为 props 传递给父组件吗？</h2><p>不会，name 是一个 Vue 特别保留的 attribute，不会作为 props 传递给插槽。</p>
+<h2 id="Question-one-hundred-and-forty-同时使用了具名插槽与默认插槽，可以直接为组件添加-v-slot-指令？"><a href="#Question-one-hundred-and-forty-同时使用了具名插槽与默认插槽，可以直接为组件添加-v-slot-指令？" class="headerlink" title="Question one hundred and forty: 同时使用了具名插槽与默认插槽，可以直接为组件添加 v-slot 指令？"></a>Question one hundred and forty: 同时使用了具名插槽与默认插槽，可以直接为组件添加 v-slot 指令？</h2><p>可以，只是需要为默认插槽使用显式的 <code>&lt;template&gt;</code> 标签。</p>
+<h2 id="Question-one-hundred-and-forty-one-什么是无渲染组件？"><a href="#Question-one-hundred-and-forty-one-什么是无渲染组件？" class="headerlink" title="Question one hundred and forty-one: 什么是无渲染组件？"></a>Question one hundred and forty-one: 什么是无渲染组件？</h2><p>一些组件可能只包括了逻辑而不需要自己渲染内容，视图输出通过作用域插槽全权交给了消费者组件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;FancyList :api-url=&quot;url&quot; :per-page=&quot;10&quot;&gt;<br>  &lt;template #item=&quot;&#123; body, username, likes &#125;&quot;&gt;<br>    &lt;div class=&quot;item&quot;&gt;<br>      &lt;p&gt;&#123;&#123; body &#125;&#125;&lt;/p&gt;<br>      &lt;p&gt;by &#123;&#123; username &#125;&#125; | &#123;&#123; likes &#125;&#125; likes&lt;/p&gt;<br>    &lt;/div&gt;<br>  &lt;/template&gt;<br>&lt;/FancyList&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vue">&lt;ul&gt;<br>  &lt;li v-for=&quot;item in items&quot;&gt;<br>    &lt;slot name=&quot;item&quot; v-bind=&quot;item&quot;&gt;&lt;/slot&gt;<br>  &lt;/li&gt;<br>&lt;/ul&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Question-one-hundred-and-forty-two-provide-和-inject-如果传入一个-ref-能否保持响应式？"><a href="#Question-one-hundred-and-forty-two-provide-和-inject-如果传入一个-ref-能否保持响应式？" class="headerlink" title="Question one hundred and forty-two: provide 和 inject 如果传入一个 ref,能否保持响应式？"></a>Question one hundred and forty-two: provide 和 inject 如果传入一个 ref,能否保持响应式？</h2><p>能</p>
+<h2 id="Question-one-hundred-and-forty-three-provide-和-inject-如果传入一个-ref-注入时会解包吗？"><a href="#Question-one-hundred-and-forty-three-provide-和-inject-如果传入一个-ref-注入时会解包吗？" class="headerlink" title="Question one hundred and forty-three: provide 和 inject 如果传入一个 ref,注入时会解包吗？"></a>Question one hundred and forty-three: provide 和 inject 如果传入一个 ref,注入时会解包吗？</h2><p>不会</p>
+<h2 id="Question-one-hundred-and-forty-four-provide-和-inject-能否在-setup-外调用？"><a href="#Question-one-hundred-and-forty-four-provide-和-inject-能否在-setup-外调用？" class="headerlink" title="Question one hundred and forty-four: provide 和 inject 能否在 setup 外调用？"></a>Question one hundred and forty-four: provide 和 inject 能否在 setup 外调用？</h2><p>不能，provide 和 inject 需要在 setup 内同步调用。</p>
+<h2 id="Question-one-hundred-and-forty-five-如何确保提供的数据不能被注入方的组件更改？"><a href="#Question-one-hundred-and-forty-five-如何确保提供的数据不能被注入方的组件更改？" class="headerlink" title="Question one hundred and forty-five: 如何确保提供的数据不能被注入方的组件更改？"></a>Question one hundred and forty-five: 如何确保提供的数据不能被注入方的组件更改？</h2><p>你可以使用 readonly() 来包装提供的值。</p>
+<h2 id="Question-one-hundred-and-forty-six-什么是异步组件？"><a href="#Question-one-hundred-and-forty-six-什么是异步组件？" class="headerlink" title="Question one hundred and forty-six: 什么是异步组件？"></a>Question one hundred and forty-six: 什么是异步组件？</h2><p>在需要时再从服务器加载相关组件。Vue 提供了 defineAsyncComponent 方法来实现此功能：defineAsyncComponent 方法接收一个返回 Promise 的加载函数。这个 Promise 的 resolve 回调方法应该在从服务器获得组件定义时调用。你也可以调用 reject(reason) 表明加载失败。</p>
+<h2 id="Question-one-hundred-and-forty-seven-toValue-这个-API-是干什么的？"><a href="#Question-one-hundred-and-forty-seven-toValue-这个-API-是干什么的？" class="headerlink" title="Question one hundred and forty-seven: toValue 这个 API 是干什么的？"></a>Question one hundred and forty-seven: toValue 这个 API 是干什么的？</h2><p>toValue() 是一个在 3.3 版本中新增的 API。它的设计目的是将 ref 或 getter 规范化为值。如果参数是 ref，它会返回 ref 的值；如果参数是函数，它会调用函数并返回其返回值。否则，它会原样返回参数。它的工作方式类似于 unref()，但对函数有特殊处理。</p>
+<h2 id="Question-one-hundred-and-forty-eight-toValue-使用时应注意什么？"><a href="#Question-one-hundred-and-forty-eight-toValue-使用时应注意什么？" class="headerlink" title="Question one hundred and forty-eight: toValue 使用时应注意什么？"></a>Question one hundred and forty-eight: toValue 使用时应注意什么？</h2><p>如果你的组合式函数在输入参数是 ref 或 getter 的情况下创建了响应式 effect，为了让它能够被正确追踪，请确保要么使用 watch() 显式地监视 ref 或 getter，要么在 watchEffect() 中调用 toValue()。</p>
+<h2 id="Question-one-hundred-and-forty-nine-toValue-应用场景有哪些？"><a href="#Question-one-hundred-and-forty-nine-toValue-应用场景有哪些？" class="headerlink" title="Question one hundred and forty-nine: toValue 应用场景有哪些？"></a>Question one hundred and forty-nine: toValue 应用场景有哪些？</h2><p>常用于在 use 类组合式工具中处理入参</p>
+<h2 id="Question-one-hundred-fifty：组合式函数中使用-ref-而不是-reactive-的原因是什么？"><a href="#Question-one-hundred-fifty：组合式函数中使用-ref-而不是-reactive-的原因是什么？" class="headerlink" title="Question one hundred fifty：组合式函数中使用 ref() 而不是 reactive()的原因是什么？"></a>Question one hundred fifty：组合式函数中使用 ref() 而不是 reactive()的原因是什么？</h2><p>组合式函数可能返回一个包含多个 ref 的普通的非响应式对象，这样该对象在组件中被解构为 ref 之后仍可以保持响应性。</p>
+<h2 id="Question-one-hundred-fifty-one：组合式函数的使用环境有什么要求？"><a href="#Question-one-hundred-fifty-one：组合式函数的使用环境有什么要求？" class="headerlink" title="Question one hundred fifty-one：组合式函数的使用环境有什么要求？"></a>Question one hundred fifty-one：组合式函数的使用环境有什么要求？</h2><p>组合式函数只能在 <code>&lt;script setup&gt;</code> 或 <code>setup()</code> 钩子中被调用。在这些上下文中，它们也只能被同步调用。</p>
+<h2 id="Question-one-hundred-fifty-two：-lt-script-setup-gt-是唯一在调用-await-之后仍可调用组合式函数吗？"><a href="#Question-one-hundred-fifty-two：-lt-script-setup-gt-是唯一在调用-await-之后仍可调用组合式函数吗？" class="headerlink" title="Question one hundred fifty-two：&lt;script setup&gt; 是唯一在调用 await 之后仍可调用组合式函数吗？"></a>Question one hundred fifty-two：<code>&lt;script setup&gt;</code> 是唯一在调用 await 之后仍可调用组合式函数吗？</h2><p>可以,编译器会在异步操作之后自动为你恢复当前的组件实例。</p>
+<h2 id="Question-one-hundred-fifty-three：组合式函数对标的时-vue2-的什么？"><a href="#Question-one-hundred-fifty-three：组合式函数对标的时-vue2-的什么？" class="headerlink" title="Question one hundred fifty-three：组合式函数对标的时 vue2 的什么？"></a>Question one hundred fifty-three：组合式函数对标的时 vue2 的什么？</h2><p>对标 vue2 的 mixin，但是他改善了 mixin 不清楚数据来源，命名空间冲突，隐式的跨 mixin 交流等缺点。</p>
+<h2 id="Question-one-hundred-fifty-three：什么情况下，应该使用自定义指令？"><a href="#Question-one-hundred-fifty-three：什么情况下，应该使用自定义指令？" class="headerlink" title="Question one hundred fifty-three：什么情况下，应该使用自定义指令？"></a>Question one hundred fifty-three：什么情况下，应该使用自定义指令？</h2><p>只有当所需功能只能通过直接的 DOM 操作来实现时，才应该使用自定义指令。</p>
+<h2 id="Question-one-hundred-fifty-four：指令钩子有哪几个？"><a href="#Question-one-hundred-fifty-four：指令钩子有哪几个？" class="headerlink" title="Question one hundred fifty-four：指令钩子有哪几个？"></a>Question one hundred fifty-four：指令钩子有哪几个？</h2><p>created，beforeMount，mounted，beforeUpdate，updated，beforeUnmount，unmounted</p>
+<h2 id="Question-one-hundred-fifty-five-指令如何传参？"><a href="#Question-one-hundred-fifty-five-指令如何传参？" class="headerlink" title="Question one hundred fifty-five: 指令如何传参？"></a>Question one hundred fifty-five: 指令如何传参？</h2><p>可以使用第二个参数 binding 接收传参</p>
+<h2 id="Question-one-hundred-fifty-six-指令传参-中的参数都是可以修改的吗？"><a href="#Question-one-hundred-fifty-six-指令传参-中的参数都是可以修改的吗？" class="headerlink" title="Question one hundred fifty-six: 指令传参 中的参数都是可以修改的吗？"></a>Question one hundred fifty-six: 指令传参 中的参数都是可以修改的吗？</h2><p>除了 el 外，其他参数都是只读的，不要更改它们。</p>
+<h2 id="Question-one-hundred-fifty-seven-如何使用插件机制把一个全局变量注入-Vue-实例？"><a href="#Question-one-hundred-fifty-seven-如何使用插件机制把一个全局变量注入-Vue-实例？" class="headerlink" title="Question one hundred fifty-seven: 如何使用插件机制把一个全局变量注入 Vue 实例？"></a>Question one hundred fifty-seven: 如何使用插件机制把一个全局变量注入 Vue 实例？</h2><p>可以使用 provide 和 inject，或者 app.config.globalProperties</p>
+<h2 id="Question-one-hundred-fifty-eight-单文件组件需要声明-name-吗？"><a href="#Question-one-hundred-fifty-eight-单文件组件需要声明-name-吗？" class="headerlink" title="Question one hundred fifty-eight: 单文件组件需要声明 name 吗？"></a>Question one hundred fifty-eight: 单文件组件需要声明 name 吗？</h2><p>在 3.2.34 或以上的版本中，使用 <code>&lt;script setup&gt;</code> 的单文件组件会自动根据文件名生成对应的 name 选项，无需再手动声明。</p>
+<h2 id="Question-one-hundred-fifty-nine-如果-keepAlive-缓存组件达到-max，会如何？"><a href="#Question-one-hundred-fifty-nine-如果-keepAlive-缓存组件达到-max，会如何？" class="headerlink" title="Question one hundred fifty-nine: 如果 keepAlive 缓存组件达到 max，会如何？"></a>Question one hundred fifty-nine: 如果 keepAlive 缓存组件达到 max，会如何？</h2><p><code>&lt;KeepAlive&gt;</code> 的行为在指定了 max 后类似一个 LRU 缓存：如果缓存的实例数量即将超过指定的那个最大数量，则最久没有被访问的缓存实例将被销毁，以便为新的实例腾出空间。</p>
+<h2 id="Question-one-hundred-sixty-lt-KeepAlive-gt-的缓存效果也适用于根组件的后代吗？"><a href="#Question-one-hundred-sixty-lt-KeepAlive-gt-的缓存效果也适用于根组件的后代吗？" class="headerlink" title="Question one hundred sixty: &lt;KeepAlive&gt;的缓存效果也适用于根组件的后代吗？"></a>Question one hundred sixty: <code>&lt;KeepAlive&gt;</code>的缓存效果也适用于根组件的后代吗？</h2><p>onActivated 在组件挂载时也会调用，并且 onDeactivated 在组件卸载时也会调用。</p>
+<p>这两个钩子不仅适用于 <code>&lt;KeepAlive&gt;</code> 缓存的根组件，也适用于缓存树中的后代组件。</p>
+<h2 id="Question-one-hundred-sixty-one-什么是-Teleport-组件？"><a href="#Question-one-hundred-sixty-one-什么是-Teleport-组件？" class="headerlink" title="Question one hundred sixty-one: 什么是 Teleport 组件？"></a>Question one hundred sixty-one: 什么是 Teleport 组件？</h2><p><code>&lt;Teleport&gt;</code> 是一个内置组件，它可以将一个组件内部的一部分模板“传送”到该组件的 DOM 结构外层的位置去。</p>
+<h2 id="Question-one-hundred-sixty-two-lt-Teleport-gt-的使用场景有哪些？"><a href="#Question-one-hundred-sixty-two-lt-Teleport-gt-的使用场景有哪些？" class="headerlink" title="Question one hundred sixty-two: &lt;Teleport&gt;的使用场景有哪些？"></a>Question one hundred sixty-two: <code>&lt;Teleport&gt;</code>的使用场景有哪些？</h2><p>譬如可以将 <code>&lt;Teleport&gt;</code> 和 <code>&lt;Transition&gt;</code> 结合使用来创建一个带动画的模态框。</p>
+<h2 id="Question-one-hundred-sixty-three-你能理解很多组件库需要在-App-组件外套一层-config-组件吗？"><a href="#Question-one-hundred-sixty-three-你能理解很多组件库需要在-App-组件外套一层-config-组件吗？" class="headerlink" title="Question one hundred sixty-three: 你能理解很多组件库需要在 App 组件外套一层 config 组件吗？"></a>Question one hundred sixty-three: 你能理解很多组件库需要在 App 组件外套一层 config 组件吗？</h2><p><code>&lt;Teleport&gt;</code> 挂载时，传送的 to 目标必须已经存在于 DOM 中。理想情况下，这应该是整个 Vue 应用 DOM 树外部的一个元素。如果目标元素也是由 Vue 渲染的，你需要确保在挂载 <code>&lt;Teleport&gt;</code> 之前先挂载该元素。</p>
+<h2 id="Question-one-hundred-sixty-four-在某些场景下可能需要视情况禁用-lt-Teleport-gt-如何禁用"><a href="#Question-one-hundred-sixty-four-在某些场景下可能需要视情况禁用-lt-Teleport-gt-如何禁用" class="headerlink" title="Question one hundred sixty-four: 在某些场景下可能需要视情况禁用 &lt;Teleport&gt;,如何禁用?"></a>Question one hundred sixty-four: 在某些场景下可能需要视情况禁用 <code>&lt;Teleport&gt;</code>,如何禁用?</h2><p>动态地传入一个 disabled prop</p>
+<h2 id="Question-one-hundred-sixty-five-多个-组件可以将其内容挂载在同一个目标元素上，顺序如何？"><a href="#Question-one-hundred-sixty-five-多个-组件可以将其内容挂载在同一个目标元素上，顺序如何？" class="headerlink" title="Question one hundred sixty-five: 多个  组件可以将其内容挂载在同一个目标元素上，顺序如何？"></a>Question one hundred sixty-five: 多个 <Teleport> 组件可以将其内容挂载在同一个目标元素上，顺序如何？</h2><p>简单的顺次追加</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%9D%A2%E8%AF%95/" class="category-chain-item">面试</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%8A%96%E9%9F%B3/" class="print-no-link">#抖音</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>vue模拟面试</div>
+      <div>https://undercurre.github.io/2024/07/17/面试/vue模拟面试/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月17日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/17/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9keep-alive%E7%9A%84%E4%BA%86%E8%A7%A3/" title="谈谈你对keep-alive的了解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">谈谈你对keep-alive的了解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/CORS%E5%A6%82%E4%BD%95%E5%88%B0%E5%BA%95/" title="CORS如何到底">
+                        <span class="hidden-mobile">CORS如何到底</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

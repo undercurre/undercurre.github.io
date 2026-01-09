@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前后端登录时密码的加密逻辑在一次 http 请求中，前后端如何安全地传输密码呢？服务器端如何安全存储密码呢？ 第一种：明文传输、存储     大致步骤是用户提供用户名和密码。前端把密码进行明文传输。后端在用户注册服务调用时，明文存储密码；用户登录时，读取数据库中密码，然后与接收的密码进行比较以验证登录。这种方式没任何安全性可言，裸奔密码。请求被抓包，密码即暴露；数据库泄露，密码即暴露。 第二种：单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端登录时密码的加密">
+<meta property="og:url" content="https://undercurre.github.io/2024/07/03/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="前后端登录时密码的加密逻辑在一次 http 请求中，前后端如何安全地传输密码呢？服务器端如何安全存储密码呢？ 第一种：明文传输、存储     大致步骤是用户提供用户名和密码。前端把密码进行明文传输。后端在用户注册服务调用时，明文存储密码；用户登录时，读取数据库中密码，然后与接收的密码进行比较以验证登录。这种方式没任何安全性可言，裸奔密码。请求被抓包，密码即暴露；数据库泄露，密码即暴露。 第二种：单">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112322488-417701842.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112434913-941269065.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112512905-625975737.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112654045-1583437850.png">
+<meta property="og:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112801548-743069375.png">
+<meta property="article:published_time" content="2024-07-03T15:49:17.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.091Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="博客园">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112322488-417701842.png">
+  
+  
+  
+  <title>前后端登录时密码的加密 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="前后端登录时密码的加密"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-03 15:49" pubdate>
+          2024年7月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">前后端登录时密码的加密</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="前后端登录时密码的加密逻辑"><a href="#前后端登录时密码的加密逻辑" class="headerlink" title="前后端登录时密码的加密逻辑"></a>前后端登录时密码的加密逻辑</h1><p>在一次 http 请求中，前后端如何安全地传输密码呢？服务器端如何安全存储密码呢？</p>
+<h2 id="第一种：明文传输、存储"><a href="#第一种：明文传输、存储" class="headerlink" title="第一种：明文传输、存储"></a>第一种：明文传输、存储</h2><div align=center>
+
+<p><img src="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112322488-417701842.png" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+</div>
+
+<p>大致步骤是用户提供用户名和密码。前端把密码进行明文传输。后端在用户注册服务调用时，明文存储密码；用户登录时，读取数据库中密码，然后与接收的密码进行比较以验证登录。这种方式没任何安全性可言，裸奔密码。请求被抓包，密码即暴露；数据库泄露，密码即暴露。</p>
+<h2 id="第二种：单向哈希后传输、存储"><a href="#第二种：单向哈希后传输、存储" class="headerlink" title="第二种：单向哈希后传输、存储"></a>第二种：单向哈希后传输、存储</h2><div align=center>
+
+<p><img src="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112434913-941269065.png" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+</div>
+
+<p>大致步骤是用户提供用户名和密码。前端把密码经单向哈希后再发送给后端服务器。后端在用户注册时，存储密码的哈希值；用户登录时，读取数据库中哈希值，与接收的密码哈希值进行比较以验证登录。相比明文传输、存储，这个方式有了最基础安全防范。但密码的单向哈希，且存储时未加盐。密码容易被暴力穷举检索出来，如彩虹表攻击。现在主流的彩虹表都是100G以上了。</p>
+<h2 id="第三种：加盐存储"><a href="#第三种：加盐存储" class="headerlink" title="第三种：加盐存储"></a>第三种：加盐存储</h2><div align=center>
+
+<p><img src="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112512905-625975737.png" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+</div>
+
+<p>大致步骤是用户提供用户名和密码。前端把密码经单向哈希后再发送给后端服务器。后端在用户注册时，生成随机盐，加入到接收的哈希值中，经单向哈希后生成另一个哈希值2；存储盐值、哈希值2；用户登录时，读取数据库中盐值，加入到接收的密码哈希值中，经单向哈希后生成哈希值2；与库中哈希值2进行比较以验证登录。</p>
+<p>这种密码加盐可以有效地防止彩虹表攻击。即使攻击者知道了盐的内容和加盐的位置，加盐仍然大大增加了利用彩虹表攻击的难度。</p>
+<p>这种方式的优点是，即使数据库泄露，密码仍然具有一定的安全性。</p>
+<p>缺点是多次请求，传输的哈希值总是固定的，并没有“加盐”保护。由于http请求的特性，不能直接对密码“加盐”，需要引入非对称加密。</p>
+<h2 id="第四种：非对称加密后传输后，加盐存储"><a href="#第四种：非对称加密后传输后，加盐存储" class="headerlink" title="第四种：非对称加密后传输后，加盐存储"></a>第四种：非对称加密后传输后，加盐存储</h2><div align=center>
+
+<p><img src="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112654045-1583437850.png" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+</div>
+
+<p>大致步骤是用户提供用户名和密码。前端注册账号或登录时，生成随机值；密码经单向哈希后，与生成的随机值一起，经公钥加密后，生成密文，将密文发送给后端服务器。后端：用户注册时，使用私钥解密密文，丢掉随机值，得到哈希值；生成随机盐，加入到哈希值中，经单向哈希后生成哈希值2；存储盐值、哈希值2；用户登录时，使用私钥解密密文，丢掉随机值，得到哈希值；读取数据库中盐值，加入到哈希值中，经单向哈希后生成哈希值2；与库中哈希值2进行比较以验证登录。这种方式引入随机值，每次传输的密文不同。但RSA加密对于其加密的明文的长度有限制。同时，非对称加解密需要一些开销。另外，还需要维护公钥。</p>
+<h2 id="第五种：加密公钥得到签名，非对称加密后传输，加盐存储"><a href="#第五种：加密公钥得到签名，非对称加密后传输，加盐存储" class="headerlink" title="第五种：加密公钥得到签名，非对称加密后传输，加盐存储"></a>第五种：加密公钥得到签名，非对称加密后传输，加盐存储</h2><div align=center>
+
+<p><img src="https://img2023.cnblogs.com/blog/604997/202311/604997-20231123112801548-743069375.png" srcset="/img/loading.gif" lazyload alt="这里写图片描述"></p>
+</div>
+
+<p>大致步骤是用户提供用户名和密码。前端注册账号或登录时，随机生成对称加密密钥；密码经单向哈希后，进行对称加密，生成密文；随机生成的对称加密密钥经公钥加密后，生成签名；将密文、签名一起发送给后端服务器。后端用户注册时，使用私钥解密签名，得到对称加密密钥；使用对称密钥解密密文，得到哈希值；生成随机盐，加入到哈希值中，经单向哈希后生成哈希值2；存储盐值、哈希值2；用户登录时，使用私钥解密签名，得到对称加密密钥；使用对称密钥解密密文，得到哈希值；读取数据库中盐值，加入到哈希值中，经单向哈希后生成哈希值2；与库中哈希值2进行比较以验证登录。此方式虽然仍需要维护公钥，但传输的数据将不再有限制（即使是https，也需要付出维护公钥的成本）。缺点是开销进一步加大。</p>
+<h2 id="这个第五种很像https雏形"><a href="#这个第五种很像https雏形" class="headerlink" title="这个第五种很像https雏形"></a>这个第五种很像https雏形</h2><p>可将要传输的“密码的哈希值”换成任何你想要的数据，以达到安全传输数据的目的。此方式为https的雏形，与https相比，区别在于：①此方式并不验证公钥，②签名和加密后密文一起被发送到后端服务器，③用于加密数据的“对称加密的密钥”此后不再使用。而 https 通过2次请求完成对公钥的验证以及对“对称加密的密钥”的约定，之后才发送数据，且继续使用密钥：第一次请求：服务器返回含公钥的证书；客户端验证证书（与本地的证书进行比较），决定是否发起第二次请求；第二次请求：客户端使用公钥加密“对称加密的密钥”，再发送给服务器，以约定之后使用的“对称加密的密钥”。后续的请求与返回，使用约定好的对称加密的密钥来加密要传输的数据并将继续使用对称加密</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" class="category-chain-item">知识点</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%8D%9A%E5%AE%A2%E5%9B%AD/" class="print-no-link">#博客园</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>前后端登录时密码的加密</div>
+      <div>https://undercurre.github.io/2024/07/03/知识点积累/密码加密/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/03/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%92%8C%E9%97%AD%E5%8C%85/" title="内存泄露和闭包">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">内存泄露和闭包</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/02/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/bfc%E6%80%BB%E7%BB%93/" title="BFC总论">
+                        <span class="hidden-mobile">BFC总论</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

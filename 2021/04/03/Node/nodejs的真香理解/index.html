@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Node服务Node.js是一种基于Chrome V8 JavaScript引擎构建的开源跨平台运行时环境，用于构建高效且可扩展的网络应用程序。 入门步骤一：安装Node.js在你开始学习Node.js之前，你需要安装它。你可以在Node.js官方网站上下载最新版本的Node.js，并按照安装向导进行安装。 步骤二：初始化项目在你创建服务器之前，你需要创建一个Node.js项目。请在终端中转到你要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs的真香理解">
+<meta property="og:url" content="https://undercurre.github.io/2021/04/03/Node/nodejs%E7%9A%84%E7%9C%9F%E9%A6%99%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="Node服务Node.js是一种基于Chrome V8 JavaScript引擎构建的开源跨平台运行时环境，用于构建高效且可扩展的网络应用程序。 入门步骤一：安装Node.js在你开始学习Node.js之前，你需要安装它。你可以在Node.js官方网站上下载最新版本的Node.js，并按照安装向导进行安装。 步骤二：初始化项目在你创建服务器之前，你需要创建一个Node.js项目。请在终端中转到你要">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-03T20:14:11.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.022Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>nodejs的真香理解 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="nodejs的真香理解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-04-03 20:14" pubdate>
+          2021年4月3日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">nodejs的真香理解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Node服务"><a href="#Node服务" class="headerlink" title="Node服务"></a>Node服务</h1><p>Node.js是一种基于Chrome V8 JavaScript引擎构建的开源跨平台运行时环境，用于构建高效且可扩展的网络应用程序。</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><p>步骤一：安装Node.js<br>在你开始学习Node.js之前，你需要安装它。你可以在Node.js官方网站上下载最新版本的Node.js，并按照安装向导进行安装。</p>
+<p>步骤二：初始化项目<br>在你创建服务器之前，你需要创建一个Node.js项目。请在终端中转到你要创建项目的目录并运行以下命令：<code>npm init</code><br>该命令将会启动项目初始化向导，并为你创建一个package.json文件。在向导中，你可以设置你的项目名称，版本，描述等信息。</p>
+<p>步骤三：安装依赖项(使用入门级框架的情况下)<br>在你创建服务器之前，你需要安装必要的依赖项。在终端中运行以下命令来安装express和body-parser：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npm install express <span class="hljs-keyword">body</span>-parser <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
+<p>express是一个流行的Node.js Web框架，而body-parser是一个用于解析HTTP请求体的中间件。</p>
+<p>步骤四：创建服务器<br>现在你可以创建你的Node.js服务器了。在你的项目根目录下创建一个server.js文件，并输入以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>);<br><span class="hljs-keyword">const</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;body-parser&#x27;</span>);<br><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>();<br><br>app.<span class="hljs-title function_">use</span>(bodyParser.<span class="hljs-title function_">json</span>());<br>app.<span class="hljs-title function_">use</span>(bodyParser.<span class="hljs-title function_">urlencoded</span>(&#123; <span class="hljs-attr">extended</span>: <span class="hljs-literal">true</span> &#125;));<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;Hello World!&#x27;</span>);<br>&#125;);<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">3000</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Server listening on port 3000&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+<p>在这个例子中，我们使用express创建了一个名为app的应用程序。我们使用body-parser中间件来解析HTTP请求体，并使用app.get方法创建一个路由处理程序，当用户访问根URL时，发送“Hello World！”消息。最后，我们使用app.listen方法在端口3000上启动服务器。</p>
+<p>步骤五：启动服务器<br>现在你可以启动你的服务器了。在终端中运行以下命令来启动服务器：<br><code>node server.js</code><br>这将启动你的服务器，并在终端中打印“Server listening on port 3000”消息。现在你可以在浏览器中访问<a href="http://localhost:3000，应该会看到“Hello">http://localhost:3000，应该会看到“Hello</a> World！”消息。</p>
+<p>这就是创建自己的Node.js服务器的基础。你可以在此基础上继续扩展你的服务器，添加更多的路由处理程序和中间件，以满足你的需求。</p>
+<h2 id="Nest-js——大型框架"><a href="#Nest-js——大型框架" class="headerlink" title="Nest.js——大型框架"></a>Nest.js——大型框架</h2><p>Nest.js是一个基于Node.js的开源框架，使用TypeScript语言编写，旨在提供一种结构良好的解决方案，用于构建可伸缩和可维护的应用程序。</p>
+<p>Nest.js提供了很多开箱即用的特性，如依赖注入，模块化，中间件，管道，守卫等。这些特性使得应用程序的组织结构更加清晰，代码更易于维护。</p>
+<p>Nest.js也提供了很多集成选项，例如与TypeORM，Mongoose和GraphQL等库的集成，以及内置的WebSocket支持。这使得开发人员可以更轻松地构建各种类型的应用程序，从简单的REST API到实时Web应用程序。</p>
+<p>由于其结构良好，易于使用和丰富的功能，Nest.js成为了很受欢迎的Node.js框架之一。如果你对Nest.js感兴趣，可以阅读官方文档并开始学习。</p>
+<h2 id="其他框架推荐"><a href="#其他框架推荐" class="headerlink" title="其他框架推荐"></a>其他框架推荐</h2><p>除了Nest.js之外，Node.js社区中还有很多其他优秀的框架可供学习和使用。以下是其中的一些：</p>
+<p>Express.js：Express.js是一个流行的Web应用程序框架，提供了一种简单而灵活的方法来构建Web应用程序。它是基于中间件的，易于使用和扩展。</p>
+<p>Koa.js：Koa.js是由Express.js团队创建的一个类似的Web应用程序框架，提供了更小和更模块化的核心。它利用了ES6中的async/await功能，并提供了一种更优雅的方法来处理异步操作。</p>
+<p>Fastify：Fastify是一个高效且低开销的Web框架，它专注于提供快速的HTTP路由和中间件处理。它使用了一些最新的Node.js技术，如异步生成器和HTTP/2，以提供最佳的性能。</p>
+<p>Hapi：Hapi是一个适用于大型应用程序的可扩展Web框架。它提供了强大的路由功能，可以处理各种请求和响应类型，并具有内置的身份验证和安全性功能。</p>
+<p>这些框架都有其独特的特点和优点，你可以根据自己的需求和偏好选择其中之一来学习和使用。不管你选择哪个框架，建议先从官方文档开始学习，了解其核心概念和用法，然后再尝试构建自己的应用程序。</p>
+<h2 id="Node-js有以下优势："><a href="#Node-js有以下优势：" class="headerlink" title="Node.js有以下优势："></a>Node.js有以下优势：</h2><p>单线程和非阻塞I/O模型：Node.js采用单线程和非阻塞I/O模型，使得它可以处理大量并发连接，而不需要创建大量线程和进程，减少了服务器的资源占用。此外，非阻塞I/O模型可以避免I/O阻塞，提高了应用程序的响应性能。</p>
+<p>JavaScript语言：Node.js使用JavaScript语言，这使得前端开发人员可以在后端开发中使用熟悉的语言，从而减少了学习成本和开发时间。此外，JavaScript的灵活性和可扩展性使得Node.js可以轻松地与各种数据源和API进行集成。</p>
+<p>社区生态系统：Node.js拥有庞大的开发者社区和生态系统，可以提供丰富的开源库和工具，使得开发人员可以更快地构建和部署应用程序。此外，社区的活跃性和开源精神也使得Node.js不断发展和改进。</p>
+<p>跨平台支持：Node.js可以在多种操作系统上运行，包括Windows，macOS和Linux等，这使得它非常灵活，可以在各种不同的环境中使用。</p>
+<p>总的来说，Node.js的单线程，非阻塞I/O模型和JavaScript语言等特点使得它在处理大量并发连接和实时数据交互等场景下具有优势，同时拥有庞大的社区生态系统和跨平台支持，使得开发人员可以更快更轻松地构建和部署应用程序。</p>
+<h2 id="在线通讯场景"><a href="#在线通讯场景" class="headerlink" title="在线通讯场景"></a>在线通讯场景</h2><p>Node.js的单线程，非阻塞I/O模型和JavaScript语言等特点使得它在处理大量并发连接和实时数据交互等场景下具有优势</p>
+<p>单线程：在Node.js中，每个请求都由一个线程处理，这使得它可以处理大量并发连接而不会消耗过多的服务器资源。在聊天应用程序中，用户可以同时向服务器发送多个请求，例如建立连接、发送消息、接收消息等等。由于Node.js采用单线程模型，这些请求可以在同一个线程中处理，从而避免了创建大量线程或进程，减少了服务器的资源消耗。</p>
+<p>非阻塞I/O模型：在聊天应用程序中，大量的I/O操作（例如读写数据库、发送和接收消息等）会使得传统的多线程服务器陷入阻塞状态，导致应用程序的响应变慢。但是，在Node.js中，I/O操作是非阻塞的，当一个I/O操作被触发时，Node.js会将其放入事件队列中，然后继续执行后续代码，从而避免了I/O操作的阻塞。当I/O操作完成时，Node.js会从事件队列中取出该事件，并将其作为回调函数执行。这种非阻塞I/O模型可以使得聊天应用程序在大量并发连接和消息传递时保持高响应性。</p>
+<p>JavaScript语言：在聊天应用程序中，前端和后端都需要使用JavaScript语言进行开发。如果使用其他后端语言，可能需要在前后端之间进行语言转换，导致开发时间变长和效率降低。但是，由于Node.js使用JavaScript语言，前后端开发人员可以使用同样的语言进行开发，减少了学习成本和开发时间。</p>
+<p>综上所述，Node.js的单线程，非阻塞I/O模型和JavaScript语言等特点可以使得聊天应用程序在处理大量并发连接和实时数据交互等场景下具有优势。</p>
+<p>假设有一个在线聊天应用程序，它需要实时处理用户发送的消息并将其发送给所有在线用户，同时需要支持大量并发连接。在传统的Java多线程服务器中，每个请求都由一个独立的线程处理，这意味着每个用户连接都需要创建一个新的线程，因此当连接数量增加时，线程数量也会增加。当线程数量过多时，会导致服务器的资源消耗过大，从而导致性能下降。</p>
+<p>相反，在Node.js单线程服务器中，所有的请求都由一个单独的线程处理，这意味着在高并发连接的情况下，Node.js可以更好地处理请求，因为它可以将大量请求集中在一个线程中，减少线程切换的开销。此外，Node.js还具有非阻塞I/O模型，这意味着它可以在处理I/O操作时不会阻塞进程，而是使用回调函数，将I/O操作放到事件队列中，然后继续处理其他请求。这使得Node.js可以更快地响应用户请求，并在高并发的情况下提供更好的性能表现。</p>
+<p>此外，使用JavaScript语言还可以减少代码的复杂性，并提高开发效率。JavaScript具有简单易用的语法和广泛的社区支持，可以帮助开发人员更快地开发应用程序。</p>
+<p>综上所述，相对于传统的Java多线程服务器，Node.js具有更好的性能和响应能力，在高并发连接的情况下能够更好地处理请求。同时，使用JavaScript语言可以提高开发效率和代码的可读性。</p>
+<h2 id="Node的单线程为何成为优势？"><a href="#Node的单线程为何成为优势？" class="headerlink" title="Node的单线程为何成为优势？"></a>Node的单线程为何成为优势？</h2><p>线程是计算机中最基本的执行单元之一，它可以独立执行一段程序。在多线程环境下，多个线程可以同时运行，这样可以提高计算机的利用率和效率。</p>
+<p>线程切换是指在多线程环境下，从一个线程的执行上下文（包括程序计数器、寄存器、栈指针等）切换到另一个线程的执行上下文的过程。线程切换通常是由操作系统内核负责管理的，当一个线程的时间片用完或者被阻塞时，操作系统内核会将该线程的执行上下文保存起来，并将CPU资源分配给其他线程。当该线程再次获得CPU资源时，内核将其保存的执行上下文恢复回来，继续执行。</p>
+<p>在线程切换的过程中，操作系统内核需要保存和恢复线程的执行上下文，包括程序计数器、寄存器、栈指针等信息。这些操作需要花费一定的时间和资源，从而造成性能的损耗。</p>
+<p>此外，线程切换还可能导致CPU缓存失效，因为在切换到另一个线程时，该线程的执行上下文可能存储在不同的内存地址上，这可能会导致缓存中的数据失效，从而降低程序的性能。</p>
+<p>因此，在多线程环境下，过多的线程切换可能会导致系统性能的下降。而Node.js采用单线程模型，避免了多线程环境下线程切换的开销，从而提高了系统的性能和响应速度。同时，Node.js采用异步非阻塞I/O模型，可以避免在I/O操作中阻塞进程，从而进一步提高系统的性能。</p>
+<h2 id="除了在线聊天，node服务器的其他优势场景"><a href="#除了在线聊天，node服务器的其他优势场景" class="headerlink" title="除了在线聊天，node服务器的其他优势场景"></a>除了在线聊天，node服务器的其他优势场景</h2><p>除了在线聊天，Node.js还适用于以下场景：</p>
+<p>高并发Web应用程序：由于Node.js采用了单线程和非阻塞I/O模型，可以处理大量并发连接和高负载的Web应用程序，如在线游戏、社交网络、电子商务网站等。</p>
+<p>实时应用程序：由于Node.js采用了事件驱动和异步I/O模型，可以快速响应客户端请求并实时推送数据，适用于实时应用程序，如聊天室、在线视频、在线音乐播放器等。</p>
+<p>微服务架构：Node.js适合用于构建微服务架构，可以快速构建轻量级的服务，并可以方便地通过RESTful API进行交互。</p>
+<p>高速缓存服务器：由于Node.js具有快速的I/O处理能力和高效的内存管理机制，可以用于构建高速缓存服务器，如Redis、Memcached等。</p>
+<p>命令行工具：由于Node.js具有优秀的模块化机制和命令行工具库，可以快速构建命令行工具，并可以方便地与其他系统进行集成。</p>
+<p>总之，Node.js适用于大部分需要处理高并发、实时数据交互、轻量级服务、高速缓存等场景的应用程序。</p>
+<h2 id="其他疑问"><a href="#其他疑问" class="headerlink" title="其他疑问"></a>其他疑问</h2><h3 id="那为什么传统多线程服务器要在多个线程中处理用户的请求而不像nodejs一样在一个线程里操作？"><a href="#那为什么传统多线程服务器要在多个线程中处理用户的请求而不像nodejs一样在一个线程里操作？" class="headerlink" title="那为什么传统多线程服务器要在多个线程中处理用户的请求而不像nodejs一样在一个线程里操作？"></a>那为什么传统多线程服务器要在多个线程中处理用户的请求而不像nodejs一样在一个线程里操作？</h3><p>传统多线程服务器之所以要使用多个线程来处理用户请求，主要是由于这些服务器采用了多进程或多线程的方式来进行并发处理。每个线程或进程都有自己的内存空间和执行环境，可以独立地处理客户端请求，从而达到并发处理的效果。</p>
+<p>相比之下，Node.js采用了单线程和非阻塞I/O模型，所有的I/O操作都是异步的，当一个I/O操作完成时，会触发一个事件并交给事件循环来处理，这样可以避免线程切换所带来的性能损耗，并且可以更好地利用计算机的多核心处理能力，提高系统的并发性能。</p>
+<p>虽然Node.js是单线程的，但是它使用事件循环机制和异步I/O模型来实现高并发和高性能的目标，它可以处理大量的并发连接和实时数据交互，适用于处理高并发的Web应用程序、实时应用程序、轻量级服务等场景。同时，Node.js还提供了一些模块，如cluster模块和child_process模块等，可以帮助开发者利用多核心处理能力来提高系统的并发性能。</p>
+<h4 id="nodejs对服务器例如CPU资源利用率相对较低？"><a href="#nodejs对服务器例如CPU资源利用率相对较低？" class="headerlink" title="nodejs对服务器例如CPU资源利用率相对较低？"></a>nodejs对服务器例如CPU资源利用率相对较低？</h4><p>在CPU密集型的场景下，Node.js的性能表现相对较差，因为它只有单线程，只能使用一个CPU核心。在这种情况下，Node.js不能像多线程的服务器那样，将任务分配给多个线程并充分利用多个CPU核心。这就导致Node.js在处理CPU密集型任务时相对较慢，无法发挥出多核处理器的优势。</p>
+<p>但是，如果你的服务器应用程序的主要任务是I/O密集型，例如处理网络请求、读写文件等，那么Node.js是非常适合的选择。Node.js的事件驱动模型和非阻塞I/O能够帮助应用程序高效地处理大量并发请求，同时在并发请求较少的情况下，Node.js的单线程模型可以节省服务器资源并降低服务器成本。</p>
+<p>另外，Node.js还提供了一些工具和模块，如cluster模块和child_process模块，可以帮助应用程序充分利用多核CPU资源来提高系统的并发性能，这些工具和模块能够将任务分配给多个进程或子进程，并利用多核处理器并行处理任务，从而提高系统的并发性能和效率。</p>
+<p>一个CPU核心代表着一颗物理上的中央处理器。在一台计算机中，CPU通常由多个核心组成，每个核心都可以独立地执行指令和操作数据。多核CPU可以同时处理多个线程或进程，从而提高系统的性能和效率。</p>
+<p>一个CPU核心通常包括运算器、控制器、高速缓存、寄存器等组成部分。这些组成部分协同工作，执行指令，完成各种计算任务和数据处理操作。</p>
+<p>对于多线程或多进程应用程序，可以利用多核CPU来同时执行多个线程或进程，从而提高应用程序的性能和效率。但对于单线程的应用程序，如Node.js，只能利用一个CPU核心，无法充分利用多核CPU的优势。</p>
+<h4 id="不适合Nodejs，也就是CPU密集型场景有哪些？"><a href="#不适合Nodejs，也就是CPU密集型场景有哪些？" class="headerlink" title="不适合Nodejs，也就是CPU密集型场景有哪些？"></a>不适合Nodejs，也就是CPU密集型场景有哪些？</h4><p>CPU密集型任务通常是指那些需要大量计算、操作数据和执行复杂算法等操作的任务。这些任务需要CPU大量的运算能力和资源来完成。</p>
+<p>以下是一些常见的CPU密集型场景举例：</p>
+<p>数据加密和解密：数据加密和解密需要进行大量的计算和数据操作，特别是在处理大量数据时，CPU的负载非常高。</p>
+<p>图像和视频处理：图像和视频处理通常需要进行复杂的算法和运算，如图像压缩、图像识别、视频编解码等。</p>
+<p>科学计算：科学计算通常需要进行复杂的数学运算和模拟，如天气预报、分子动力学模拟等。</p>
+<p>游戏开发：游戏开发需要进行复杂的物理模拟、图形渲染和人工智能算法等操作，这些都需要大量的计算资源和运算能力。</p>
+<p>在这些场景中，CPU是整个系统的瓶颈，应用程序的性能和效率主要取决于CPU的处理能力和资源。在这种情况下，Node.js的单线程模型无法充分利用多核CPU的优势，因此性能表现相对较差。</p>
+<h3 id="如果业务只是进行简单的运算并且存储到服务器供客户请求的情况下，node服务更优势"><a href="#如果业务只是进行简单的运算并且存储到服务器供客户请求的情况下，node服务更优势" class="headerlink" title="如果业务只是进行简单的运算并且存储到服务器供客户请求的情况下，node服务更优势"></a>如果业务只是进行简单的运算并且存储到服务器供客户请求的情况下，node服务更优势</h3><p>是的，如果你的业务主要是进行简单的运算并将结果存储到服务器供客户端请求，那么Node.js可能是更好的选择。这是因为Node.js具有快速的I/O操作和事件驱动模型的优势，可以快速地响应客户端请求，同时可以处理大量并发连接。而且Node.js的JavaScript语言特性也使得编程更加简单和高效。</p>
+<p>然而，在进行大量的CPU密集型运算时，单线程的Node.js可能会变得比较慢，因为它只能使用单个CPU核心。在这种情况下，使用多线程的服务器可能更适合，因为它可以利用多个CPU核心进行并行计算。</p>
+<h4 id="那普通的企业级管理系统，例如ERP系统，用node服务器会更好吗？为什么市场上大多是Java这种传统服务器？"><a href="#那普通的企业级管理系统，例如ERP系统，用node服务器会更好吗？为什么市场上大多是Java这种传统服务器？" class="headerlink" title="那普通的企业级管理系统，例如ERP系统，用node服务器会更好吗？为什么市场上大多是Java这种传统服务器？"></a>那普通的企业级管理系统，例如ERP系统，用node服务器会更好吗？为什么市场上大多是Java这种传统服务器？</h4><p>对于普通的企业级管理系统，例如ERP系统，Node.js可能不是最佳选择。这是因为这些系统通常涉及到大量的业务逻辑和数据处理，而这些处理往往是CPU密集型的。尽管Node.js具有快速的I/O操作和事件驱动模型，但它对CPU密集型任务的处理能力不如多线程的服务器。</p>
+<p>通常情况下，使用Java、C#等语言编写的服务器可能更适合企业级管理系统。这些语言具有更好的CPU处理能力，可以更好地处理大量的业务逻辑和数据处理。同时，这些语言也具有丰富的企业级框架和库，可以帮助开发人员更快速地开发和部署应用程序。</p>
+<p>那怎么样的企业级系统能用node服务器完成<br>虽然Node.js并不适合处理所有的企业级应用，但是对于某些特定的企业级应用来说，它也可以是一种不错的选择。以下是一些可以使用Node.js处理的企业级应用的示例：</p>
+<p>即时通信应用程序：Node.js的事件驱动和非阻塞I/O模型使得它非常适合处理实时通信应用程序，例如在线聊天、协作工具、视频会议等。</p>
+<p>基于API的应用程序：Node.js在处理RESTful API时表现出色，因为它可以使用JSON作为主要数据格式，并且可以通过各种NPM包轻松地构建和管理API。</p>
+<p>微服务应用程序：Node.js可以很好地处理微服务架构中的单个服务，因为它可以轻松地创建轻量级服务，同时可以方便地使用消息队列和其他工具进行服务间通信。</p>
+<p>实时数据分析和处理应用程序：Node.js可以使用流式数据处理和事件驱动的方式轻松地处理大量的实时数据，并且可以轻松地使用各种NPM包进行数据可视化和呈现。</p>
+<p>总之，Node.js对于需要处理实时数据、实时通信和轻量级微服务等场景下的企业级应用程序来说是非常有用的，但并不适合所有类型的企业级应用程序。</p>
+<h3 id="数字孪生项目是否适用Node服务器？"><a href="#数字孪生项目是否适用Node服务器？" class="headerlink" title="数字孪生项目是否适用Node服务器？"></a>数字孪生项目是否适用Node服务器？</h3><p>数字孪生项目是指使用数字技术来创建物理实体的虚拟副本，以便进行模拟、分析和测试等应用程序。对于数字孪生项目，Node.js可以作为后端服务器处理大量的实时数据，并且可以使用事件驱动和非阻塞I/O模型轻松地处理并发请求。同时，Node.js还可以使用各种NPM包来轻松地处理和管理数据，例如数据库访问、数据可视化和呈现等。</p>
+<p>然而，数字孪生项目通常需要进行复杂的计算和建模，这可能需要使用其他更适合处理CPU密集型任务的语言和工具。因此，Node.js作为后端服务器在数字孪生项目中并不是唯一的选择，而是需要根据具体的项目需求进行评估和选择。</p>
+<h4 id="为什么数字孪生需要建模和复杂的计算？"><a href="#为什么数字孪生需要建模和复杂的计算？" class="headerlink" title="为什么数字孪生需要建模和复杂的计算？"></a>为什么数字孪生需要建模和复杂的计算？</h4><p>数字孪生需要建模和复杂的计算是因为它的目标是创建物理实体的虚拟副本，并且对这些虚拟副本进行模拟、分析和测试。这些虚拟副本需要具备真实实体的特性和行为，才能对真实实体进行准确的模拟和分析。</p>
+<p>在数字孪生项目中，通常需要从真实实体中收集大量的数据，并对这些数据进行处理、分析和建模，以便创建虚拟副本。这些数据可以包括结构、形状、材料、物理特性、运动特性等等。基于这些数据，需要使用计算机模拟技术对虚拟副本进行建模，并且进行大量的计算和分析，以便对虚拟副本进行准确的模拟和测试。</p>
+<p>因此，数字孪生需要建模和复杂的计算，才能满足对真实实体进行准确的模拟和分析的需求。这些计算通常需要高性能的计算机系统和处理器来完成，而Node.js作为后端服务器可能并不是最佳选择。</p>
+<h3 id="可以把Node服务来收集和发送数据和传统多线程Java服务结合吗？"><a href="#可以把Node服务来收集和发送数据和传统多线程Java服务结合吗？" class="headerlink" title="可以把Node服务来收集和发送数据和传统多线程Java服务结合吗？"></a>可以把Node服务来收集和发送数据和传统多线程Java服务结合吗？</h3><p>是的，你可以使用Node.js作为数据收集和发送的中间层，而将复杂的计算和处理任务交给其他更适合的技术栈来完成，比如使用传统的多线程Java应用程序。这种方式可以充分发挥Node.js在处理高并发请求和实时数据处理方面的优势，同时也能充分发挥其他技术栈在复杂计算和处理方面的优势。这种方式被称为“微服务架构”，它允许你使用不同的技术栈来构建不同的服务，从而在不同的场景下获得最佳的性能和可靠性。</p>
+<h4 id="云原生"><a href="#云原生" class="headerlink" title="云原生"></a>云原生</h4><p>云原生和微服务架构是相关的概念。云原生是一种设计和构建应用程序的方法，旨在最大化应用程序的可伸缩性、可移植性和容错性，以适应云环境的特点。云原生应用程序通常基于微服务架构，将应用程序拆分为多个小型服务，每个服务都有自己的生命周期和运行环境。这些服务可以独立部署、扩展和更新，从而实现更高的灵活性和可靠性。Node.js作为一个轻量级、高效、可扩展的技术，可以很好地支持云原生应用程序的构建和部署，也是云原生时代的一种常用技术。</p>
+<h4 id="可以使用微服务架构把node服务器和go服务器结合吗"><a href="#可以使用微服务架构把node服务器和go服务器结合吗" class="headerlink" title="可以使用微服务架构把node服务器和go服务器结合吗"></a>可以使用微服务架构把node服务器和go服务器结合吗</h4><p>是的，你可以使用微服务架构将 Node.js 服务器和 Go 服务器组合起来构建分布式应用程序。微服务架构的核心思想是将应用程序拆分成多个小型服务，每个服务都有自己的业务逻辑和数据存储，服务之间通过轻量级的通信机制进行通信，从而实现更高的可伸缩性、可靠性和灵活性。</p>
+<p>Node.js 作为一种轻量级、高效、可扩展的技术，非常适合用来构建分布式系统中的一部分。而 Go 作为一种快速、高效、并发的编程语言，也非常适合用来构建分布式系统中的另一部分。你可以使用 Node.js 来构建一些需要高并发、实时通信的服务，比如消息推送、聊天服务等，同时使用 Go 来构建一些需要高吞吐量、高性能的服务，比如数据处理、计算等。</p>
+<p>通过微服务架构将 Node.js 和 Go 服务器组合起来，你可以充分发挥它们各自的优势，构建出高性能、高可靠性、高可扩展性的分布式应用程序。</p>
+<h4 id="譬如我现在要做一个拥有数亿智能设备的服务器，每个设备每分钟至少会上报10条数据，这个长几个下怎么使用上述的微服务架构构建node和go分布式服务器"><a href="#譬如我现在要做一个拥有数亿智能设备的服务器，每个设备每分钟至少会上报10条数据，这个长几个下怎么使用上述的微服务架构构建node和go分布式服务器" class="headerlink" title="譬如我现在要做一个拥有数亿智能设备的服务器，每个设备每分钟至少会上报10条数据，这个长几个下怎么使用上述的微服务架构构建node和go分布式服务器"></a>譬如我现在要做一个拥有数亿智能设备的服务器，每个设备每分钟至少会上报10条数据，这个长几个下怎么使用上述的微服务架构构建node和go分布式服务器</h4><p>针对这个场景，可以考虑使用以下微服务架构构建node和go分布式服务器：</p>
+<p>首先需要进行负载均衡，可以使用Nginx或者HAProxy等工具，将请求分发到多个服务器上。<br>对于收集数据的服务，可以使用Node.js编写，同时使用Redis等高性能内存数据库存储数据，以及使用Kafka等消息队列来缓存和转发数据，确保高并发下的可靠性和性能。<br>对于复杂计算的服务，可以使用Go语言编写，Go语言具有高性能和并发处理的特点，能够有效地处理大量的计算任务。<br>通过使用Docker等容器技术和Kubernetes等容器编排工具来管理和部署微服务，确保服务的高可用和弹性扩展。<br>最后，使用Prometheus等监控工具和ELK等日志收集和分析工具对服务器进行实时监控和分析，及时发现问题并进行处理。<br>这样构建的分布式服务器，能够处理大量的数据，并且具有高性能、可靠性和可扩展性。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Node/" class="category-chain-item">Node</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/nodejs/" class="print-no-link">#nodejs</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>nodejs的真香理解</div>
+      <div>https://undercurre.github.io/2021/04/03/Node/nodejs的真香理解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2021年4月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/04/04/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E7%90%86%E8%A7%A3typescript%E7%9A%84never%E7%B1%BB%E5%9E%8B/" title="理解typescript的never类型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">理解typescript的never类型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/03/25/%E6%A8%A1%E6%9D%BF/%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E4%BD%A0%E7%94%A8%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%84%E4%BB%B6%E5%BA%93%E6%90%9E%E4%B8%80%E4%B8%AA%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" title="手把手教你用第三方组件库搞一个后台管理系统">
+                        <span class="hidden-mobile">手把手教你用第三方组件库搞一个后台管理系统</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

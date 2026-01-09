@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="安装开发工具 Java 开发环境：  123456# 下载并安装JDK 17https:&#x2F;&#x2F;www.oracle.com&#x2F;java&#x2F;technologies&#x2F;javase&#x2F;jdk17-archive-downloads.html# 验证安装java -versionjavac -version   IDE 安装（IntelliJ IDEA Community 版）：  12# 下载并安装Intel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jack Blog">
+<meta property="og:url" content="https://undercurre.github.io/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/JAVA/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="安装开发工具 Java 开发环境：  123456# 下载并安装JDK 17https:&#x2F;&#x2F;www.oracle.com&#x2F;java&#x2F;technologies&#x2F;javase&#x2F;jdk17-archive-downloads.html# 验证安装java -versionjavac -version   IDE 安装（IntelliJ IDEA Community 版）：  12# 下载并安装Intel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-01-09T16:35:00.083Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.083Z">
+<meta property="article:author" content="Jack">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-09 16:35" pubdate>
+          2026年1月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="安装开发工具"><a href="#安装开发工具" class="headerlink" title="安装开发工具"></a>安装开发工具</h1><ol>
+<li>Java 开发环境：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 下载并安装JDK 17</span><br>https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html<br><br><span class="hljs-comment"># 验证安装</span><br>java -version<br>javac -version<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>IDE 安装（IntelliJ IDEA Community 版）：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 下载并安装IntelliJ IDEA Community版</span><br>https://www.jetbrains.com/idea/download/<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>创建项目</li>
+</ol>
+<p>在 IDEA 中操作：</p>
+<p>新建项目：File → New → Project</p>
+<p>选择 Spring Initializr</p>
+<p>项目配置：</p>
+<p>Project: Maven</p>
+<p>Language: Java</p>
+<p>Spring Boot: 3.5.8</p>
+<p>Group: com.iot</p>
+<p>Artifact: iot-platform</p>
+<p>Packaging: Jar</p>
+<p>Java: 17</p>
+<p>选择依赖：</p>
+<p>Spring Web</p>
+<p>Spring Data JPA</p>
+<p>MySQL Driver</p>
+<p>Lombok</p>
+<p>点击 Create</p>
+<h1 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs nix">iot-platform<span class="hljs-symbol">/</span><br>├── pom.xml                                  <span class="hljs-comment"># Maven项目配置文件，管理项目依赖和构建</span><br>├── mvnw                                      <span class="hljs-comment"># Maven wrapper脚本（Linux/macOS）</span><br>├── mvnw.cmd                                  <span class="hljs-comment"># Maven wrapper脚本（Windows）</span><br>├── HELP.md                                   <span class="hljs-comment"># 项目帮助文档</span><br>├── .gitignore                                <span class="hljs-comment"># Git忽略文件配置</span><br>├── src<span class="hljs-symbol">/</span><br>│   ├── main<span class="hljs-symbol">/</span><br>│   │   ├── java<span class="hljs-symbol">/</span><br>│   │   │   └── com<span class="hljs-symbol">/</span><br>│   │   │       └── iot<span class="hljs-symbol">/</span><br>│   │   │           ├── IotPlatformApplication.java          <span class="hljs-comment"># 主应用类，启动Spring Boot应用</span><br>│   │   │           ├── config<span class="hljs-symbol">/</span>                              <span class="hljs-comment"># 配置类目录</span><br>│   │   │           │   ├── MqttConfig.java                  <span class="hljs-comment"># MQTT客户端配置，用于设备命令发送</span><br>│   │   │           │   ├── MqttChannelConfig.java           <span class="hljs-comment"># MQTT通道配置，处理消息接收和分发</span><br>│   │   │           │   ├── SecurityConfig.java              <span class="hljs-comment"># Spring Security安全配置</span><br>│   │   │           │   ├── JwtConfig.java                   <span class="hljs-comment"># JWT令牌配置</span><br>│   │   │           │   ├── JwtAuthenticationFilter.java     <span class="hljs-comment"># JWT认证过滤器</span><br>│   │   │           │   ├── OpenApiConfig.java               <span class="hljs-comment"># OpenAPI/Swagger文档配置</span><br>│   │   │           │   └── WebSocketConfig.java             <span class="hljs-comment"># WebSocket配置，实现实时通信</span><br>│   │   │           ├── controller<span class="hljs-symbol">/</span>                          <span class="hljs-comment"># 控制器目录，处理HTTP请求</span><br>│   │   │           │   ├── DeviceController.java            <span class="hljs-comment"># 设备管理控制器</span><br>│   │   │           │   ├── UserController.java              <span class="hljs-comment"># 用户管理控制器</span><br>│   │   │           │   ├── AuthController.java              <span class="hljs-comment"># 认证控制器（登录、注册等）</span><br>│   │   │           │   └── TestController.java              <span class="hljs-comment"># 测试控制器，提供测试接口</span><br>│   │   │           ├── entity<span class="hljs-symbol">/</span>                              <span class="hljs-comment"># 实体类目录，映射数据库表</span><br>│   │   │           │   ├── User.java                        <span class="hljs-comment"># 用户实体</span><br>│   │   │           │   ├── Device.java                      <span class="hljs-comment"># 设备实体</span><br>│   │   │           │   ├── DeviceData.java                  <span class="hljs-comment"># 设备数据实体</span><br>│   │   │           │   ├── DeviceCommand.java               <span class="hljs-comment"># 设备命令实体</span><br>│   │   │           │   ├── AlertRule.java                   <span class="hljs-comment"># 告警规则实体</span><br>│   │   │           │   ├── Alert.java                       <span class="hljs-comment"># 告警实体</span><br>│   │   │           │   ├── UserDevicePermission.java        <span class="hljs-comment"># 用户设备权限实体</span><br>│   │   │           │   ├── LoginAudit.java                  <span class="hljs-comment"># 登录审计实体</span><br>│   │   │           │   └── RefreshToken.java                <span class="hljs-comment"># 刷新令牌实体</span><br>│   │   │           ├── repository<span class="hljs-symbol">/</span>                          <span class="hljs-comment"># 数据访问层，操作数据库</span><br>│   │   │           │   ├── DeviceRepository.java            <span class="hljs-comment"># 设备数据访问</span><br>│   │   │           │   ├── DeviceDataRepository.java        <span class="hljs-comment"># 设备数据访问</span><br>│   │   │           │   ├── DeviceCommandRepository.java     <span class="hljs-comment"># 设备命令数据访问</span><br>│   │   │           │   ├── UserRepository.java              <span class="hljs-comment"># 用户数据访问</span><br>│   │   │           │   ├── AlertRepository.java             <span class="hljs-comment"># 告警数据访问</span><br>│   │   │           │   ├── AlertRuleRepository.java         <span class="hljs-comment"># 告警规则数据访问</span><br>│   │   │           │   ├── LoginAuditRepository.java        <span class="hljs-comment"># 登录审计数据访问</span><br>│   │   │           │   └── RefreshTokenRepository.java      <span class="hljs-comment"># 刷新令牌数据访问</span><br>│   │   │           ├── service<span class="hljs-symbol">/</span>                             <span class="hljs-comment"># 服务层目录，实现业务逻辑</span><br>│   │   │           │   ├── MqttMessageService.java          <span class="hljs-comment"># MQTT消息处理服务</span><br>│   │   │           │   ├── DeviceControlService.java        <span class="hljs-comment"># 设备控制服务（发送命令）</span><br>│   │   │           │   ├── DeviceService.java               <span class="hljs-comment"># 设备业务服务</span><br>│   │   │           │   ├── AlertService.java                <span class="hljs-comment"># 告警服务</span><br>│   │   │           │   ├── UserService.java                 <span class="hljs-comment"># 用户服务</span><br>│   │   │           │   ├── AuthService.java                 <span class="hljs-comment"># 认证服务</span><br>│   │   │           │   ├── LoginAuditService.java           <span class="hljs-comment"># 登录审计服务</span><br>│   │   │           │   ├── RefreshTokenService.java         <span class="hljs-comment"># 刷新令牌服务</span><br>│   │   │           │   └── WebSocketNotificationService.java <span class="hljs-comment"># WebSocket通知服务</span><br>│   │   │           ├── dto<span class="hljs-symbol">/</span>                                 <span class="hljs-comment"># 数据传输对象目录</span><br>│   │   │           │   ├── DeviceStatusDTO.java             <span class="hljs-comment"># 设备状态DTO</span><br>│   │   │           │   ├── CommandRequest.java              <span class="hljs-comment"># 命令请求DTO</span><br>│   │   │           │   ├── DeviceDataDTO.java               <span class="hljs-comment"># 设备数据DTO</span><br>│   │   │           │   ├── LoginRequest.java                <span class="hljs-comment"># 登录请求DTO</span><br>│   │   │           │   ├── LoginResponse.java               <span class="hljs-comment"># 登录响应DTO</span><br>│   │   │           │   ├── RegisterRequest.java             <span class="hljs-comment"># 注册请求DTO</span><br>│   │   │           │   ├── TokenResponse.java               <span class="hljs-comment"># 令牌响应DTO</span><br>│   │   │           │   └── ApiResponse.java                 <span class="hljs-comment"># API响应DTO</span><br>│   │   │           ├── listener<span class="hljs-symbol">/</span>                            <span class="hljs-comment"># 监听器目录</span><br>│   │   │           │   └── WebSocketEventListener.java      <span class="hljs-comment"># WebSocket事件监听器</span><br>│   │   │           ├── security<span class="hljs-symbol">/</span>                            <span class="hljs-comment"># 安全相关目录</span><br>│   │   │           │   ├── JwtTokenProvider.java            <span class="hljs-comment"># JWT令牌提供器</span><br>│   │   │           │   └── HybridPasswordEncoder.java       <span class="hljs-comment"># 混合密码编码器</span><br>│   │   │           ├── task<span class="hljs-symbol">/</span>                                <span class="hljs-comment"># 定时任务目录</span><br>│   │   │           │   ├── DeviceStatusCheckTask.java       <span class="hljs-comment"># 设备状态检查任务</span><br>│   │   │           │   └── CleanupTask.java                 <span class="hljs-comment"># 数据清理任务</span><br>│   │   │           └── handler<span class="hljs-symbol">/</span>                             <span class="hljs-comment"># 处理器目录</span><br>│   │   │               └── GlobalExceptionHandler.java      <span class="hljs-comment"># 全局异常处理器</span><br>│   │   └── resources<span class="hljs-symbol">/</span>                                       <span class="hljs-comment"># 资源目录</span><br>│   │       ├── application.properties                       <span class="hljs-comment"># 主配置文件</span><br>│   │       ├── static<span class="hljs-symbol">/</span>                                      <span class="hljs-comment"># 静态资源目录（CSS、JS等）</span><br>│   │       └── templates<span class="hljs-symbol">/</span>                                   <span class="hljs-comment"># 模板文件目录（HTML模板）</span><br>│   └── test<span class="hljs-symbol">/</span>                                                <span class="hljs-comment"># 测试代码目录</span><br>│       └── java<span class="hljs-symbol">/</span>                                            <span class="hljs-comment"># Java测试代码</span><br>│           └── com<span class="hljs-symbol">/</span>                                         <span class="hljs-comment"># 测试代码包结构</span><br>│               └── iot<span class="hljs-symbol">/</span>                                     <span class="hljs-comment"># 测试代码包</span><br>│                   └── IotPlatformApplicationTests.java     <span class="hljs-comment"># 应用测试类</span><br>├── target<span class="hljs-symbol">/</span>                                  <span class="hljs-comment"># 编译输出目录（自动生成）</span><br>│   ├── classes<span class="hljs-symbol">/</span>                             <span class="hljs-comment"># 编译后的class文件</span><br>│   └── generated-sources<span class="hljs-symbol">/</span>                    <span class="hljs-comment"># 自动生成的源代码</span><br>└── .mvn<span class="hljs-symbol">/</span>                                    <span class="hljs-comment"># Maven wrapper配置目录</span><br>    └── wrapper<span class="hljs-symbol">/</span>                              <span class="hljs-comment"># Maven wrapper包装器</span><br>        └── maven-wrapper.properties          <span class="hljs-comment"># Maven wrapper属性配置</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="在-application-properties-中配置数据库连接信息和-MQTT-连接信息"><a href="#在-application-properties-中配置数据库连接信息和-MQTT-连接信息" class="headerlink" title="在 application.properties 中配置数据库连接信息和 MQTT 连接信息"></a>在 application.properties 中配置数据库连接信息和 MQTT 连接信息</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">?????</span><br>server.port=8080<br>spring.application.name=iot-platform<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">?????</span><br>spring.datasource.url=jdbc:mysql://localhost:3306/iot_platform?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true<br>spring.datasource.username=root<br>spring.datasource.password=123456<br>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Hikari?????</span><br>spring.datasource.hikari.maximum-pool-size=20<br>spring.datasource.hikari.minimum-idle=5<br>spring.datasource.hikari.connection-timeout=30000<br>spring.datasource.hikari.idle-timeout=600000<br>spring.datasource.hikari.max-lifetime=1800000<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">JPA??</span><br>spring.jpa.hibernate.ddl-auto=update<br>spring.jpa.show-sql=true<br>spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect<br>spring.jpa.properties.hibernate.format_sql=true<br>spring.jpa.properties.hibernate.jdbc.time_zone=UTC<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">????</span><br>spring.cache.type=caffeine<br>spring.cache.caffeine.spec=maximumSize=500,expireAfterWrite=300s<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Redis??</span><br>spring.data.redis.host=127.0.0.1<br>spring.data.redis.port=6379<br>spring.data.redis.password=$&#123;REDIS_PASSWORD:&#125;<br>spring.data.redis.database=0<br>spring.data.redis.timeout=3000ms<br>spring.data.redis.jedis.pool.max-active=20<br>spring.data.redis.jedis.pool.max-wait=3000ms<br>spring.data.redis.jedis.pool.max-idle=10<br>spring.data.redis.jedis.pool.min-idle=5<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">MQTT</span><br>mqtt.broker.url=tcp://124.220.30.221:1883<br>mqtt.broker-url=tcp://124.220.30.221:1883<br>mqtt.username=admin<br>mqtt.password=lirunhua12()<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">MQTT????</span><br>mqtt.topics.status=device/status<br>mqtt.topics.data=device/data<br>mqtt.topics.command=device/command<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">??????</span><br>device.heartbeat.timeout-seconds=30<br>device.heartbeat.check-interval-millis=10000<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">??WebSocket??????</span><br>logging.level.com.iot.config.WebSocketConfig=INFO<br>logging.level.com.iot.listener.WebSocketEventListener=INFO<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">????????????????DEBUG</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">logging.level.org.springframework.messaging.simp=DEBUG</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">logging.level.org.springframework.web.socket=DEBUG</span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">JWT??</span><br>jwt.secret=your-super-secure-jwt-secret-key-minimum-32-characters-long-here<br>jwt.access-token-expiration=900000<br>jwt.refresh-token-expiration=604800000<br>jwt.issuer=management-system<br>jwt.audience=management-client<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">????</span><br>security.password.bcrypt-strength=12<br>security.password.max-login-attempts=5<br>security.password.lock-duration-minutes=30<br>security.rsa.key-size=2048<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">????</span><br>logging.level.com.iot=INFO<br>logging.level.org.springframework.web=INFO<br>logging.level.org.hibernate.SQL=DEBUG<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Actuator??</span><br>management.endpoints.web.exposure.include=health,info,metrics<br>management.endpoint.health.show-details=always<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">????</span><br>app.auth.require-https=false<br>app.auth.allow-multiple-devices=true<br>app.auth.session-timeout=1800<br></code></pre></td></tr></table></figure>
+
+<h1 id="存储的数据使用其中-timestamp-使用的比我在中国境内的北京时间要早-8-小时"><a href="#存储的数据使用其中-timestamp-使用的比我在中国境内的北京时间要早-8-小时" class="headerlink" title="存储的数据使用其中 timestamp 使用的比我在中国境内的北京时间要早 8 小时"></a>存储的数据使用其中 timestamp 使用的比我在中国境内的北京时间要早 8 小时</h1><p>在 application.yml 中确保数据库连接使用北京时间：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">spring.datasource.url=jdbc:mysql://localhost:3306/iot_platform?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true<br></code></pre></td></tr></table></figure>
+
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.handler;<br><br><span class="hljs-keyword">import</span> jakarta.servlet.http.HttpServletRequest;<br><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;<br><span class="hljs-keyword">import</span> org.springframework.http.HttpStatus;<br><span class="hljs-keyword">import</span> org.springframework.http.ResponseEntity;<br><span class="hljs-keyword">import</span> org.springframework.validation.FieldError;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.MethodArgumentNotValidException;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.ExceptionHandler;<br><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestControllerAdvice;<br><br><span class="hljs-keyword">import</span> java.util.HashMap;<br><span class="hljs-keyword">import</span> java.util.Map;<br><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@RestControllerAdvice</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">GlobalExceptionHandler</span> &#123;<br><br>    <span class="hljs-meta">@ExceptionHandler(MethodArgumentNotValidException.class)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; <span class="hljs-title function_">handleValidationExceptions</span><span class="hljs-params">(</span><br><span class="hljs-params">            MethodArgumentNotValidException ex, HttpServletRequest request)</span> &#123;<br><br>        Map&lt;String, String&gt; errors = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        ex.getBindingResult().getAllErrors().forEach(error -&gt; &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">fieldName</span> <span class="hljs-operator">=</span> ((FieldError) error).getField();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">errorMessage</span> <span class="hljs-operator">=</span> error.getDefaultMessage();<br>            errors.put(fieldName, errorMessage);<br>        &#125;);<br><br>        Map&lt;String, Object&gt; response = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        response.put(<span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-literal">false</span>);<br>        response.put(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;参数验证失败&quot;</span>);<br>        response.put(<span class="hljs-string">&quot;errors&quot;</span>, errors);<br>        response.put(<span class="hljs-string">&quot;path&quot;</span>, request.getRequestURI());<br><br>        log.warn(<span class="hljs-string">&quot;参数验证失败: &#123;&#125; &#123;&#125; - errors: &#123;&#125;&quot;</span>,<br>                request.getMethod(), request.getRequestURI(), errors);<br><br>        <span class="hljs-keyword">return</span> ResponseEntity.badRequest().body(response);<br>    &#125;<br><br>    <span class="hljs-meta">@ExceptionHandler(RuntimeException.class)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; <span class="hljs-title function_">handleRuntimeException</span><span class="hljs-params">(</span><br><span class="hljs-params">            RuntimeException ex, HttpServletRequest request)</span> &#123;<br><br>        Map&lt;String, Object&gt; response = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        response.put(<span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-literal">false</span>);<br>        response.put(<span class="hljs-string">&quot;message&quot;</span>, ex.getMessage());<br>        response.put(<span class="hljs-string">&quot;path&quot;</span>, request.getRequestURI());<br><br>        log.error(<span class="hljs-string">&quot;业务异常: &#123;&#125; &#123;&#125;&quot;</span>, request.getMethod(), request.getRequestURI(), ex);<br><br>        <span class="hljs-keyword">return</span> ResponseEntity.badRequest().body(response);<br>    &#125;<br><br>    <span class="hljs-meta">@ExceptionHandler(Exception.class)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; <span class="hljs-title function_">handleAllExceptions</span><span class="hljs-params">(</span><br><span class="hljs-params">            Exception ex, HttpServletRequest request)</span> &#123;<br><br>        Map&lt;String, Object&gt; response = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        response.put(<span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-literal">false</span>);<br>        response.put(<span class="hljs-string">&quot;message&quot;</span>, <span class="hljs-string">&quot;系统繁忙，请稍后重试&quot;</span>);<br>        response.put(<span class="hljs-string">&quot;path&quot;</span>, request.getRequestURI());<br><br>        log.error(<span class="hljs-string">&quot;系统异常: &#123;&#125; &#123;&#125;&quot;</span>, request.getMethod(), request.getRequestURI(), ex);<br><br>        <span class="hljs-keyword">return</span> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="安全配置"><a href="#安全配置" class="headerlink" title="安全配置"></a>安全配置</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-keyword">package</span> com.iot.config;<br><br><span class="hljs-keyword">import</span> com.iot.config.JwtAuthenticationFilter;<br><span class="hljs-keyword">import</span> lombok.RequiredArgsConstructor;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;<br><span class="hljs-keyword">import</span> org.springframework.security.config.http.SessionCreationPolicy;<br><span class="hljs-keyword">import</span> org.springframework.security.web.SecurityFilterChain;<br><span class="hljs-keyword">import</span> org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.CorsConfiguration;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.CorsConfigurationSource;<br><span class="hljs-keyword">import</span> org.springframework.web.cors.UrlBasedCorsConfigurationSource;<br><br><span class="hljs-keyword">import</span> java.util.Arrays;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableWebSecurity</span><br><span class="hljs-meta">@EnableMethodSecurity(prePostEnabled = true)</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> JwtAuthenticationFilter jwtAuthenticationFilter;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> SecurityFilterChain <span class="hljs-title function_">filterChain</span><span class="hljs-params">(HttpSecurity http)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        http<br>                .cors(cors -&gt; cors.configurationSource(corsConfigurationSource()))<br>                .csrf(csrf -&gt; csrf.disable())<br>                .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))<br>                .authorizeHttpRequests(auth -&gt; auth<br>                        .requestMatchers(<span class="hljs-string">&quot;/swagger-ui/**&quot;</span>, <span class="hljs-string">&quot;/v3/api-docs/**&quot;</span>, <span class="hljs-string">&quot;/api-docs/**&quot;</span>, <span class="hljs-string">&quot;/swagger-ui.html&quot;</span>).permitAll()<br>                        .requestMatchers(<span class="hljs-string">&quot;/auth/**&quot;</span>, <span class="hljs-string">&quot;/health&quot;</span>).permitAll()<br>                        .requestMatchers(<span class="hljs-string">&quot;/ws/**&quot;</span>, <span class="hljs-string">&quot;/ws&quot;</span>).permitAll()  <span class="hljs-comment">// 添加WebSocket端点</span><br>                        .requestMatchers(<span class="hljs-string">&quot;/admin/**&quot;</span>).hasRole(<span class="hljs-string">&quot;ADMIN&quot;</span>)<br>                        .requestMatchers(<span class="hljs-string">&quot;/user/**&quot;</span>).hasAnyRole(<span class="hljs-string">&quot;USER&quot;</span>, <span class="hljs-string">&quot;ADMIN&quot;</span>)<br>                        .anyRequest().authenticated()<br>                )<br>                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);<br><br>        <span class="hljs-keyword">return</span> http.build();<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> CorsConfigurationSource <span class="hljs-title function_">corsConfigurationSource</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">CorsConfiguration</span> <span class="hljs-variable">configuration</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CorsConfiguration</span>();<br>        configuration.setAllowedOriginPatterns(Arrays.asList(<span class="hljs-string">&quot;*&quot;</span>));<br>        configuration.setAllowedMethods(Arrays.asList(<span class="hljs-string">&quot;GET&quot;</span>, <span class="hljs-string">&quot;POST&quot;</span>, <span class="hljs-string">&quot;PUT&quot;</span>, <span class="hljs-string">&quot;DELETE&quot;</span>, <span class="hljs-string">&quot;OPTIONS&quot;</span>));<br>        configuration.setAllowedHeaders(Arrays.asList(<span class="hljs-string">&quot;*&quot;</span>));<br>        configuration.setAllowCredentials(<span class="hljs-literal">true</span>);<br>        configuration.setMaxAge(<span class="hljs-number">3600L</span>);<br><br>        <span class="hljs-type">UrlBasedCorsConfigurationSource</span> <span class="hljs-variable">source</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UrlBasedCorsConfigurationSource</span>();<br>        source.registerCorsConfiguration(<span class="hljs-string">&quot;/**&quot;</span>, configuration);<br>        <span class="hljs-keyword">return</span> source;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="统一响应结构体"><a href="#统一响应结构体" class="headerlink" title="统一响应结构体"></a>统一响应结构体</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/public-key&quot;)</span><br><span class="hljs-keyword">public</span> ResponseEntity&lt;ApiResponse&lt;Map&lt;String, String&gt;&gt;&gt; <span class="hljs-title function_">getPublicKey</span><span class="hljs-params">()</span> &#123;<br>    Map&lt;String, String&gt; data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>    data.put(<span class="hljs-string">&quot;publicKey&quot;</span>, authService.getPublicKey());<br>    data.put(<span class="hljs-string">&quot;algorithm&quot;</span>, <span class="hljs-string">&quot;RSA&quot;</span>);<br>    data.put(<span class="hljs-string">&quot;timestamp&quot;</span>, String.valueOf(System.currentTimeMillis()));<br><br>    <span class="hljs-comment">// 使用ApiResponse包装响应数据</span><br>    ApiResponse&lt;Map&lt;String, String&gt;&gt; response = ApiResponse.success(<span class="hljs-string">&quot;获取公钥成功&quot;</span>, data);<br>    <span class="hljs-keyword">return</span> ResponseEntity.ok(response);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="Swagger-配置"><a href="#Swagger-配置" class="headerlink" title="Swagger 配置"></a>Swagger 配置</h1><ol>
+<li>添加 SpringDoc OpenAPI 3 依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springdoc<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springdoc-openapi-starter-webmvc-ui<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.8.6<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建新的配置类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.iot.config;<br><br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.OpenAPI;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.info.Contact;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.info.Info;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.info.License;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.models.servers.Server;<br><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;<br><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;<br><br><span class="hljs-keyword">import</span> java.util.List;<br><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OpenApiConfig</span> &#123;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;server.port:8080&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String serverPort;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> OpenAPI <span class="hljs-title function_">myOpenAPI</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">Server</span> <span class="hljs-variable">devServer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Server</span>();<br>        devServer.setUrl(<span class="hljs-string">&quot;http://localhost:&quot;</span> + serverPort);<br>        devServer.setDescription(<span class="hljs-string">&quot;开发环境服务器&quot;</span>);<br><br>        <span class="hljs-type">Contact</span> <span class="hljs-variable">contact</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Contact</span>();<br>        contact.setEmail(<span class="hljs-string">&quot;admin@iot-platform.com&quot;</span>);<br>        contact.setName(<span class="hljs-string">&quot;IoT平台&quot;</span>);<br>        contact.setUrl(<span class="hljs-string">&quot;https://www.iot-platform.com&quot;</span>);<br><br>        <span class="hljs-type">License</span> <span class="hljs-variable">mitLicense</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">License</span>().name(<span class="hljs-string">&quot;MIT License&quot;</span>).url(<span class="hljs-string">&quot;https://choosealicense.com/licenses/mit/&quot;</span>);<br><br>        <span class="hljs-type">Info</span> <span class="hljs-variable">info</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Info</span>()<br>                .title(<span class="hljs-string">&quot;IoT平台管理API&quot;</span>)<br>                .version(<span class="hljs-string">&quot;1.0&quot;</span>)<br>                .contact(contact)<br>                .description(<span class="hljs-string">&quot;IoT平台后台管理系统API接口文档&quot;</span>)<br>                .license(mitLicense);<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OpenAPI</span>()<br>                .info(info)<br>                .servers(List.of(devServer));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在控制器中使用新注解</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> io.swagger.v3.oas.annotations.Operation;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.annotations.Parameter;<br><span class="hljs-keyword">import</span> io.swagger.v3.oas.annotations.tags.Tag;<br><br><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/api/auth&quot;)</span><br><span class="hljs-meta">@Tag(name = &quot;认证管理&quot;, description = &quot;用户登录、登出、Token刷新等认证相关接口&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AuthController</span> &#123;<br><br>    <span class="hljs-meta">@PostMapping(&quot;/login&quot;)</span><br>    <span class="hljs-meta">@Operation(summary = &quot;用户登录&quot;, description = &quot;使用用户名和密码进行登录，返回双Token&quot;)</span><br>    <span class="hljs-keyword">public</span> ResponseEntity&lt;LoginResponse&gt; <span class="hljs-title function_">login</span><span class="hljs-params">(</span><br><span class="hljs-params">            <span class="hljs-meta">@Parameter(description = &quot;登录请求参数&quot;, required = true)</span></span><br><span class="hljs-params">            <span class="hljs-meta">@Valid</span> <span class="hljs-meta">@RequestBody</span> LoginRequest request,</span><br><span class="hljs-params">            HttpServletRequest httpRequest)</span> &#123;<br>        <span class="hljs-comment">// 你的业务逻辑</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>访问地址</li>
+</ol>
+<p>Swagger UI: <a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></p>
+<p>API Docs: <a target="_blank" rel="noopener" href="http://localhost:8080/v3/api-docs">http://localhost:8080/v3/api-docs</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>https://undercurre.github.io/2026/01/09/物联网/JAVA/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/Device%E6%9C%8D%E5%8A%A1/" title="">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/09/%E7%89%A9%E8%81%94%E7%BD%91/MQTT%E6%90%AD%E5%BB%BA/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

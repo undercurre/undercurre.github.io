@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Jack">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="脚手架物语很多时候我地都要使用一滴类似脚手架啊，插件啊之类这些东西来提取代码并执行。那么这些东西是怎么搞出来的呢？现在我就写个手册教你搞~ 首先，先创个目录 1pnpm init 得到package.json 新建cli.js入口文件并挂载入口 1234567891011121314&amp;#123;  &quot;name&quot;: &quot;ponda&quot;,  &quot;versio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="脚手架物语">
+<meta property="og:url" content="https://undercurre.github.io/2022/06/27/%E6%A8%A1%E6%9D%BF/%E8%84%9A%E6%89%8B%E6%9E%B6%E7%89%A9%E8%AF%AD/index.html">
+<meta property="og:site_name" content="Jack Blog">
+<meta property="og:description" content="脚手架物语很多时候我地都要使用一滴类似脚手架啊，插件啊之类这些东西来提取代码并执行。那么这些东西是怎么搞出来的呢？现在我就写个手册教你搞~ 首先，先创个目录 1pnpm init 得到package.json 新建cli.js入口文件并挂载入口 1234567891011121314&amp;#123;  &quot;name&quot;: &quot;ponda&quot;,  &quot;versio">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-27T00:10:55.000Z">
+<meta property="article:modified_time" content="2026-01-09T16:35:00.083Z">
+<meta property="article:author" content="Jack">
+<meta property="article:tag" content="Cli">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>脚手架物语 - Jack Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"undercurre.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"gtag":null,"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Jack Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="脚手架物语"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-06-27 00:10" pubdate>
+          2022年6月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">脚手架物语</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="脚手架物语"><a href="#脚手架物语" class="headerlink" title="脚手架物语"></a>脚手架物语</h1><p>很多时候我地都要使用一滴类似脚手架啊，插件啊之类这些东西来提取代码并执行。那么这些东西是怎么搞出来的呢？现在我就写个手册教你搞~</p>
+<p>首先，先创个目录</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">pnpm <span class="hljs-keyword">init</span><br></code></pre></td></tr></table></figure>
+<p>得到package.json</p>
+<p>新建cli.js入口文件并挂载入口</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stata">&#123;<br>  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;ponda&quot;</span>,<br>  <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,<br>  <span class="hljs-string">&quot;description&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;main&quot;</span>: <span class="hljs-string">&quot;cli.js&quot;</span>,<br>  <span class="hljs-string">&quot;bin&quot;</span>: <span class="hljs-string">&quot;cli.js&quot;</span>, <span class="hljs-comment">// 挂载入口</span><br>  <span class="hljs-string">&quot;scripts&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;test&quot;</span>: <span class="hljs-string">&quot;echo \&quot;</span><span class="hljs-keyword">Error</span>: <span class="hljs-keyword">no</span> <span class="hljs-keyword">test</span> specified\<span class="hljs-string">&quot; &amp;&amp; exit 1&quot;</span><br>  &#125;,<br>  <span class="hljs-string">&quot;keywords&quot;</span>: [],<br>  <span class="hljs-string">&quot;author&quot;</span>: <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-string">&quot;license&quot;</span>: <span class="hljs-string">&quot;ISC&quot;</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>我们要跟用户做交流对吧？</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> inquirer -D<br></code></pre></td></tr></table></figure>
+
+<p>把用户输入的参数放入模板中</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> ejs -S<br></code></pre></td></tr></table></figure>
+
+<p>自定义命令行指令</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> commander -S<br></code></pre></td></tr></table></figure>
+<p>命令行询问用户问题，记录回答结果</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> inquirer -S<br></code></pre></td></tr></table></figure>
+<p>控制台输出内容样式美化</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> chalk -S<br></code></pre></td></tr></table></figure>
+<p>控制台 loading 样式</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pnpm <span class="hljs-keyword">install </span><span class="hljs-keyword">ora </span>-S<br></code></pre></td></tr></table></figure>
+<p>控制台打印 logo</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> figlet -S<br></code></pre></td></tr></table></figure>
+<p>控制台输出表格</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> easy-table -S<br></code></pre></td></tr></table></figure>
+<p>下载远程模版</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> download-git-repo -S<br></code></pre></td></tr></table></figure>
+<p>系统fs模块的扩展，提供了更多便利的 API，并继承了fs模块的 API</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pnpm <span class="hljs-keyword">install </span>fs-<span class="hljs-keyword">extra </span>-S<br></code></pre></td></tr></table></figure>
+<p>支持跨平台调用系统上的命令</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span> cross-spawn -S<br></code></pre></td></tr></table></figure>
+<p>全部指令</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pnpm <span class="hljs-keyword">add </span>commander inquirer chalk <span class="hljs-keyword">ora </span>figlet easy-table download-git-repo fs-<span class="hljs-keyword">extra </span>cross-spawn<br></code></pre></td></tr></table></figure>
+
+<p>接下来用一个实例来证明我是最强的！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./bicli.js</span><br>#! <span class="hljs-regexp">/usr/</span>bin/env node<br><br><br><span class="hljs-keyword">const</span> program = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;commander&#x27;</span>)<br><br>program<br>  <span class="hljs-comment">// 定义命令和参数</span><br>  .<span class="hljs-title function_">command</span>(<span class="hljs-string">&#x27;create &lt;app-name&gt;&#x27;</span>)<br>  .<span class="hljs-title function_">description</span>(<span class="hljs-string">&#x27;create a new project&#x27;</span>)<br>  <span class="hljs-comment">// -f or --force 为强制创建，如果创建的目录存在则直接覆盖</span><br>  .<span class="hljs-title function_">option</span>(<span class="hljs-string">&#x27;-f, --force&#x27;</span>, <span class="hljs-string">&#x27;overwrite target directory if it exist&#x27;</span>)<br>  .<span class="hljs-title function_">action</span>(<span class="hljs-function">(<span class="hljs-params">name, options</span>) =&gt;</span> &#123;<br>    <span class="hljs-comment">// 打印执行结果</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;name:&#x27;</span>,name,<span class="hljs-string">&#x27;options:&#x27;</span>,options)<br>  &#125;)<br>  <br>program<br>   <span class="hljs-comment">// 配置版本号信息</span><br>  .<span class="hljs-title function_">version</span>(<span class="hljs-string">`v<span class="hljs-subst">$&#123;<span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../package.json&#x27;</span>).version&#125;</span>`</span>)<br>  .<span class="hljs-title function_">usage</span>(<span class="hljs-string">&#x27;&lt;command&gt; [option]&#x27;</span>)<br>  <br><span class="hljs-comment">// 解析用户执行命令传入参数</span><br>program.<span class="hljs-title function_">parse</span>(process.<span class="hljs-property">argv</span>);<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./bin/config.js</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>    <span class="hljs-attr">support</span>: [<span class="hljs-number">567242931</span>]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>新建个lib文件夹来存具体命令要做的事情</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./lib/create.js</span><br><br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>)<br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs-extra&#x27;</span>);<br><span class="hljs-keyword">const</span> middleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../utils/logo&#x27;</span>);<br><span class="hljs-keyword">const</span> <span class="hljs-title class_">Generator</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../utils/generator&#x27;</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> (<span class="hljs-params">name, options</span>) &#123;<br>  <span class="hljs-comment">// 执行中间件</span><br>  <span class="hljs-title function_">middleware</span>(<span class="hljs-title function_">async</span>() =&gt; &#123;<br>    <span class="hljs-comment">// 当前命令行选择的目录</span><br>    <span class="hljs-keyword">const</span> cwd  = process.<span class="hljs-title function_">cwd</span>();<br>    <span class="hljs-comment">// 需要创建的目录地址</span><br>    <span class="hljs-keyword">const</span> targetAir  = path.<span class="hljs-title function_">join</span>(cwd, name)<br><br>    <span class="hljs-comment">// 目录是否已经存在？</span><br>    <span class="hljs-keyword">if</span> (fs.<span class="hljs-title function_">existsSync</span>(targetAir)) &#123;<br><br>      <span class="hljs-comment">// 是否为强制创建？</span><br>      <span class="hljs-keyword">if</span> (options.<span class="hljs-property">force</span>) &#123;<br>        <span class="hljs-keyword">await</span> fs.<span class="hljs-title function_">remove</span>(targetAir)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// TODO：询问用户是否确定要覆盖</span><br>      &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 创建项目</span><br>    <span class="hljs-keyword">const</span> generator = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Generator</span>(name, targetAir);<br><br>    <span class="hljs-comment">// 开始创建项目</span><br>    generator.<span class="hljs-title function_">create</span>()<br>  &#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./utils/generator.js</span><br><span class="hljs-comment">// 模板创建器</span><br><br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> &#123; getRepoList &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./github.js&#x27;</span>);<br><span class="hljs-keyword">const</span> inquirer = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;inquirer&#x27;</span>);<br><span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../bin/config.js&#x27;</span>);<br><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;util&#x27;</span>);<br><span class="hljs-keyword">const</span> downloadGitRepo = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;download-git-repo&#x27;</span>);<br><span class="hljs-keyword">const</span> wrapLoading = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./loading.js&#x27;</span>);<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Generator</span> &#123;<br>  <span class="hljs-title function_">constructor</span> (<span class="hljs-params">name, targetDir</span>)&#123;<br>    <span class="hljs-comment">// 目录名称</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>    <span class="hljs-comment">// 创建位置</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">targetDir</span> = targetDir;<br>    <span class="hljs-comment">// 下载</span><br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">downloadGitRepo</span> = util.<span class="hljs-title function_">promisify</span>(downloadGitRepo);<br>  &#125;<br><br>  <span class="hljs-comment">// 获取用户选择的模板</span><br>  <span class="hljs-comment">// 1）从远程拉取模板数据</span><br>  <span class="hljs-comment">// 2）用户选择自己新下载的模板名称</span><br>  <span class="hljs-comment">// 3）return 用户选择的名称</span><br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">getRepo</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 1）从远程拉取模板数据</span><br>    <span class="hljs-keyword">const</span> repoList = <span class="hljs-keyword">await</span> <span class="hljs-title function_">wrapLoading</span>(getRepoList, <span class="hljs-string">&#x27;waiting fetch template&#x27;</span>);<br>    <span class="hljs-keyword">if</span> (!repoList) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-comment">// 筛选</span><br>    <span class="hljs-keyword">const</span> needs = repoList.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> config.<span class="hljs-property">support</span>.<span class="hljs-title function_">includes</span>(item.<span class="hljs-property">id</span>))<br><br>    <span class="hljs-comment">// 过滤我们需要的模板名称</span><br>    <span class="hljs-keyword">const</span> repos = needs.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item.<span class="hljs-property">name</span>);<br><br>    <span class="hljs-comment">// 2）用户选择自己新下载的模板名称</span><br>    <span class="hljs-keyword">const</span> &#123; repo &#125; = <span class="hljs-keyword">await</span> inquirer.<span class="hljs-title function_">prompt</span>(&#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;repo&#x27;</span>,<br>      <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;list&#x27;</span>,<br>      <span class="hljs-attr">choices</span>: repos,<br>      <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;Please choose a template to create project&#x27;</span><br>    &#125;)<br><br>    <span class="hljs-comment">// 3）return 用户选择的名称</span><br>    <span class="hljs-keyword">return</span> repo;<br>  &#125;<br><br>  <span class="hljs-comment">// 下载逻辑</span><br><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">download</span>(<span class="hljs-params">repo</span>)&#123;<br><br>    <span class="hljs-comment">// 1）拼接下载地址</span><br>    <span class="hljs-keyword">const</span> requestUrl = <span class="hljs-string">`undercurre/<span class="hljs-subst">$&#123;repo&#125;</span>`</span>;<br><br>    <span class="hljs-comment">// 2）调用下载方法</span><br>    <span class="hljs-keyword">await</span> <span class="hljs-title function_">wrapLoading</span>(<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">downloadGitRepo</span>, <span class="hljs-comment">// 远程下载方法</span><br>      <span class="hljs-string">&#x27;waiting download template&#x27;</span>, <span class="hljs-comment">// 加载提示信息</span><br>      requestUrl, <span class="hljs-comment">// 参数1: 下载地址</span><br>      path.<span class="hljs-title function_">resolve</span>(process.<span class="hljs-title function_">cwd</span>(), <span class="hljs-variable language_">this</span>.<span class="hljs-property">targetDir</span>)) <span class="hljs-comment">// 参数2: 创建位置</span><br>  &#125;<br><br>  <span class="hljs-comment">// 核心创建逻辑</span><br>  <span class="hljs-comment">// 1）获取模板名称</span><br>  <span class="hljs-comment">// 2）获取 tag 名称</span><br>  <span class="hljs-comment">// 3）下载模板到模板目录</span><br>  <span class="hljs-keyword">async</span> <span class="hljs-title function_">create</span>(<span class="hljs-params"></span>)&#123;<br><br>    <span class="hljs-comment">// 1）获取模板名称</span><br>    <span class="hljs-keyword">const</span> repo = <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getRepo</span>();<br>    <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;you chose，repo=&#x27;</span> + repo);<br><br>    <span class="hljs-comment">// 2）下载模板</span><br><br>    <span class="hljs-keyword">await</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">download</span>(repo);<br>  &#125;<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-title class_">Generator</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./utils/github.js</span><br><span class="hljs-comment">// 通过 axios 处理请求</span><br><span class="hljs-keyword">const</span> axios = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;axios&#x27;</span>)<br><br>axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">request</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function"><span class="hljs-params">config</span> =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> config;<br>&#125;)<br><br>axios.<span class="hljs-property">interceptors</span>.<span class="hljs-property">response</span>.<span class="hljs-title function_">use</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> res.<span class="hljs-property">data</span>;<br>&#125;)<br><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 获取模板列表</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@returns</span> <span class="hljs-variable">Promise</span></span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getRepoList</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;https://api.github.com/users/undercurre/repos&#x27;</span>)<br>  <span class="hljs-keyword">return</span> res<br>&#125;<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  getRepoList,<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><br><span class="hljs-comment">// ./utils/loading.js</span><br><span class="hljs-keyword">const</span> ora = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ora&#x27;</span>);<br><br><span class="hljs-comment">// 添加加载动画</span><br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapLoading</span>(<span class="hljs-params">fn, message, ...args</span>) &#123;<br>    <span class="hljs-comment">// 使用 ora 初始化，传入提示信息 message</span><br>    <span class="hljs-keyword">const</span> spinner = <span class="hljs-title function_">ora</span>(message);<br>    <span class="hljs-comment">// 开始加载动画</span><br>    spinner.<span class="hljs-title function_">start</span>();<br>  <br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-comment">// 执行传入方法 fn</span><br>      <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fn</span>(...args);<br>      <span class="hljs-comment">// 状态为修改为成功</span><br>      spinner.<span class="hljs-title function_">succeed</span>();<br>      <span class="hljs-keyword">return</span> result; <br>    &#125; <span class="hljs-keyword">catch</span> (error) &#123;<br>      <span class="hljs-comment">// 状态为修改为失败</span><br>      spinner.<span class="hljs-title function_">fail</span>(<span class="hljs-string">&#x27;Request failed, refetch ...&#x27;</span>)<br>    &#125; <br>  &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// ./utils/logo.js</span><br><span class="hljs-keyword">const</span> figlet = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;figlet&#x27;</span>)<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">middleware</span>(<span class="hljs-params">callback</span>) &#123;<br>    <span class="hljs-comment">// 打印logo</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;\r\n&#x27;</span> + figlet.<span class="hljs-title function_">textSync</span>(<span class="hljs-string">&#x27;ponda&#x27;</span>, &#123;<br>        <span class="hljs-attr">font</span>: <span class="hljs-string">&#x27;Ghost&#x27;</span>,<br>        <span class="hljs-attr">horizontalLayout</span>: <span class="hljs-string">&#x27;default&#x27;</span>,<br>        <span class="hljs-attr">verticalLayout</span>: <span class="hljs-string">&#x27;default&#x27;</span>,<br>        <span class="hljs-attr">width</span>: <span class="hljs-number">80</span>,<br>        <span class="hljs-attr">whitespaceBreak</span>: <span class="hljs-literal">true</span><br>      &#125;));<br>    <span class="hljs-title function_">callback</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><h3 id="先来改一下package-json"><a href="#先来改一下package-json" class="headerlink" title="先来改一下package.json"></a>先来改一下package.json</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ponda&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0.0&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;index.js&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;bin&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-comment">// 缩写入口</span><br>    <span class="hljs-attr">&quot;pd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./bin/cli.js&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;commonjs&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;files&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">// 上传文件</span><br>    <span class="hljs-string">&quot;lib&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;bin&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;utils&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span> <span class="hljs-comment">//关键字</span><br>    <span class="hljs-string">&quot;pd&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-string">&quot;脚手架&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;license&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ISC&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;devDependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;inquirer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;8.0.0&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;dependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;axios&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^1.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;chalk&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^5.1.2&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;commander&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^9.4.1&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;cross-spawn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^7.0.3&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;download-git-repo&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^3.0.2&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;easy-table&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^1.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;ejs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^3.1.8&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;figlet&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^1.5.2&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;fs-extra&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^10.1.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;ora&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;4.0.0&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="发布命令"><a href="#发布命令" class="headerlink" title="发布命令"></a>发布命令</h3><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">npm</span> publish<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%A8%A1%E6%9D%BF/" class="category-chain-item">模板</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Cli/" class="print-no-link">#Cli</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>脚手架物语</div>
+      <div>https://undercurre.github.io/2022/06/27/模板/脚手架物语/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Jack</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年6月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/02/%E4%BA%91%E5%BC%80%E5%8F%91/%E8%96%85laf%E7%AD%89%E5%A4%9A%E7%A7%8D%E4%BA%91%E5%BC%80%E5%8F%91%E5%B9%B3%E5%8F%B0/" title="薅laf等多种云开发平台">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">薅laf等多种云开发平台</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/15/%E7%9F%A5%E8%AF%86%E7%82%B9%E7%A7%AF%E7%B4%AF/%E5%9B%BD%E9%99%85%E5%8C%96%E2%80%94%E9%98%BF%E6%8B%89%E4%BC%AF%E5%BC%8F%E9%80%86%E5%90%91%E9%98%85%E8%AF%BB/" title="国际化—阿拉伯式逆向阅读">
+                        <span class="hidden-mobile">国际化—阿拉伯式逆向阅读</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
